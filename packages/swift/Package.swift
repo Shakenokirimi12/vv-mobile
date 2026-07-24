@@ -1,45 +1,6 @@
 // swift-tools-version: 5.9
+// SwiftPM 公開タグ(swift-vX.Y.Z)専用の Package.swift。
 import PackageDescription
-import Foundation
-
-// ビルド済みバイナリ(xcframework)は scripts/prepare-binaries.sh が
-// Binaries/ に配置する。リリース時は CI が URL + checksum に書き換える。
-let binariesDir = "Binaries"
-let hasBinaries = FileManager.default.fileExists(
-    atPath: URL(fileURLWithPath: #filePath)
-        .deletingLastPathComponent()
-        .appendingPathComponent("\(binariesDir)/voicevox_core.xcframework").path
-)
-
-var targets: [Target] = [
-    .target(
-        name: "CVoicevoxCore",
-        path: "Sources/CVoicevoxCore"
-    ),
-    .target(
-        name: "VoicevoxCore",
-        dependencies: hasBinaries
-            ? ["CVoicevoxCore", "voicevox_core_binary", "voicevox_onnxruntime_binary"]
-            : ["CVoicevoxCore"],
-        path: "Sources/VoicevoxCore",
-        resources: [
-            .copy("Resources/licenses.json"),
-            .copy("Resources/open_jtalk_dic"),
-        ]
-    ),
-    .testTarget(
-        name: "VoicevoxCoreTests",
-        dependencies: ["VoicevoxCore"],
-        path: "Tests/VoicevoxCoreTests"
-    ),
-]
-
-if hasBinaries {
-    targets += [
-        .binaryTarget(name: "voicevox_core_binary", path: "\(binariesDir)/voicevox_core.xcframework"),
-        .binaryTarget(name: "voicevox_onnxruntime_binary", path: "\(binariesDir)/voicevox_onnxruntime.xcframework"),
-    ]
-}
 
 let package = Package(
     name: "VoicevoxCore",
@@ -47,5 +8,23 @@ let package = Package(
     products: [
         .library(name: "VoicevoxCore", targets: ["VoicevoxCore"])
     ],
-    targets: targets
+    targets: [
+        .target(name: "CVoicevoxCore", path: "Sources/CVoicevoxCore"),
+        .target(
+            name: "VoicevoxCore",
+            dependencies: ["CVoicevoxCore", "voicevox_core_binary", "voicevox_onnxruntime_binary"],
+            path: "Sources/VoicevoxCore",
+            resources: [.copy("Resources/licenses.json"), .copy("Resources/open_jtalk_dic")]
+        ),
+        .binaryTarget(
+            name: "voicevox_core_binary",
+            url: "https://github.com/Shakenokirimi12/vv-mobile/releases/download/swift-v0.1.0/voicevox_core.xcframework.zip",
+            checksum: "b787c6852b9c756e5c4ab8d812507c0ef39f1e7a4af4e40584c68b272af2b9ca"
+        ),
+        .binaryTarget(
+            name: "voicevox_onnxruntime_binary",
+            url: "https://github.com/Shakenokirimi12/vv-mobile/releases/download/swift-v0.1.0/voicevox_onnxruntime.xcframework.zip",
+            checksum: "c8744176cdf090a44a3cd2459e8ced7b531ba0e34d4f37dfe8d5129cc662aba8"
+        ),
+    ]
 )
