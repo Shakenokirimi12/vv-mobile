@@ -7,8 +7,8 @@
 
 #include "JHybridVoicevoxSpec.hpp"
 
-// Forward declaration of `VoicevoxModelInfo` to properly resolve imports.
-namespace margelo::nitro::voicevox { struct VoicevoxModelInfo; }
+// Forward declaration of `VoicevoxModel` to properly resolve imports.
+namespace margelo::nitro::voicevox { struct VoicevoxModel; }
 // Forward declaration of `VoicevoxCharacter` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxCharacter; }
 // Forward declaration of `VoicevoxStyle` to properly resolve imports.
@@ -19,9 +19,9 @@ namespace margelo::nitro::voicevox { struct DownloadResult; }
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 #include <NitroModules/JUnit.hpp>
-#include "VoicevoxModelInfo.hpp"
+#include "VoicevoxModel.hpp"
 #include <vector>
-#include "JVoicevoxModelInfo.hpp"
+#include "JVoicevoxModel.hpp"
 #include <string>
 #include "VoicevoxCharacter.hpp"
 #include "JVoicevoxCharacter.hpp"
@@ -81,16 +81,16 @@ namespace margelo::nitro::voicevox {
       return __promise;
     }();
   }
-  std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> JHybridVoicevoxSpec::listModels() {
+  std::shared_ptr<Promise<std::vector<VoicevoxModel>>> JHybridVoicevoxSpec::listModels() {
     static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("listModels");
     auto __result = method(_javaPart);
     return [&]() {
-      auto __promise = Promise<std::vector<VoicevoxModelInfo>>::create();
+      auto __promise = Promise<std::vector<VoicevoxModel>>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
-        auto __result = jni::static_ref_cast<jni::JArrayClass<JVoicevoxModelInfo>>(__boxedResult);
+        auto __result = jni::static_ref_cast<jni::JArrayClass<JVoicevoxModel>>(__boxedResult);
         __promise->resolve([&](auto&& __input) {
           size_t __size = __input->size();
-          std::vector<VoicevoxModelInfo> __vector;
+          std::vector<VoicevoxModel> __vector;
           __vector.reserve(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             auto __element = __input->getElement(__i);

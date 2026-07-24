@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 # prepare-sources.sh — RN パッケージに Swift/Kotlin 実装・バイナリ・リソースを
 # packages/swift・packages/android から複製して配置する(単一の実装を共有する)。
+#
+# 複製は「純粋なコピー」のみで、ソース書き換えは行わない:
+#   - C API モジュールは Swift ソース側の #if canImport(CVoicevoxCore) 分岐により、
+#     SwiftPM では CVoicevoxCore、Pod ビルドでは vendored xcframework の
+#     voicevox_core フレームワークモジュールに解決される(モジュールは常に1つ)
+#   - nitrogen 生成型との名前衝突は spec 側の型名(VoicevoxModel)で回避済み
+#
 # 事前に以下を実行しておくこと:
 #   ../core-native/scripts/fetch-core.sh ios osx android
 #   ../swift/scripts/prepare-binaries.sh
@@ -21,12 +28,11 @@ source "$CORE/VERSION"
   exit 1
 }
 
-# --- iOS: VoicevoxCore Swift 実装 + CVoicevoxCore ヘッダ ---
+# --- iOS: VoicevoxCore Swift 実装(C API は vendored framework モジュールを使う) ---
 ios_vc="$PKG_DIR/ios/VoicevoxCore"
 rm -rf "$ios_vc"
-mkdir -p "$ios_vc/CVoicevoxCore"
+mkdir -p "$ios_vc"
 cp "$SWIFT_PKG"/Sources/VoicevoxCore/*.swift "$ios_vc/"
-cp -R "$SWIFT_PKG/Sources/CVoicevoxCore/include" "$ios_vc/CVoicevoxCore/include"
 
 # CocoaPods ビルドでは SwiftPM の Bundle.module が生成されないため、
 # リソースバンドル(RNVoicevoxResources)へ解決するシムを追加する。

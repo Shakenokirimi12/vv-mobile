@@ -13,14 +13,14 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/vv-mobile/vv-mobile.git", :tag => "react-native-v#{s.version}" }
 
   # RN グルー + packages/swift から複製した VoicevoxCore 実装
-  # (ios/VoicevoxCore は scripts/prepare-sources.sh が配置する)
+  # (ios/VoicevoxCore は scripts/prepare-sources.sh が配置する)。
+  # C API は vendored xcframework 内蔵の voicevox_core フレームワーク
+  # モジュール1つに解決される(Swift ソース側の #if canImport 分岐)。
   s.source_files = [
     "ios/**/*.{swift,h,c}",
     "nitrogen/generated/ios/**/*.{swift,hpp,cpp}",
     "nitrogen/generated/shared/**/*.{hpp,cpp}",
   ]
-  s.public_header_files = "ios/VoicevoxCore/CVoicevoxCore/include/*.h"
-  s.preserve_paths = "ios/VoicevoxCore/CVoicevoxCore/include/module.modulemap"
 
   s.vendored_frameworks = [
     "ios/Frameworks/voicevox_core.xcframework",
@@ -35,7 +35,6 @@ Pod::Spec.new do |s|
   }
 
   s.pod_target_xcconfig = {
-    "SWIFT_INCLUDE_PATHS" => "$(PODS_TARGET_SRCROOT)/ios/VoicevoxCore/CVoicevoxCore/include",
     "DEFINES_MODULE" => "YES",
   }
 

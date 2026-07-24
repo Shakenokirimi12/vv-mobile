@@ -64,14 +64,46 @@
 
 - 未 example アプリの手動動作確認(Android)
 
-## React Native (packages/react-native) — 未
+## React Native (packages/react-native) — 済(iOS)
 
-TypeScript typecheck のみ通過済み。作成すべきテスト:
+example アプリ(RN 0.81.5 + Nitro 0.36)を iOS シミュレータで実行し、起動時自動E2E
+(`App.tsx` の `AUTO_E2E` フラグ、通常は false)で確認済み:
 
-- 未 example アプリ(RN 0.81 + Nitro)での手動E2E: initialize → listModels → acceptLicense → downloadModel → synthesis → 再生
-- 未 iOS: `pod install` → ビルド確認(RNVoicevox.podspec の vendored xcframework + BundleModuleShim の動作)
-- 未 Android: gradle ビルド確認(vendored/ ソース複製 + nitrogen autolinking)
-- 未 C2, C6, C10 のJS層からの確認(ネイティブ層は Swift/Kotlin テストでカバー済み)
+- 済 initialize → listModels(27モデル、キャラクター名付きで画面表示)
+- 済 C2 (未同意 `downloadModel('1')` が reject されることを確認)
+- 済 C3, C7 (acceptLicense → downloadModel('0') → synthesis → **122924 bytes, header="RIFF"** を画面表示で確認)
+- 済 iOS: `pod install` → xcodebuild BUILD SUCCEEDED → シミュレータ実行
+- 未 Android: gradle ビルド確認(vendored/ ソース複製 + nitrogen autolinking)、エミュレータでのE2E
+- 未 C9, C10 のJS層からの確認(ネイティブ層は Swift テストでカバー済み)
+
+### 発覚した問題と修正(RN iOSビルド)
+
+1. **C APIの型面がビルドモードで食い違う(根本問題)**: Nitro のポッドは Swift を
+   **C++ interop モード**でコンパイルするため、公式ヘッダの
+   `#ifndef __cplusplus` ガード付き typedef が消え、`VoicevoxResultCode` が
+   enum 型として import される(SwiftPM の C モードでは typedef=Int32)。
+   同じ共有 Swift ソースが片方でしかコンパイルできない状態だった。
+   → `core-native/scripts/normalize_header.py` に enum タグのリネーム
+   (`<Name>Values`)+ typedef 無条件化の正規化を追加し、**C/C++ どちらの
+   モードでも関数シグネチャが int32_t(Swift では Int32)になるよう統一**。
+   `swift/scripts/prepare-binaries.sh` が vendored xcframework 内の
+   umbrella ヘッダにも同じ正規化を適用する
+2. **モジュールの二重定義**: podspec が `SWIFT_INCLUDE_PATHS` で CVoicevoxCore
+   モジュールを追加していたため、vendored xcframework 内蔵の `voicevox_core`
+   フレームワークモジュールと同一シンボルが別型として二重に見えていた。
+   → 共有 Swift ソースを `#if canImport(CVoicevoxCore)` の条件 import にし、
+   SwiftPM では CVoicevoxCore、Pod では framework モジュールの**常に1つだけ**
+   に解決されるよう修正(podspec から CVoicevoxCore 設定を削除)
+3. **nitrogen 生成型との名前衝突**: spec の TS interface `VoicevoxModelInfo` が
+   生成 Swift 構造体として vendored 実装の同名型と衝突。
+   → spec 側を `VoicevoxModel` にリネーム(JS公開型名も VoicevoxModel)
+4. **fmt 11.0.2 と Xcode 26 の非互換**: RN 0.81 同梱の fmt が
+   `FMT_USE_CONSTEVAL 1` を無条件 define しており、新しい Clang の consteval
+   厳格化でコンパイル不能(このプラグインとは無関係の RN 側問題)。
+   → example の Podfile post_install で fmt/base.h をパッチ(RN が fmt を
+   更新したら削除する)
+5. **公式 iOS ヘッダのマクロ行順**: LINK/LOAD マクロの「コメント行→define行」の
+   順序がプラットフォームで逆のものがあり正規化の正規表現が不一致 → 両順対応
 
 ## CI で自動化すべきもの(tools/release 参照)
 

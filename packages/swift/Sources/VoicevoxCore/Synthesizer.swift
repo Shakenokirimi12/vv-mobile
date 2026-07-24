@@ -1,4 +1,13 @@
+// SwiftPM では CVoicevoxCore(正規化ヘッダのCモジュール)、
+// CocoaPods(react-native-voicevox の vendored ビルド)では
+// xcframework 内蔵の voicevox_core フレームワークモジュールを使う。
+// どちらの環境でも「C API を提供するモジュールは1つだけ」にすることで
+// 型解決の不一致を防ぐ。
+#if canImport(CVoicevoxCore)
 import CVoicevoxCore
+#else
+import voicevox_core
+#endif
 import Foundation
 
 /// voicevox_core C API の薄いラッパー。

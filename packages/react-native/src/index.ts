@@ -5,7 +5,7 @@ export type {
   DownloadResult,
   Voicevox,
   VoicevoxCharacter,
-  VoicevoxModelInfo,
+  VoicevoxModel,
   VoicevoxStyle,
 } from './specs/Voicevox.nitro'
 

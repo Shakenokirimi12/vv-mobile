@@ -116,42 +116,10 @@ download "$DICT_URL" "$dict_archive"
 verify_or_record "$dict_archive"
 extract "$dict_archive" "$DIST_DIR/common"
 
-# C ヘッダを include/ へ同期。
-# 公式ヘッダはプラットフォームごとに VOICEVOX_LOAD/LINK_ONNXRUNTIME を
-# ハードコードしているため、全プラットフォームで使える条件分岐に正規化する。
+# C ヘッダを include/ へ同期・正規化(詳細は normalize_header.py 参照)。
 header="$(find "$DIST_DIR" -name voicevox_core.h -print -quit)"
 if [[ -n "$header" ]]; then
-  python3 - "$header" "$ROOT_DIR/include/voicevox_core.h" <<'PYEOF'
-import re, sys
-src, dst = sys.argv[1], sys.argv[2]
-text = open(src).read()
-conditional = """\
-// vv-mobile: 単一ヘッダを全プラットフォームで使うため条件分岐に正規化。
-// 公式リリースのライブラリは iOS のみリンク時動的リンク(LINK)、
-// その他のプラットフォームは実行時ロード(LOAD)。
-#if !defined(VOICEVOX_LINK_ONNXRUNTIME) && !defined(VOICEVOX_LOAD_ONNXRUNTIME)
-#if defined(__APPLE__)
-#include <TargetConditionals.h>
-#if TARGET_OS_IPHONE
-#define VOICEVOX_LINK_ONNXRUNTIME
-#else
-#define VOICEVOX_LOAD_ONNXRUNTIME
-#endif
-#else
-#define VOICEVOX_LOAD_ONNXRUNTIME
-#endif
-#endif
-"""
-patched, n = re.subn(
-    r"^//#define VOICEVOX_(?:LINK|LOAD)_ONNXRUNTIME\n#define VOICEVOX_(?:LINK|LOAD)_ONNXRUNTIME\n",
-    conditional,
-    text,
-    flags=re.M,
-)
-assert n == 1, f"macro block not found (matched {n})"
-open(dst, "w").write(patched)
-print("header synced+normalized: include/voicevox_core.h")
-PYEOF
+  python3 "$SCRIPT_DIR/normalize_header.py" "$header" "$ROOT_DIR/include/voicevox_core.h"
 fi
 
 echo "done. artifacts in $DIST_DIR"

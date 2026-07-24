@@ -30,10 +30,10 @@ namespace margelo::nitro::voicevox::bridge::swift {
     };
   }
   
-  // pragma MARK: std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>
-  Func_void_std__vector_VoicevoxModelInfo_ create_Func_void_std__vector_VoicevoxModelInfo_(void* NON_NULL swiftClosureWrapper) noexcept {
-    auto swiftClosure = RNVoicevox::Func_void_std__vector_VoicevoxModelInfo_::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const std::vector<VoicevoxModelInfo>& result) mutable -> void {
+  // pragma MARK: std::function<void(const std::vector<VoicevoxModel>& /* result */)>
+  Func_void_std__vector_VoicevoxModel_ create_Func_void_std__vector_VoicevoxModel_(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = RNVoicevox::Func_void_std__vector_VoicevoxModel_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::vector<VoicevoxModel>& result) mutable -> void {
       swiftClosure.call(result);
     };
   }

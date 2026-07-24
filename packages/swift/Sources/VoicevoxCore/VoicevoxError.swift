@@ -1,4 +1,9 @@
+// Synthesizer.swift と同様、C API モジュールはビルド環境ごとに1つに揃える。
+#if canImport(CVoicevoxCore)
 import CVoicevoxCore
+#else
+import voicevox_core
+#endif
 import Foundation
 
 /// voicevox_core の結果コードおよびパッケージ固有の失敗を表すエラー。

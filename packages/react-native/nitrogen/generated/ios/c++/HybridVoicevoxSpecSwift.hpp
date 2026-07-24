@@ -12,8 +12,8 @@
 // Forward declaration of `HybridVoicevoxSpec_cxx` to properly resolve imports.
 namespace RNVoicevox { class HybridVoicevoxSpec_cxx; }
 
-// Forward declaration of `VoicevoxModelInfo` to properly resolve imports.
-namespace margelo::nitro::voicevox { struct VoicevoxModelInfo; }
+// Forward declaration of `VoicevoxModel` to properly resolve imports.
+namespace margelo::nitro::voicevox { struct VoicevoxModel; }
 // Forward declaration of `VoicevoxCharacter` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxCharacter; }
 // Forward declaration of `VoicevoxStyle` to properly resolve imports.
@@ -24,7 +24,7 @@ namespace margelo::nitro::voicevox { struct DownloadResult; }
 namespace NitroModules { class ArrayBufferHolder; }
 
 #include <NitroModules/Promise.hpp>
-#include "VoicevoxModelInfo.hpp"
+#include "VoicevoxModel.hpp"
 #include <vector>
 #include <string>
 #include "VoicevoxCharacter.hpp"
@@ -92,7 +92,7 @@ namespace margelo::nitro::voicevox {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> listModels() override {
+    inline std::shared_ptr<Promise<std::vector<VoicevoxModel>>> listModels() override {
       auto __result = _swiftPart.listModels();
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

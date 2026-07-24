@@ -15,7 +15,10 @@ export interface VoicevoxCharacter {
   styles: VoicevoxStyle[]
 }
 
-export interface VoicevoxModelInfo {
+// NOTE: 名前を「VoicevoxModel」にしているのは、ネイティブ実装(vendored された
+// packages/swift の VoicevoxModelInfo 型)と nitrogen 生成 Swift 構造体が
+// 同一ターゲット内で名前衝突しないようにするため。
+export interface VoicevoxModel {
   id: string
   filename: string
   sizeBytes: number
@@ -45,7 +48,7 @@ export interface Voicevox
   initialize(maxConcurrentDownloads: number): Promise<void>
 
   /** 利用可能な全モデルの一覧(ダウンロード状態付き)。 */
-  listModels(): Promise<VoicevoxModelInfo[]>
+  listModels(): Promise<VoicevoxModel[]>
 
   /** 全モデル共通の利用規約(VOICEVOX 音声モデル利用規約)のURL。 */
   getTermsURL(): string

@@ -100,7 +100,14 @@ xcodebuild -create-xcframework \
 
 rm -rf "$TMP"
 
-# --- Open JTalk 辞書をリソースとして配置 ---
+# --- フレームワーク内ヘッダの正規化 ---
+# vendored xcframework の umbrella ヘッダは公式のままなので、
+# 単体ヘッダと同じ正規化(ONNXマクロ条件分岐 + enum/typedef統一)を適用する。
+# これにより C++ interop ビルド(React Native / Nitro)でも C API の
+# シグネチャが SwiftPM(Cモード)と同一の型面(int32_t)になる。
+find "$BIN" -path '*/Headers/voicevox_core.h' | while read -r fw_header; do
+  python3 "$PKG_DIR/../core-native/scripts/normalize_header.py" "$fw_header" "$fw_header"
+done
 dict_src="$DIST/common/open_jtalk_dic_utf_8-${OPEN_JTALK_DICT_VERSION}"
 dict_dst="$PKG_DIR/Sources/VoicevoxCore/Resources/open_jtalk_dic"
 rm -rf "$dict_dst"

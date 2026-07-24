@@ -108,7 +108,7 @@
  *
  * \orig-impl{VoicevoxAccelerationMode}
  */
-enum VoicevoxAccelerationMode
+enum VoicevoxAccelerationModeValues
 #ifdef __cplusplus
   : int32_t
 #endif // __cplusplus
@@ -126,16 +126,15 @@ enum VoicevoxAccelerationMode
    */
   VOICEVOX_ACCELERATION_MODE_GPU = 2,
 };
-#ifndef __cplusplus
+// vv-mobile: C/C++両モードで typedef を関数シグネチャの型として使う
 typedef int32_t VoicevoxAccelerationMode;
-#endif // __cplusplus
 
 /**
  * 処理結果を示す結果コード。
  *
  * \orig-impl{VoicevoxResultCode,C APIにしか無いものがあることに注意。}
  */
-enum VoicevoxResultCode
+enum VoicevoxResultCodeValues
 #ifdef __cplusplus
   : int32_t
 #endif // __cplusplus
@@ -265,16 +264,15 @@ enum VoicevoxResultCode
    */
   VOICEVOX_RESULT_INCOMPATIBLE_QUERIES_ERROR = 35,
 };
-#ifndef __cplusplus
+// vv-mobile: C/C++両モードで typedef を関数シグネチャの型として使う
 typedef int32_t VoicevoxResultCode;
-#endif // __cplusplus
 
 /**
  * ユーザー辞書の単語の種類。
  *
  * \orig-impl{VoicevoxUserDictWordType}
  */
-enum VoicevoxUserDictWordType
+enum VoicevoxUserDictWordTypeValues
 #ifdef __cplusplus
   : int32_t
 #endif // __cplusplus
@@ -300,9 +298,8 @@ enum VoicevoxUserDictWordType
    */
   VOICEVOX_USER_DICT_WORD_TYPE_SUFFIX = 4,
 };
-#ifndef __cplusplus
+// vv-mobile: C/C++両モードで typedef を関数シグネチャの型として使う
 typedef int32_t VoicevoxUserDictWordType;
-#endif // __cplusplus
 
 /**
  * テキスト解析器としてのOpen JTalk。

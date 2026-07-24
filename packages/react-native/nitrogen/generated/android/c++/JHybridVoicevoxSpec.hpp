@@ -55,7 +55,7 @@ namespace margelo::nitro::voicevox {
   public:
     // Methods
     std::shared_ptr<Promise<void>> initialize(double maxConcurrentDownloads) override;
-    std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> listModels() override;
+    std::shared_ptr<Promise<std::vector<VoicevoxModel>>> listModels() override;
     std::string getTermsURL() override;
     void acceptLicense(const std::string& modelId) override;
     bool isLicenseAccepted(const std::string& modelId) override;

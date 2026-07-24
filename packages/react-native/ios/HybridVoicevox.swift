@@ -1,6 +1,8 @@
 import Foundation
 import NitroModules
-import VoicevoxCore
+// VoicevoxCore の Swift ソースは prepare-sources.sh により
+// ios/VoicevoxCore/ にコピーされ、このターゲットへ直接コンパイルされる
+// (別モジュールとしては存在しないため import 不要)。
 
 /// Nitro HybridObject 実装。
 /// packages/swift の `Voicevox` Facade を呼ぶだけの薄いグルー。
@@ -23,7 +25,7 @@ final class HybridVoicevox: HybridVoicevoxSpec {
         }
     }
 
-    func listModels() throws -> Promise<[VoicevoxModelInfo]> {
+    func listModels() throws -> Promise<[VoicevoxModel]> {
         let voicevox = try requireVoicevox()
         return Promise.async {
             await voicevox.listModels().map { $0.toNitro() }
@@ -92,10 +94,10 @@ final class HybridVoicevox: HybridVoicevoxSpec {
     }
 }
 
-private extension VoicevoxCore.VoicevoxModelInfo {
-    /// VoicevoxCore のモデル情報を Nitro 生成の構造体へ変換する。
-    func toNitro() -> VoicevoxModelInfo {
-        VoicevoxModelInfo(
+private extension VoicevoxModelInfo {
+    /// VoicevoxCore のモデル情報を Nitro 生成の構造体(VoicevoxModel)へ変換する。
+    func toNitro() -> VoicevoxModel {
+        VoicevoxModel(
             id: id,
             filename: filename,
             sizeBytes: Double(sizeBytes),

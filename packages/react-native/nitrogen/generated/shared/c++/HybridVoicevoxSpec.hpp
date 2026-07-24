@@ -13,13 +13,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `VoicevoxModelInfo` to properly resolve imports.
-namespace margelo::nitro::voicevox { struct VoicevoxModelInfo; }
+// Forward declaration of `VoicevoxModel` to properly resolve imports.
+namespace margelo::nitro::voicevox { struct VoicevoxModel; }
 // Forward declaration of `DownloadResult` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct DownloadResult; }
 
 #include <NitroModules/Promise.hpp>
-#include "VoicevoxModelInfo.hpp"
+#include "VoicevoxModel.hpp"
 #include <vector>
 #include <string>
 #include "DownloadResult.hpp"
@@ -58,7 +58,7 @@ namespace margelo::nitro::voicevox {
     public:
       // Methods
       virtual std::shared_ptr<Promise<void>> initialize(double maxConcurrentDownloads) = 0;
-      virtual std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> listModels() = 0;
+      virtual std::shared_ptr<Promise<std::vector<VoicevoxModel>>> listModels() = 0;
       virtual std::string getTermsURL() = 0;
       virtual void acceptLicense(const std::string& modelId) = 0;
       virtual bool isLicenseAccepted(const std::string& modelId) = 0;

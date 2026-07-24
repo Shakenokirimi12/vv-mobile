@@ -14,7 +14,7 @@ public protocol HybridVoicevoxSpec_protocol: HybridObject {
 
   // Methods
   func initialize(maxConcurrentDownloads: Double) throws -> Promise<Void>
-  func listModels() throws -> Promise<[VoicevoxModelInfo]>
+  func listModels() throws -> Promise<[VoicevoxModel]>
   func getTermsURL() throws -> String
   func acceptLicense(modelId: String) throws -> Void
   func isLicenseAccepted(modelId: String) throws -> Bool

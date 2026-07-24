@@ -14,8 +14,8 @@ namespace margelo::nitro::voicevox { struct DownloadResult; }
 namespace margelo::nitro::voicevox { class HybridVoicevoxSpec; }
 // Forward declaration of `VoicevoxCharacter` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxCharacter; }
-// Forward declaration of `VoicevoxModelInfo` to properly resolve imports.
-namespace margelo::nitro::voicevox { struct VoicevoxModelInfo; }
+// Forward declaration of `VoicevoxModel` to properly resolve imports.
+namespace margelo::nitro::voicevox { struct VoicevoxModel; }
 // Forward declaration of `VoicevoxStyle` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxStyle; }
 
@@ -23,7 +23,7 @@ namespace margelo::nitro::voicevox { struct VoicevoxStyle; }
 #include "DownloadResult.hpp"
 #include "HybridVoicevoxSpec.hpp"
 #include "VoicevoxCharacter.hpp"
-#include "VoicevoxModelInfo.hpp"
+#include "VoicevoxModel.hpp"
 #include "VoicevoxStyle.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/Promise.hpp>

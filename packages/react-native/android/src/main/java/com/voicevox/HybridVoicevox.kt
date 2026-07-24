@@ -6,7 +6,7 @@ import com.margelo.nitro.core.Promise
 import com.margelo.nitro.voicevox.DownloadResult
 import com.margelo.nitro.voicevox.HybridVoicevoxSpec
 import com.margelo.nitro.voicevox.VoicevoxCharacter
-import com.margelo.nitro.voicevox.VoicevoxModelInfo
+import com.margelo.nitro.voicevox.VoicevoxModel
 import com.margelo.nitro.voicevox.VoicevoxStyle
 import jp.voicevox.android.Voicevox
 
@@ -30,7 +30,7 @@ class HybridVoicevox : HybridVoicevoxSpec() {
             )
         }
 
-    override fun listModels(): Promise<Array<VoicevoxModelInfo>> {
+    override fun listModels(): Promise<Array<VoicevoxModel>> {
         val vv = requireVoicevox()
         return Promise.async {
             vv.listModels().map { it.toNitro() }.toTypedArray()
@@ -82,9 +82,9 @@ class HybridVoicevox : HybridVoicevoxSpec() {
     }
 }
 
-/** voicevox-core-android のモデル情報を Nitro 生成の構造体へ変換する。 */
-private fun jp.voicevox.android.VoicevoxModelInfo.toNitro(): VoicevoxModelInfo =
-    VoicevoxModelInfo(
+/** voicevox-core-android のモデル情報を Nitro 生成の構造体(VoicevoxModel)へ変換する。 */
+private fun jp.voicevox.android.VoicevoxModelInfo.toNitro(): VoicevoxModel =
+    VoicevoxModel(
         id = id,
         filename = filename,
         sizeBytes = sizeBytes.toDouble(),

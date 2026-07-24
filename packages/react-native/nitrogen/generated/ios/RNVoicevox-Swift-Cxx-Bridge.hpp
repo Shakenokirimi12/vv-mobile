@@ -16,8 +16,8 @@ namespace margelo::nitro::voicevox { struct DownloadResult; }
 namespace margelo::nitro::voicevox { class HybridVoicevoxSpec; }
 // Forward declaration of `VoicevoxCharacter` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxCharacter; }
-// Forward declaration of `VoicevoxModelInfo` to properly resolve imports.
-namespace margelo::nitro::voicevox { struct VoicevoxModelInfo; }
+// Forward declaration of `VoicevoxModel` to properly resolve imports.
+namespace margelo::nitro::voicevox { struct VoicevoxModel; }
 // Forward declaration of `VoicevoxStyle` to properly resolve imports.
 namespace margelo::nitro::voicevox { struct VoicevoxStyle; }
 
@@ -29,7 +29,7 @@ namespace RNVoicevox { class HybridVoicevoxSpec_cxx; }
 #include "DownloadResult.hpp"
 #include "HybridVoicevoxSpec.hpp"
 #include "VoicevoxCharacter.hpp"
-#include "VoicevoxModelInfo.hpp"
+#include "VoicevoxModel.hpp"
 #include "VoicevoxStyle.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
@@ -127,49 +127,49 @@ namespace margelo::nitro::voicevox::bridge::swift {
     return vector;
   }
   
-  // pragma MARK: std::vector<VoicevoxModelInfo>
+  // pragma MARK: std::vector<VoicevoxModel>
   /**
-   * Specialized version of `std::vector<VoicevoxModelInfo>`.
+   * Specialized version of `std::vector<VoicevoxModel>`.
    */
-  using std__vector_VoicevoxModelInfo_ = std::vector<VoicevoxModelInfo>;
-  inline std::vector<VoicevoxModelInfo> create_std__vector_VoicevoxModelInfo_(size_t size) noexcept {
-    std::vector<VoicevoxModelInfo> vector;
+  using std__vector_VoicevoxModel_ = std::vector<VoicevoxModel>;
+  inline std::vector<VoicevoxModel> create_std__vector_VoicevoxModel_(size_t size) noexcept {
+    std::vector<VoicevoxModel> vector;
     vector.reserve(size);
     return vector;
   }
   
-  // pragma MARK: std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>
+  // pragma MARK: std::shared_ptr<Promise<std::vector<VoicevoxModel>>>
   /**
-   * Specialized version of `std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>`.
+   * Specialized version of `std::shared_ptr<Promise<std::vector<VoicevoxModel>>>`.
    */
-  using std__shared_ptr_Promise_std__vector_VoicevoxModelInfo___ = std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>;
-  inline std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> create_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo___() noexcept {
-    return Promise<std::vector<VoicevoxModelInfo>>::create();
+  using std__shared_ptr_Promise_std__vector_VoicevoxModel___ = std::shared_ptr<Promise<std::vector<VoicevoxModel>>>;
+  inline std::shared_ptr<Promise<std::vector<VoicevoxModel>>> create_std__shared_ptr_Promise_std__vector_VoicevoxModel___() noexcept {
+    return Promise<std::vector<VoicevoxModel>>::create();
   }
-  inline PromiseHolder<std::vector<VoicevoxModelInfo>> wrap_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo___(std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>> promise) noexcept {
-    return PromiseHolder<std::vector<VoicevoxModelInfo>>(std::move(promise));
+  inline PromiseHolder<std::vector<VoicevoxModel>> wrap_std__shared_ptr_Promise_std__vector_VoicevoxModel___(std::shared_ptr<Promise<std::vector<VoicevoxModel>>> promise) noexcept {
+    return PromiseHolder<std::vector<VoicevoxModel>>(std::move(promise));
   }
   
-  // pragma MARK: std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>
+  // pragma MARK: std::function<void(const std::vector<VoicevoxModel>& /* result */)>
   /**
-   * Specialized version of `std::function<void(const std::vector<VoicevoxModelInfo>&)>`.
+   * Specialized version of `std::function<void(const std::vector<VoicevoxModel>&)>`.
    */
-  using Func_void_std__vector_VoicevoxModelInfo_ = std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>;
+  using Func_void_std__vector_VoicevoxModel_ = std::function<void(const std::vector<VoicevoxModel>& /* result */)>;
   /**
-   * Wrapper class for a `std::function<void(const std::vector<VoicevoxModelInfo>& / * result * /)>`, this can be used from Swift.
+   * Wrapper class for a `std::function<void(const std::vector<VoicevoxModel>& / * result * /)>`, this can be used from Swift.
    */
-  class Func_void_std__vector_VoicevoxModelInfo__Wrapper final {
+  class Func_void_std__vector_VoicevoxModel__Wrapper final {
   public:
-    explicit Func_void_std__vector_VoicevoxModelInfo__Wrapper(std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>>(std::move(func))) {}
-    inline void call(std::vector<VoicevoxModelInfo> result) const noexcept {
+    explicit Func_void_std__vector_VoicevoxModel__Wrapper(std::function<void(const std::vector<VoicevoxModel>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::vector<VoicevoxModel>& /* result */)>>(std::move(func))) {}
+    inline void call(std::vector<VoicevoxModel> result) const noexcept {
       _function->operator()(result);
     }
   private:
-    std::unique_ptr<std::function<void(const std::vector<VoicevoxModelInfo>& /* result */)>> _function;
+    std::unique_ptr<std::function<void(const std::vector<VoicevoxModel>& /* result */)>> _function;
   } SWIFT_NONCOPYABLE;
-  Func_void_std__vector_VoicevoxModelInfo_ create_Func_void_std__vector_VoicevoxModelInfo_(void* NON_NULL swiftClosureWrapper) noexcept;
-  inline Func_void_std__vector_VoicevoxModelInfo__Wrapper wrap_Func_void_std__vector_VoicevoxModelInfo_(Func_void_std__vector_VoicevoxModelInfo_ value) noexcept {
-    return Func_void_std__vector_VoicevoxModelInfo__Wrapper(std::move(value));
+  Func_void_std__vector_VoicevoxModel_ create_Func_void_std__vector_VoicevoxModel_(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_std__vector_VoicevoxModel__Wrapper wrap_Func_void_std__vector_VoicevoxModel_(Func_void_std__vector_VoicevoxModel_ value) noexcept {
+    return Func_void_std__vector_VoicevoxModel__Wrapper(std::move(value));
   }
   
   // pragma MARK: std::optional<std::string>
@@ -313,13 +313,13 @@ namespace margelo::nitro::voicevox::bridge::swift {
     return Result<std::shared_ptr<Promise<void>>>::withError(error);
   }
   
-  // pragma MARK: Result<std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>>
-  using Result_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo____ = Result<std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>>;
-  inline Result_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo____ create_Result_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo____(const std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>& value) noexcept {
-    return Result<std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>>::withValue(value);
+  // pragma MARK: Result<std::shared_ptr<Promise<std::vector<VoicevoxModel>>>>
+  using Result_std__shared_ptr_Promise_std__vector_VoicevoxModel____ = Result<std::shared_ptr<Promise<std::vector<VoicevoxModel>>>>;
+  inline Result_std__shared_ptr_Promise_std__vector_VoicevoxModel____ create_Result_std__shared_ptr_Promise_std__vector_VoicevoxModel____(const std::shared_ptr<Promise<std::vector<VoicevoxModel>>>& value) noexcept {
+    return Result<std::shared_ptr<Promise<std::vector<VoicevoxModel>>>>::withValue(value);
   }
-  inline Result_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo____ create_Result_std__shared_ptr_Promise_std__vector_VoicevoxModelInfo____(const std::exception_ptr& error) noexcept {
-    return Result<std::shared_ptr<Promise<std::vector<VoicevoxModelInfo>>>>::withError(error);
+  inline Result_std__shared_ptr_Promise_std__vector_VoicevoxModel____ create_Result_std__shared_ptr_Promise_std__vector_VoicevoxModel____(const std::exception_ptr& error) noexcept {
+    return Result<std::shared_ptr<Promise<std::vector<VoicevoxModel>>>>::withError(error);
   }
   
   // pragma MARK: Result<std::string>

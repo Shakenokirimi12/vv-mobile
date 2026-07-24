@@ -36,7 +36,7 @@ abstract class HybridVoicevoxSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun listModels(): Promise<Array<VoicevoxModelInfo>>
+  abstract fun listModels(): Promise<Array<VoicevoxModel>>
   
   @DoNotStrip
   @Keep
