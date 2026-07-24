@@ -27,7 +27,7 @@ void main() {
 
   testWidgets('synthesis without download throws ModelNotDownloadedException',
       (tester) async {
-    expect(
+    await expectLater(
       () => voicevox.synthesis('テスト', modelId: '0'),
       throwsA(isA<ModelNotDownloadedException>()),
     );
@@ -36,7 +36,7 @@ void main() {
   testWidgets('download without license throws LicenseNotAcceptedException',
       (tester) async {
     await voicevox.gate.revoke('1');
-    expect(
+    await expectLater(
       () => voicevox.downloadModel('1'),
       throwsA(isA<LicenseNotAcceptedException>()),
     );

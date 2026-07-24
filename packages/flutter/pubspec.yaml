@@ -4,6 +4,7 @@ description: >-
   voice model download and per-character license gating.
 version: 0.1.0
 homepage: https://github.com/vv-mobile/vv-mobile
+repository: https://github.com/vv-mobile/vv-mobile/tree/main/packages/flutter
 
 environment:
   sdk: ^3.12.0

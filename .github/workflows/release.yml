@@ -1,0 +1,149 @@
+# リリース準備ワークフロー(手動トリガーのみ)。
+# 方針(docs/RELEASE.md): 公開はすべて手動。このワークフローはビルド + dry-run +
+# 成果物のアップロードまでを行い、実際の publish は行わない。
+name: Release (prepare)
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "リリース準備するパッケージ"
+        required: true
+        type: choice
+        options:
+          - swift
+          - android
+          - flutter
+          - react-native
+
+env:
+  CORE_CACHE_VERSION: v1
+
+jobs:
+  swift:
+    if: inputs.package == 'swift'
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh ios osx
+      - name: Prepare binaries
+        run: ./packages/swift/scripts/prepare-binaries.sh
+      - name: Build & test (macOS)
+        run: swift build && swift test
+        working-directory: packages/swift
+      - name: Prepare release zips + checksums
+        run: ./tools/release/prepare-swift-release.sh
+      - name: Upload xcframework zips
+        uses: actions/upload-artifact@v4
+        with:
+          name: swift-xcframeworks
+          path: packages/swift/.release/*.zip
+      # TODO: publish — GitHub Release (swift-vX.Y.Z) に zip を添付し、
+      # Package.swift を URL+checksum に書き換えてタグを push(手動承認後)
+
+  android:
+    if: inputs.package == 'android'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh android
+      - name: Prepare binaries
+        run: ./packages/android/scripts/prepare-binaries.sh
+      - name: Publish to Maven local (dry-run 相当)
+        run: gradle :lib:publishReleasePublicationToMavenLocal --console=plain
+        working-directory: packages/android
+      - name: Upload AAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aar
+          path: ~/.m2/repository/jp/voicevox/voicevox-core-android/**/*
+      # TODO: publish — Maven Central へは gradle publish(要 signing/sonatype 設定)。
+      # 依存の jp.hiroshiba.voicevoxcore:voicevoxcore-android が未公開のため
+      # 現状 Maven Central 公開は保留(docs/RELEASE.md 参照)
+
+  flutter:
+    if: inputs.package == 'flutter'
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh ios osx android
+      - name: Prepare binaries (swift deps)
+        run: ./packages/swift/scripts/prepare-binaries.sh
+      - name: Prepare binaries (flutter)
+        run: ./packages/flutter/scripts/prepare-binaries.sh
+      - name: Analyze
+        run: flutter analyze
+        working-directory: packages/flutter
+      - name: Publish dry-run
+        # 注意: pub はバイナリ(gitignore 対象)を含めないため、公開物は
+        # prepare スクリプト前提の不完全なパッケージになる。0.1.0 は git 依存のみで
+        # 配布し、pub.dev 公開は保留(docs/RELEASE.md 参照)
+        run: flutter pub publish --dry-run || true
+        working-directory: packages/flutter
+      # TODO: publish — pub.dev 公開は配布方式(バイナリ取得ツール)決定後に有効化
+
+  react-native:
+    if: inputs.package == 'react-native'
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh ios osx android
+      - name: Prepare binaries (swift deps)
+        run: ./packages/swift/scripts/prepare-binaries.sh
+      - name: Prepare binaries (android deps)
+        run: ./packages/android/scripts/prepare-binaries.sh
+      - name: Prepare vendored sources
+        run: ./packages/react-native/scripts/prepare-sources.sh
+      - name: Install
+        run: npm ci || npm install
+        working-directory: packages/react-native
+      - name: Typecheck
+        run: npx tsc --noEmit
+        working-directory: packages/react-native
+      - name: Build (builder-bob)
+        run: npm run prepare
+        working-directory: packages/react-native
+      - name: Pack
+        run: npm pack
+        working-directory: packages/react-native
+      - name: Upload npm tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-native-npm-tarball
+          path: packages/react-native/react-native-voicevox-*.tgz
+      # TODO: publish — npm publish(手動承認後)。tarball が npm のサイズ上限に
+      # 収まるか要確認(docs/RELEASE.md 参照)

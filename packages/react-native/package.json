@@ -22,6 +22,16 @@
     "codegen": "nitrogen",
     "prepare": "bob build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vv-mobile/vv-mobile.git",
+    "directory": "packages/react-native"
+  },
+  "author": "vv-mobile contributors",
+  "homepage": "https://github.com/vv-mobile/vv-mobile/tree/main/packages/react-native#readme",
+  "bugs": {
+    "url": "https://github.com/vv-mobile/vv-mobile/issues"
+  },
   "keywords": [
     "react-native",
     "voicevox",
