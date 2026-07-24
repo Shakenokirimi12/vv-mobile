@@ -1,0 +1,16 @@
+{
+  "cxxNamespace": ["voicevox"],
+  "ios": {
+    "iosModuleName": "RNVoicevox"
+  },
+  "android": {
+    "androidNamespace": ["voicevox"],
+    "androidCxxLibName": "RNVoicevox"
+  },
+  "autolinking": {
+    "Voicevox": {
+      "swift": "HybridVoicevox",
+      "kotlin": "HybridVoicevox"
+    }
+  }
+}

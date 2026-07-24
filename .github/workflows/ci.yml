@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # core-native の取得物をキャッシュするキー(VERSION が変わると更新)
+  CORE_CACHE_VERSION: v1
+
+jobs:
+  swift:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh ios osx
+      - name: Prepare binaries
+        run: ./packages/swift/scripts/prepare-binaries.sh
+      - name: Build (macOS)
+        run: swift build
+        working-directory: packages/swift
+      - name: Test (macOS)
+        run: swift test
+        working-directory: packages/swift
+      - name: Build (iOS Simulator)
+        run: >
+          xcodebuild -scheme VoicevoxCore
+          -destination 'generic/platform=iOS Simulator' build
+        working-directory: packages/swift
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh android
+      - name: Prepare binaries
+        run: ./packages/android/scripts/prepare-binaries.sh
+      - name: Build AAR
+        run: gradle assembleRelease
+        working-directory: packages/android
+
+  flutter:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Cache core-native artifacts
+        uses: actions/cache@v4
+        with:
+          path: packages/core-native/.cache
+          key: core-native-${{ env.CORE_CACHE_VERSION }}-${{ hashFiles('packages/core-native/VERSION') }}
+      - name: Fetch prebuilt binaries
+        run: ./packages/core-native/scripts/fetch-core.sh ios osx android
+      - name: Prepare binaries (swift deps)
+        run: ./packages/swift/scripts/prepare-binaries.sh
+      - name: Prepare binaries (flutter)
+        run: ./packages/flutter/scripts/prepare-binaries.sh
+      - name: Analyze
+        run: flutter analyze
+        working-directory: packages/flutter
+
+  react-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm ci || npm install
+        working-directory: packages/react-native
+      - name: Typecheck
+        run: npx tsc --noEmit
+        working-directory: packages/react-native
+      - name: Codegen drift check
+        run: |
+          npx nitrogen
+          git diff --exit-code nitrogen/generated || {
+            echo "::error::nitrogen/generated is out of date. Run 'npx nitrogen' and commit."
+            exit 1
+          }
+        working-directory: packages/react-native

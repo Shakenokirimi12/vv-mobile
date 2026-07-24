@@ -1,0 +1,20 @@
+// voicevox_flutter (Android, FFI plugin)
+// jniLibs は ../scripts/prepare-binaries.sh が配置する
+// (libvoicevox_core.so + libvoicevox_onnxruntime.so)。
+plugins {
+    id "com.android.library"
+}
+
+android {
+    namespace = "jp.voicevox.voicevox_flutter"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 26
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}

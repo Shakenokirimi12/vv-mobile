@@ -1,0 +1,1849 @@
+{
+  "termsVersion": "0.16.4",
+  "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+  "models": [
+    {
+      "id": "0",
+      "filename": "0.vvm",
+      "sizeBytes": 58214379,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/0.vvm",
+      "vvmId": "7cb1e0dd-718f-41d7-889b-1b1307dc4727",
+      "characters": [
+        {
+          "name": "四国めたん",
+          "speakerUuid": "7ffcb7ce-00ec-4bdc-82cd-45a8889e43ff",
+          "creditText": "VOICEVOX:四国めたん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 2
+            },
+            {
+              "name": "あまあま",
+              "id": 0
+            },
+            {
+              "name": "ツンツン",
+              "id": 6
+            },
+            {
+              "name": "セクシー",
+              "id": 4
+            }
+          ]
+        },
+        {
+          "name": "ずんだもん",
+          "speakerUuid": "388f246b-8c41-4ac1-8e2d-5d79f3ff56d9",
+          "creditText": "VOICEVOX:ずんだもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3
+            },
+            {
+              "name": "あまあま",
+              "id": 1
+            },
+            {
+              "name": "ツンツン",
+              "id": 7
+            },
+            {
+              "name": "セクシー",
+              "id": 5
+            }
+          ]
+        },
+        {
+          "name": "春日部つむぎ",
+          "speakerUuid": "35b2c544-660e-401e-b503-0e14c635303a",
+          "creditText": "VOICEVOX:春日部つむぎ",
+          "termsURL": "https://tsumugi-official.studio.site/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 8
+            }
+          ]
+        },
+        {
+          "name": "雨晴はう",
+          "speakerUuid": "3474ee95-c274-47f9-aa1a-8322163d96f1",
+          "creditText": "VOICEVOX:雨晴はう",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "filename": "1.vvm",
+      "sizeBytes": 59477413,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/1.vvm",
+      "vvmId": "960e7621-6831-4b7b-a90b-cd34093baa21",
+      "characters": [
+        {
+          "name": "冥鳴ひまり",
+          "speakerUuid": "8eaad775-3119-417e-8cf4-2a10bfd592c8",
+          "creditText": "VOICEVOX:冥鳴ひまり",
+          "termsURL": "https://meimeihimari.wixsite.com/himari/terms-of-use",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "filename": "2.vvm",
+      "sizeBytes": 58214778,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/2.vvm",
+      "vvmId": "a1509c79-7f30-4a2a-9ad2-5b4ad211f0af",
+      "characters": [
+        {
+          "name": "九州そら",
+          "speakerUuid": "481fb609-6446-4870-9f46-90c4dd623403",
+          "creditText": "VOICEVOX:九州そら",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 16
+            },
+            {
+              "name": "あまあま",
+              "id": 15
+            },
+            {
+              "name": "ツンツン",
+              "id": 18
+            },
+            {
+              "name": "セクシー",
+              "id": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "filename": "3.vvm",
+      "sizeBytes": 61730024,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/3.vvm",
+      "vvmId": "1dc1f513-08ac-4ada-a18a-cd7f94cff46c",
+      "characters": [
+        {
+          "name": "波音リツ",
+          "speakerUuid": "b1a81618-b27b-40d2-b0ea-27a9ad408c4b",
+          "creditText": "VOICEVOX:波音リツ",
+          "termsURL": "http://canon-voice.com/kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 9
+            },
+            {
+              "name": "クイーン",
+              "id": 65
+            }
+          ]
+        },
+        {
+          "name": "中国うさぎ",
+          "speakerUuid": "1f18ffc3-47ea-4ce0-9829-0576d03a7ec8",
+          "creditText": "VOICEVOX:中国うさぎ",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 61
+            },
+            {
+              "name": "おどろき",
+              "id": 62
+            },
+            {
+              "name": "こわがり",
+              "id": 63
+            },
+            {
+              "name": "へろへろ",
+              "id": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "filename": "4.vvm",
+      "sizeBytes": 58211265,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/4.vvm",
+      "vvmId": "c5337c46-fe0d-4a6a-bbc2-ac587c640b68",
+      "characters": [
+        {
+          "name": "玄野武宏",
+          "speakerUuid": "c30dc15a-0992-4f8d-8bb8-ad3b314e6a6f",
+          "creditText": "VOICEVOX:玄野武宏",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 11
+            }
+          ]
+        },
+        {
+          "name": "剣崎雌雄",
+          "speakerUuid": "1a17ca16-7ee5-4ea5-b191-2f02ace24d21",
+          "creditText": "VOICEVOX:剣崎雌雄",
+          "termsURL": "https://frontier.creatia.cc/fanclubs/413/posts/4507",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "filename": "5.vvm",
+      "sizeBytes": 56517330,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/5.vvm",
+      "vvmId": "a0b1fe9c-a06f-4720-b03a-0eeddf0d3f65",
+      "characters": [
+        {
+          "name": "四国めたん",
+          "speakerUuid": "7ffcb7ce-00ec-4bdc-82cd-45a8889e43ff",
+          "creditText": "VOICEVOX:四国めたん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ささやき",
+              "id": 36
+            },
+            {
+              "name": "ヒソヒソ",
+              "id": 37
+            }
+          ]
+        },
+        {
+          "name": "ずんだもん",
+          "speakerUuid": "388f246b-8c41-4ac1-8e2d-5d79f3ff56d9",
+          "creditText": "VOICEVOX:ずんだもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ささやき",
+              "id": 22
+            },
+            {
+              "name": "ヒソヒソ",
+              "id": 38
+            }
+          ]
+        },
+        {
+          "name": "九州そら",
+          "speakerUuid": "481fb609-6446-4870-9f46-90c4dd623403",
+          "creditText": "VOICEVOX:九州そら",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ささやき",
+              "id": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "filename": "6.vvm",
+      "sizeBytes": 58211181,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/6.vvm",
+      "vvmId": "c5757401-ca78-4e0c-ade5-0121b84ed2e7",
+      "characters": [
+        {
+          "name": "No.7",
+          "speakerUuid": "044830d2-f23b-44d6-ac0d-b5d733caa900",
+          "creditText": "VOICEVOX:No.7",
+          "termsURL": "https://voiceseven.com/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 29
+            },
+            {
+              "name": "アナウンス",
+              "id": 30
+            },
+            {
+              "name": "読み聞かせ",
+              "id": 31
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "filename": "7.vvm",
+      "sizeBytes": 57232459,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/7.vvm",
+      "vvmId": "0d993c88-2116-4766-85cb-f3f0da46d404",
+      "characters": [
+        {
+          "name": "後鬼",
+          "speakerUuid": "0f56c2f2-644c-49c9-8989-94e11f7129d0",
+          "creditText": "VOICEVOX:後鬼",
+          "termsURL": "https://ついなちゃん.com/mail/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "人間ver.",
+              "id": 27
+            },
+            {
+              "name": "ぬいぐるみver.",
+              "id": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "filename": "8.vvm",
+      "sizeBytes": 58210984,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/8.vvm",
+      "vvmId": "c545145c-ebc5-4d60-bd79-24dacc89c534",
+      "characters": [
+        {
+          "name": "WhiteCUL",
+          "speakerUuid": "67d5d8da-acd7-4207-bb10-b5542d3a663b",
+          "creditText": "VOICEVOX:WhiteCUL",
+          "termsURL": "https://www.whitecul.com/guideline",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 23
+            },
+            {
+              "name": "たのしい",
+              "id": 24
+            },
+            {
+              "name": "かなしい",
+              "id": 25
+            },
+            {
+              "name": "びえーん",
+              "id": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "filename": "9.vvm",
+      "sizeBytes": 57235017,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/9.vvm",
+      "vvmId": "3fd47203-0943-4029-952e-11efbb6499f5",
+      "characters": [
+        {
+          "name": "白上虎太郎",
+          "speakerUuid": "e5020595-5c5d-4e87-b849-270a518d0dcf",
+          "creditText": "VOICEVOX:白上虎太郎",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ふつう",
+              "id": 12
+            },
+            {
+              "name": "わーい",
+              "id": 32
+            },
+            {
+              "name": "びくびく",
+              "id": 33
+            },
+            {
+              "name": "おこ",
+              "id": 34
+            },
+            {
+              "name": "びえーん",
+              "id": 35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "filename": "10.vvm",
+      "sizeBytes": 57235185,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/10.vvm",
+      "vvmId": "7a7b8b63-c4ce-4860-b1e5-1dfd890cef19",
+      "characters": [
+        {
+          "name": "玄野武宏",
+          "speakerUuid": "c30dc15a-0992-4f8d-8bb8-ad3b314e6a6f",
+          "creditText": "VOICEVOX:玄野武宏",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "喜び",
+              "id": 39
+            },
+            {
+              "name": "ツンギレ",
+              "id": 40
+            },
+            {
+              "name": "悲しみ",
+              "id": 41
+            }
+          ]
+        },
+        {
+          "name": "ちび式じい",
+          "speakerUuid": "468b8e94-9da4-4f7a-8715-a22a48844f9e",
+          "creditText": "VOICEVOX:ちび式じい",
+          "termsURL": "https://docs.google.com/presentation/d/1AcD8zXkfzKFf2ertHwWRwJuQXjNnijMxhz7AJzEkaI4",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 42
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "filename": "11.vvm",
+      "sizeBytes": 60231796,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/11.vvm",
+      "vvmId": "e27721b0-c274-432a-a9d6-afe5e8b73c5e",
+      "characters": [
+        {
+          "name": "櫻歌ミコ",
+          "speakerUuid": "0693554c-338e-4790-8982-b9c6d476dc69",
+          "creditText": "VOICEVOX:櫻歌ミコ",
+          "termsURL": "https://voicevox35miko.studio.site/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 43
+            },
+            {
+              "name": "第二形態",
+              "id": 44
+            },
+            {
+              "name": "ロリ",
+              "id": 45
+            }
+          ]
+        },
+        {
+          "name": "ナースロボ＿タイプＴ",
+          "speakerUuid": "882a636f-3bac-431a-966d-c5e6bba9f949",
+          "creditText": "VOICEVOX:ナースロボ＿タイプＴ",
+          "termsURL": "https://www.krnr.top/rules",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 47
+            },
+            {
+              "name": "楽々",
+              "id": 48
+            },
+            {
+              "name": "恐怖",
+              "id": 49
+            },
+            {
+              "name": "内緒話",
+              "id": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "filename": "12.vvm",
+      "sizeBytes": 58213390,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/12.vvm",
+      "vvmId": "25836b4f-cb6f-47b2-9be4-0899f546790d",
+      "characters": [
+        {
+          "name": "†聖騎士 紅桜†",
+          "speakerUuid": "471e39d2-fb11-4c8c-8d89-4b322d2498e0",
+          "creditText": "VOICEVOX:†聖騎士 紅桜†",
+          "termsURL": "https://commons.nicovideo.jp/material/nc296132",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 51
+            }
+          ]
+        },
+        {
+          "name": "雀松朱司",
+          "speakerUuid": "0acebdee-a4a5-4e12-a695-e19609728e30",
+          "creditText": "VOICEVOX:雀松朱司",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 52
+            }
+          ]
+        },
+        {
+          "name": "麒ヶ島宗麟",
+          "speakerUuid": "7d1e7ba7-f957-40e5-a3fc-da49f769ab65",
+          "creditText": "VOICEVOX:麒ヶ島宗麟",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 53
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "filename": "13.vvm",
+      "sizeBytes": 60231935,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/13.vvm",
+      "vvmId": "e7e3bd49-c3fe-4c7c-82c5-96cc2b3937f5",
+      "characters": [
+        {
+          "name": "春歌ナナ",
+          "speakerUuid": "ba5d2428-f7e0-4c20-ac41-9dd56e9178b4",
+          "creditText": "VOICEVOX:春歌ナナ",
+          "termsURL": "https://nanahira.jp/haruka_nana/guideline.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 54
+            }
+          ]
+        },
+        {
+          "name": "猫使アル",
+          "speakerUuid": "00a5c10c-d3bd-459f-83fd-43180b521a44",
+          "creditText": "VOICEVOX:猫使アル",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 55
+            },
+            {
+              "name": "おちつき",
+              "id": 56
+            },
+            {
+              "name": "うきうき",
+              "id": 57
+            }
+          ]
+        },
+        {
+          "name": "猫使ビィ",
+          "speakerUuid": "c20a2254-0349-4470-9fc8-e5c0f8cf3404",
+          "creditText": "VOICEVOX:猫使ビィ",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 58
+            },
+            {
+              "name": "おちつき",
+              "id": 59
+            },
+            {
+              "name": "人見知り",
+              "id": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "filename": "14.vvm",
+      "sizeBytes": 64664926,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/14.vvm",
+      "vvmId": "8be7954b-9611-43ac-92ea-238c838f348d",
+      "characters": [
+        {
+          "name": "栗田まろん",
+          "speakerUuid": "04dbd989-32d0-40b4-9e71-17c920f2a8a9",
+          "creditText": "VOICEVOX:栗田まろん",
+          "termsURL": "https://aivoice.jp/character/maron/",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 67
+            }
+          ]
+        },
+        {
+          "name": "あいえるたん",
+          "speakerUuid": "dda44ade-5f9c-4a3a-9d2c-2a976c7476d9",
+          "creditText": "VOICEVOX:あいえるたん",
+          "termsURL": "https://www.infiniteloop.co.jp/special/iltan/terms/",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 68
+            }
+          ]
+        },
+        {
+          "name": "満別花丸",
+          "speakerUuid": "287aa49f-e56b-4530-a469-855776c84a8d",
+          "creditText": "VOICEVOX:満別花丸",
+          "termsURL": "https://100hanamaru.wixsite.com/manbetsu-hanamaru/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 69
+            },
+            {
+              "name": "元気",
+              "id": 70
+            },
+            {
+              "name": "ささやき",
+              "id": 71
+            },
+            {
+              "name": "ぶりっ子",
+              "id": 72
+            },
+            {
+              "name": "ボーイ",
+              "id": 73
+            }
+          ]
+        },
+        {
+          "name": "琴詠ニア",
+          "speakerUuid": "97a4af4b-086e-4efd-b125-7ae2da85e697",
+          "creditText": "VOICEVOX:琴詠ニア",
+          "termsURL": "https://commons.nicovideo.jp/works/nc315435",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 74
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "filename": "15.vvm",
+      "sizeBytes": 65647574,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/15.vvm",
+      "vvmId": "e65e8046-e0f9-4d54-925a-9103303fdc3e",
+      "characters": [
+        {
+          "name": "ずんだもん",
+          "speakerUuid": "388f246b-8c41-4ac1-8e2d-5d79f3ff56d9",
+          "creditText": "VOICEVOX:ずんだもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ヘロヘロ",
+              "id": 75
+            },
+            {
+              "name": "なみだめ",
+              "id": 76
+            }
+          ]
+        },
+        {
+          "name": "青山龍星",
+          "speakerUuid": "4f51116a-d9ee-4516-925d-21f183e2afad",
+          "creditText": "VOICEVOX:青山龍星",
+          "termsURL": "https://v.seventhh.com/contact/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 13
+            },
+            {
+              "name": "熱血",
+              "id": 81
+            },
+            {
+              "name": "不機嫌",
+              "id": 82
+            },
+            {
+              "name": "喜び",
+              "id": 83
+            },
+            {
+              "name": "しっとり",
+              "id": 84
+            },
+            {
+              "name": "かなしみ",
+              "id": 85
+            },
+            {
+              "name": "囁き",
+              "id": 86
+            }
+          ]
+        },
+        {
+          "name": "もち子さん",
+          "speakerUuid": "9f3ee141-26ad-437e-97bd-d22298d02ad2",
+          "creditText": "VOICEVOX:もち子さん",
+          "termsURL": "https://vtubermochio.wixsite.com/mochizora/contact)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 20
+            },
+            {
+              "name": "セクシー／あん子",
+              "id": 66
+            },
+            {
+              "name": "泣き",
+              "id": 77
+            },
+            {
+              "name": "怒り",
+              "id": 78
+            },
+            {
+              "name": "喜び",
+              "id": 79
+            },
+            {
+              "name": "のんびり",
+              "id": 80
+            }
+          ]
+        },
+        {
+          "name": "小夜/SAYO",
+          "speakerUuid": "a8cc6d22-aad0-4ab8-bf1e-2f843924164a",
+          "creditText": "VOICEVOX:小夜/SAYO",
+          "termsURL": "https://316soramegu.wixsite.com/sayo-official/guideline",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 46
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "filename": "16.vvm",
+      "sizeBytes": 58212115,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/16.vvm",
+      "vvmId": "913304f1-1a58-44e2-a772-f1fb770f59c9",
+      "characters": [
+        {
+          "name": "後鬼",
+          "speakerUuid": "0f56c2f2-644c-49c9-8989-94e11f7129d0",
+          "creditText": "VOICEVOX:後鬼",
+          "termsURL": "https://ついなちゃん.com/mail/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "人間（怒り）ver.",
+              "id": 87
+            },
+            {
+              "name": "鬼ver.",
+              "id": 88
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "filename": "17.vvm",
+      "sizeBytes": 58212482,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/17.vvm",
+      "vvmId": "f10c162e-ab57-4007-b39b-ec7752f56a0a",
+      "characters": [
+        {
+          "name": "Voidoll",
+          "speakerUuid": "0ebe2c7d-96f3-4f0e-a2e3-ae13fe27c403",
+          "creditText": "VOICEVOX:Voidoll",
+          "termsURL": "https://qa.nicovideo.jp/)が必要です。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 89
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "filename": "18.vvm",
+      "sizeBytes": 61399262,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/18.vvm",
+      "vvmId": "a4b2e567-01ff-451a-b9cd-1029f7520d30",
+      "characters": [
+        {
+          "name": "ぞん子",
+          "speakerUuid": "0156da66-4300-474a-a398-49eb2e8dd853",
+          "creditText": "VOICEVOX:ぞん子",
+          "termsURL": "https://zonko.zone-energy.jp/contact)が必要です。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 90
+            },
+            {
+              "name": "低血圧",
+              "id": 91
+            },
+            {
+              "name": "覚醒",
+              "id": 92
+            },
+            {
+              "name": "実況風",
+              "id": 93
+            }
+          ]
+        },
+        {
+          "name": "中部つるぎ",
+          "speakerUuid": "4614a7de-9829-465d-9791-97eb8a5f9b86",
+          "creditText": "VOICEVOX:中部つるぎ",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 94
+            },
+            {
+              "name": "怒り",
+              "id": 95
+            },
+            {
+              "name": "ヒソヒソ",
+              "id": 96
+            },
+            {
+              "name": "おどおど",
+              "id": 97
+            },
+            {
+              "name": "絶望と敗北",
+              "id": 98
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "filename": "19.vvm",
+      "sizeBytes": 59022148,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/19.vvm",
+      "vvmId": "d012830c-ebeb-4caf-aa49-ef6d8a460af1",
+      "characters": [
+        {
+          "name": "離途",
+          "speakerUuid": "3b91e034-e028-4acb-a08d-fbdcd207ea63",
+          "creditText": "VOICEVOX:離途",
+          "termsURL": "https://litmus9.com/#/voicebank#rules",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 99
+            },
+            {
+              "name": "シリアス",
+              "id": 101
+            }
+          ]
+        },
+        {
+          "name": "黒沢冴白",
+          "speakerUuid": "0b466290-f9b6-4718-8d37-6c0c81e824ac",
+          "creditText": "VOICEVOX:黒沢冴白",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "filename": "20.vvm",
+      "sizeBytes": 59535608,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/20.vvm",
+      "vvmId": "46c46477-2ac9-419e-9b1e-9e2a0d8aba29",
+      "characters": [
+        {
+          "name": "ユーレイちゃん",
+          "speakerUuid": "462cd6b4-c088-42b0-b357-3816e24f112e",
+          "creditText": "VOICEVOX:ユーレイちゃん",
+          "termsURL": "https://u-stella.co.jp/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 102
+            },
+            {
+              "name": "甘々",
+              "id": 103
+            },
+            {
+              "name": "哀しみ",
+              "id": 104
+            },
+            {
+              "name": "ささやき",
+              "id": 105
+            },
+            {
+              "name": "ツクモちゃん",
+              "id": 106
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "filename": "21.vvm",
+      "sizeBytes": 62075160,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/21.vvm",
+      "vvmId": "7f053732-582d-49e3-bea2-42b3b5e98f0b",
+      "characters": [
+        {
+          "name": "猫使アル",
+          "speakerUuid": "00a5c10c-d3bd-459f-83fd-43180b521a44",
+          "creditText": "VOICEVOX:猫使アル",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "つよつよ",
+              "id": 110
+            },
+            {
+              "name": "へろへろ",
+              "id": 111
+            }
+          ]
+        },
+        {
+          "name": "猫使ビィ",
+          "speakerUuid": "c20a2254-0349-4470-9fc8-e5c0f8cf3404",
+          "creditText": "VOICEVOX:猫使ビィ",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "つよつよ",
+              "id": 112
+            }
+          ]
+        },
+        {
+          "name": "東北ずん子",
+          "speakerUuid": "80802b2d-8c75-4429-978b-515105017010",
+          "creditText": "VOICEVOX:東北ずん子",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 107
+            }
+          ]
+        },
+        {
+          "name": "東北きりたん",
+          "speakerUuid": "1bd6b32b-d650-4072-bbe5-1d0ef4aaa28b",
+          "creditText": "VOICEVOX:東北きりたん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 108
+            }
+          ]
+        },
+        {
+          "name": "東北イタコ",
+          "speakerUuid": "ab4c31a3-8769-422a-b412-708f5ae637e8",
+          "creditText": "VOICEVOX:東北イタコ",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 109
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "filename": "22.vvm",
+      "sizeBytes": 62289486,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/22.vvm",
+      "vvmId": "18b8f1db-8d9b-44f3-8749-b30f4470de4b",
+      "characters": [
+        {
+          "name": "あんこもん",
+          "speakerUuid": "3be49e15-34bb-48a0-9e2f-9b80c96e9905",
+          "creditText": "VOICEVOX:あんこもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 113
+            },
+            {
+              "name": "つよつよ",
+              "id": 114
+            },
+            {
+              "name": "よわよわ",
+              "id": 115
+            },
+            {
+              "name": "けだるげ",
+              "id": 116
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "filename": "23.vvm",
+      "sizeBytes": 59022909,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/23.vvm",
+      "vvmId": "392a1e93-6939-4861-a88b-58817dfec0c8",
+      "characters": [
+        {
+          "name": "あんこもん",
+          "speakerUuid": "3be49e15-34bb-48a0-9e2f-9b80c96e9905",
+          "creditText": "VOICEVOX:あんこもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ささやき",
+              "id": 117
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "filename": "24.vvm",
+      "sizeBytes": 59024323,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/24.vvm",
+      "vvmId": "28ca9911-63f1-4adb-8f3b-7bb475fcfe49",
+      "characters": [
+        {
+          "name": "夜語トバリ",
+          "speakerUuid": "d3be2066-205b-47f6-8818-1d93a9ca9cef",
+          "creditText": "VOICEVOX:夜語トバリ",
+          "termsURL": "https://yogataritobari.studio.site/#rules",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 118
+            },
+            {
+              "name": "明るい",
+              "id": 119
+            },
+            {
+              "name": "哀しみ",
+              "id": 120
+            },
+            {
+              "name": "呆れ",
+              "id": 121
+            }
+          ]
+        },
+        {
+          "name": "暁記ミタマ",
+          "speakerUuid": "aca7de06-9ff9-49a3-9f08-9d3bc19689e5",
+          "creditText": "VOICEVOX:暁記ミタマ",
+          "termsURL": "https://yogataritobari.studio.site/#rules",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 122
+            },
+            {
+              "name": "怒り",
+              "id": 123
+            },
+            {
+              "name": "哀しみ",
+              "id": 124
+            },
+            {
+              "name": "ささやき",
+              "id": 125
+            }
+          ]
+        },
+        {
+          "name": "里石ユカ",
+          "speakerUuid": "cc7baa71-6c74-4399-803b-b60576176a08",
+          "creditText": "VOICEVOX:里石ユカ",
+          "termsURL": "https://satoishiyuka.wixsite.com/satoishi/kiyaku",
+          "styles": [
+            {
+              "name": "つぼみ",
+              "id": 126
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "n0",
+      "filename": "n0.vvm",
+      "sizeBytes": 73074437,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/n0.vvm",
+      "vvmId": "ef85fd24-b1da-4a0f-ab66-6043cf048581",
+      "characters": [
+        {
+          "name": "女声1",
+          "speakerUuid": "abccafa5-174f-44d8-b70c-c41eebb3061c",
+          "creditText": "VOICEVOX:女声1",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10005
+            }
+          ]
+        },
+        {
+          "name": "女声2",
+          "speakerUuid": "a601bf4a-d986-468d-a394-345f4e1e7ae1",
+          "creditText": "VOICEVOX:女声2",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10007
+            }
+          ]
+        },
+        {
+          "name": "女声3",
+          "speakerUuid": "be15f40d-a95a-4fb3-b298-a59fdd727af1",
+          "creditText": "VOICEVOX:女声3",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10004
+            }
+          ]
+        },
+        {
+          "name": "女声4",
+          "speakerUuid": "3f98f123-fa9a-4ad0-96ba-2a1bae922433",
+          "creditText": "VOICEVOX:女声4",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10003
+            }
+          ]
+        },
+        {
+          "name": "女声5",
+          "speakerUuid": "69f71ba4-1c36-406d-a693-8091d60fa952",
+          "creditText": "VOICEVOX:女声5",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10008
+            }
+          ]
+        },
+        {
+          "name": "女声6",
+          "speakerUuid": "3490c392-30be-44c2-8379-b77df27fa65e",
+          "creditText": "VOICEVOX:女声6",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10006
+            }
+          ]
+        },
+        {
+          "name": "男声1",
+          "speakerUuid": "2171909e-d2d1-4bbb-aa45-442c12732665",
+          "creditText": "VOICEVOX:男声1",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10001
+            }
+          ]
+        },
+        {
+          "name": "男声2",
+          "speakerUuid": "7ecc7a17-1465-4b22-a3b5-842a110ff55e",
+          "creditText": "VOICEVOX:男声2",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10000
+            }
+          ]
+        },
+        {
+          "name": "男声3",
+          "speakerUuid": "627b3e92-32c5-4c2f-860a-a5553d3d6662",
+          "creditText": "VOICEVOX:男声3",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 10002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s0",
+      "filename": "s0.vvm",
+      "sizeBytes": 130412376,
+      "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/s0.vvm",
+      "vvmId": "81fed1e8-aa94-4863-ae66-4adacb784879",
+      "characters": [
+        {
+          "name": "四国めたん",
+          "speakerUuid": "7ffcb7ce-00ec-4bdc-82cd-45a8889e43ff",
+          "creditText": "VOICEVOX:四国めたん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3002
+            },
+            {
+              "name": "あまあま",
+              "id": 3000
+            },
+            {
+              "name": "ツンツン",
+              "id": 3006
+            },
+            {
+              "name": "セクシー",
+              "id": 3004
+            },
+            {
+              "name": "ヒソヒソ",
+              "id": 3037
+            }
+          ]
+        },
+        {
+          "name": "ずんだもん",
+          "speakerUuid": "388f246b-8c41-4ac1-8e2d-5d79f3ff56d9",
+          "creditText": "VOICEVOX:ずんだもん",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3003
+            },
+            {
+              "name": "あまあま",
+              "id": 3001
+            },
+            {
+              "name": "ツンツン",
+              "id": 3007
+            },
+            {
+              "name": "セクシー",
+              "id": 3005
+            },
+            {
+              "name": "ヒソヒソ",
+              "id": 3038
+            },
+            {
+              "name": "ヘロヘロ",
+              "id": 3075
+            },
+            {
+              "name": "なみだめ",
+              "id": 3076
+            }
+          ]
+        },
+        {
+          "name": "春日部つむぎ",
+          "speakerUuid": "35b2c544-660e-401e-b503-0e14c635303a",
+          "creditText": "VOICEVOX:春日部つむぎ",
+          "termsURL": "https://tsumugi-official.studio.site/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3008
+            }
+          ]
+        },
+        {
+          "name": "雨晴はう",
+          "speakerUuid": "3474ee95-c274-47f9-aa1a-8322163d96f1",
+          "creditText": "VOICEVOX:雨晴はう",
+          "termsURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/TERMS.txt",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3010
+            }
+          ]
+        },
+        {
+          "name": "波音リツ",
+          "speakerUuid": "b1a81618-b27b-40d2-b0ea-27a9ad408c4b",
+          "creditText": "VOICEVOX:波音リツ",
+          "termsURL": "http://canon-voice.com/kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3009
+            },
+            {
+              "name": "クイーン",
+              "id": 3065
+            },
+            {
+              "name": "ノーマル",
+              "id": 6000
+            }
+          ]
+        },
+        {
+          "name": "玄野武宏",
+          "speakerUuid": "c30dc15a-0992-4f8d-8bb8-ad3b314e6a6f",
+          "creditText": "VOICEVOX:玄野武宏",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3011
+            },
+            {
+              "name": "喜び",
+              "id": 3039
+            },
+            {
+              "name": "ツンギレ",
+              "id": 3040
+            },
+            {
+              "name": "悲しみ",
+              "id": 3041
+            }
+          ]
+        },
+        {
+          "name": "白上虎太郎",
+          "speakerUuid": "e5020595-5c5d-4e87-b849-270a518d0dcf",
+          "creditText": "VOICEVOX:白上虎太郎",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ふつう",
+              "id": 3012
+            },
+            {
+              "name": "わーい",
+              "id": 3032
+            },
+            {
+              "name": "びくびく",
+              "id": 3033
+            },
+            {
+              "name": "おこ",
+              "id": 3034
+            },
+            {
+              "name": "びえーん",
+              "id": 3035
+            }
+          ]
+        },
+        {
+          "name": "青山龍星",
+          "speakerUuid": "4f51116a-d9ee-4516-925d-21f183e2afad",
+          "creditText": "VOICEVOX:青山龍星",
+          "termsURL": "https://v.seventhh.com/contact/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3013
+            },
+            {
+              "name": "熱血",
+              "id": 3081
+            },
+            {
+              "name": "不機嫌",
+              "id": 3082
+            },
+            {
+              "name": "喜び",
+              "id": 3083
+            },
+            {
+              "name": "しっとり",
+              "id": 3084
+            },
+            {
+              "name": "かなしみ",
+              "id": 3085
+            }
+          ]
+        },
+        {
+          "name": "冥鳴ひまり",
+          "speakerUuid": "8eaad775-3119-417e-8cf4-2a10bfd592c8",
+          "creditText": "VOICEVOX:冥鳴ひまり",
+          "termsURL": "https://meimeihimari.wixsite.com/himari/terms-of-use",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3014
+            }
+          ]
+        },
+        {
+          "name": "九州そら",
+          "speakerUuid": "481fb609-6446-4870-9f46-90c4dd623403",
+          "creditText": "VOICEVOX:九州そら",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3016
+            },
+            {
+              "name": "あまあま",
+              "id": 3015
+            },
+            {
+              "name": "ツンツン",
+              "id": 3018
+            },
+            {
+              "name": "セクシー",
+              "id": 3017
+            }
+          ]
+        },
+        {
+          "name": "もち子さん",
+          "speakerUuid": "9f3ee141-26ad-437e-97bd-d22298d02ad2",
+          "creditText": "VOICEVOX:もち子さん",
+          "termsURL": "https://vtubermochio.wixsite.com/mochizora/contact)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3020
+            },
+            {
+              "name": "セクシー／あん子",
+              "id": 3066
+            },
+            {
+              "name": "泣き",
+              "id": 3077
+            },
+            {
+              "name": "怒り",
+              "id": 3078
+            },
+            {
+              "name": "喜び",
+              "id": 3079
+            },
+            {
+              "name": "のんびり",
+              "id": 3080
+            }
+          ]
+        },
+        {
+          "name": "剣崎雌雄",
+          "speakerUuid": "1a17ca16-7ee5-4ea5-b191-2f02ace24d21",
+          "creditText": "VOICEVOX:剣崎雌雄",
+          "termsURL": "https://frontier.creatia.cc/fanclubs/413/posts/4507",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3021
+            }
+          ]
+        },
+        {
+          "name": "WhiteCUL",
+          "speakerUuid": "67d5d8da-acd7-4207-bb10-b5542d3a663b",
+          "creditText": "VOICEVOX:WhiteCUL",
+          "termsURL": "https://www.whitecul.com/guideline",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3023
+            },
+            {
+              "name": "たのしい",
+              "id": 3024
+            },
+            {
+              "name": "かなしい",
+              "id": 3025
+            },
+            {
+              "name": "びえーん",
+              "id": 3026
+            }
+          ]
+        },
+        {
+          "name": "後鬼",
+          "speakerUuid": "0f56c2f2-644c-49c9-8989-94e11f7129d0",
+          "creditText": "VOICEVOX:後鬼",
+          "termsURL": "https://ついなちゃん.com/mail/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "人間ver.",
+              "id": 3027
+            },
+            {
+              "name": "ぬいぐるみver.",
+              "id": 3028
+            }
+          ]
+        },
+        {
+          "name": "No.7",
+          "speakerUuid": "044830d2-f23b-44d6-ac0d-b5d733caa900",
+          "creditText": "VOICEVOX:No.7",
+          "termsURL": "https://voiceseven.com/)」に対し事前確認を取る必要があります。",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3029
+            },
+            {
+              "name": "アナウンス",
+              "id": 3030
+            },
+            {
+              "name": "読み聞かせ",
+              "id": 3031
+            }
+          ]
+        },
+        {
+          "name": "ちび式じい",
+          "speakerUuid": "468b8e94-9da4-4f7a-8715-a22a48844f9e",
+          "creditText": "VOICEVOX:ちび式じい",
+          "termsURL": "https://docs.google.com/presentation/d/1AcD8zXkfzKFf2ertHwWRwJuQXjNnijMxhz7AJzEkaI4",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3042
+            }
+          ]
+        },
+        {
+          "name": "櫻歌ミコ",
+          "speakerUuid": "0693554c-338e-4790-8982-b9c6d476dc69",
+          "creditText": "VOICEVOX:櫻歌ミコ",
+          "termsURL": "https://voicevox35miko.studio.site/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3043
+            },
+            {
+              "name": "第二形態",
+              "id": 3044
+            },
+            {
+              "name": "ロリ",
+              "id": 3045
+            }
+          ]
+        },
+        {
+          "name": "小夜/SAYO",
+          "speakerUuid": "a8cc6d22-aad0-4ab8-bf1e-2f843924164a",
+          "creditText": "VOICEVOX:小夜/SAYO",
+          "termsURL": "https://316soramegu.wixsite.com/sayo-official/guideline",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3046
+            }
+          ]
+        },
+        {
+          "name": "ナースロボ＿タイプＴ",
+          "speakerUuid": "882a636f-3bac-431a-966d-c5e6bba9f949",
+          "creditText": "VOICEVOX:ナースロボ＿タイプＴ",
+          "termsURL": "https://www.krnr.top/rules",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3047
+            },
+            {
+              "name": "楽々",
+              "id": 3048
+            },
+            {
+              "name": "恐怖",
+              "id": 3049
+            }
+          ]
+        },
+        {
+          "name": "†聖騎士 紅桜†",
+          "speakerUuid": "471e39d2-fb11-4c8c-8d89-4b322d2498e0",
+          "creditText": "VOICEVOX:†聖騎士 紅桜†",
+          "termsURL": "https://commons.nicovideo.jp/material/nc296132",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3051
+            }
+          ]
+        },
+        {
+          "name": "雀松朱司",
+          "speakerUuid": "0acebdee-a4a5-4e12-a695-e19609728e30",
+          "creditText": "VOICEVOX:雀松朱司",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3052
+            }
+          ]
+        },
+        {
+          "name": "麒ヶ島宗麟",
+          "speakerUuid": "7d1e7ba7-f957-40e5-a3fc-da49f769ab65",
+          "creditText": "VOICEVOX:麒ヶ島宗麟",
+          "termsURL": "https://www.virvoxproject.com/voicevoxの利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3053
+            }
+          ]
+        },
+        {
+          "name": "春歌ナナ",
+          "speakerUuid": "ba5d2428-f7e0-4c20-ac41-9dd56e9178b4",
+          "creditText": "VOICEVOX:春歌ナナ",
+          "termsURL": "https://nanahira.jp/haruka_nana/guideline.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3054
+            }
+          ]
+        },
+        {
+          "name": "猫使アル",
+          "speakerUuid": "00a5c10c-d3bd-459f-83fd-43180b521a44",
+          "creditText": "VOICEVOX:猫使アル",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3055
+            },
+            {
+              "name": "おちつき",
+              "id": 3056
+            },
+            {
+              "name": "うきうき",
+              "id": 3057
+            }
+          ]
+        },
+        {
+          "name": "猫使ビィ",
+          "speakerUuid": "c20a2254-0349-4470-9fc8-e5c0f8cf3404",
+          "creditText": "VOICEVOX:猫使ビィ",
+          "termsURL": "https://nekotukarb.wixsite.com/nekonohako/利用規約",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3058
+            },
+            {
+              "name": "おちつき",
+              "id": 3059
+            }
+          ]
+        },
+        {
+          "name": "中国うさぎ",
+          "speakerUuid": "1f18ffc3-47ea-4ce0-9829-0576d03a7ec8",
+          "creditText": "VOICEVOX:中国うさぎ",
+          "termsURL": "https://zunko.jp/con_ongen_kiyaku.html",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3061
+            },
+            {
+              "name": "おどろき",
+              "id": 3062
+            },
+            {
+              "name": "こわがり",
+              "id": 3063
+            },
+            {
+              "name": "へろへろ",
+              "id": 3064
+            }
+          ]
+        },
+        {
+          "name": "栗田まろん",
+          "speakerUuid": "04dbd989-32d0-40b4-9e71-17c920f2a8a9",
+          "creditText": "VOICEVOX:栗田まろん",
+          "termsURL": "https://aivoice.jp/character/maron/",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3067
+            }
+          ]
+        },
+        {
+          "name": "あいえるたん",
+          "speakerUuid": "dda44ade-5f9c-4a3a-9d2c-2a976c7476d9",
+          "creditText": "VOICEVOX:あいえるたん",
+          "termsURL": "https://www.infiniteloop.co.jp/special/iltan/terms/",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3068
+            }
+          ]
+        },
+        {
+          "name": "満別花丸",
+          "speakerUuid": "287aa49f-e56b-4530-a469-855776c84a8d",
+          "creditText": "VOICEVOX:満別花丸",
+          "termsURL": "https://100hanamaru.wixsite.com/manbetsu-hanamaru/rule",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3069
+            },
+            {
+              "name": "元気",
+              "id": 3070
+            },
+            {
+              "name": "ささやき",
+              "id": 3071
+            },
+            {
+              "name": "ぶりっ子",
+              "id": 3072
+            },
+            {
+              "name": "ボーイ",
+              "id": 3073
+            }
+          ]
+        },
+        {
+          "name": "琴詠ニア",
+          "speakerUuid": "97a4af4b-086e-4efd-b125-7ae2da85e697",
+          "creditText": "VOICEVOX:琴詠ニア",
+          "termsURL": "https://commons.nicovideo.jp/works/nc315435",
+          "styles": [
+            {
+              "name": "ノーマル",
+              "id": 3074
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

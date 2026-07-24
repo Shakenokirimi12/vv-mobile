@@ -1,0 +1,4 @@
+module CVoicevoxCore {
+    header "vv_shim.h"
+    export *
+}

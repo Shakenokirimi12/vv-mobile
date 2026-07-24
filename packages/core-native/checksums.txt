@@ -1,0 +1,11 @@
+33e9cd251bc41aa2bd7ca36f57abbf61eae3543ca25ca892ae345e394cb10549  open_jtalk_dic_utf_8-1.11.tar.gz
+51357e6804901129e8684f404f00e107b024739cdd7619b367906f9f6f282271  voicevox_core-android-arm64-0.16.4.zip
+516a992cec029d4414260b602f38f388423517221ad5f81f0e1da4ada7104c60  voicevox_onnxruntime-android-arm64-1.17.3.tgz
+59edc860252dbb7f64cc2eb72bd4b2904a6df7c35f33dc8082435b9f15a505df  voicevox_onnxruntime-osx-x86_64-1.17.3.tgz
+5b0138f25e68c3fb99771d37978837d5038a67b0720f96d912c900887164494b  voicevox_onnxruntime-ios-xcframework-1.17.3.zip
+8d7bea9007ad3819591f2318a626a1a1e1278332d6a34ff114cf77b0a1d3ae82  voicevox_core-ios-xcframework-cpu-0.16.4.zip
+92bfeb4665a57faf1f70c631bb7e135e840e3f10624036bc4fa244296649991b  voicevox_core-osx-x64-0.16.4.zip
+95f48afe11706476cedcea51b9b59f4f5dab3ec1e2f509fcf74a6230ee4b7d8b  voicevox_onnxruntime-android-x64-1.17.3.tgz
+96d7ea1928a0a15485492d37621387df50f40a792e2a6817d4df73ecd18571f2  voicevox_onnxruntime-osx-arm64-1.17.3.tgz
+b04b74719599f556c11ace926fa0522a6e972da0154700d079c24251c6fb0a68  voicevox_core-android-x86_64-0.16.4.zip
+feabfeb0e2c69ba9f54c7eb492f25d1957163d89e3c81eccdc21cf8da0bcd8b4  voicevox_core-osx-arm64-0.16.4.zip

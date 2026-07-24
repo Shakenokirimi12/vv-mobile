@@ -1,0 +1,60 @@
+{
+  "name": "react-native-voicevox",
+  "version": "0.1.0",
+  "description": "VOICEVOX CORE binding for React Native (Nitro Modules). Text-to-speech synthesis with runtime voice model download and per-character license gating.",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "ios",
+    "android",
+    "nitrogen/generated",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "codegen": "nitrogen",
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "voicevox",
+    "tts",
+    "nitro"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "nitrogen": "^0.36.1",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.32.0",
+    "react-native-nitro-modules": "^0.36.1",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.json"
+        }
+      ]
+    ]
+  }
+}

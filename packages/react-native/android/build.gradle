@@ -1,0 +1,62 @@
+// react-native-voicevox (Android)
+// vendored ディレクトリ(Kotlin実装・assets・jniLibs・local-maven)は
+// ../scripts/prepare-sources.sh が packages/android から複製して配置する。
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.7.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:2.1.0"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "org.jetbrains.kotlinx.serialization"
+
+android {
+    namespace = "com.voicevox"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 26
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += "vendored/kotlin"
+            assets.srcDirs += "vendored/assets"
+            jniLibs.srcDirs += "vendored/jniLibs"
+        }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    // 公式 voicevoxcore-android AAR(prepare-sources.sh が展開)
+    maven { url = uri("$projectDir/vendored/local-maven") }
+}
+
+dependencies {
+    implementation "jp.hiroshiba.voicevoxcore:voicevoxcore-android:0.16.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+    implementation "com.facebook.react:react-android"
+    implementation "com.margelo.nitro:react-native-nitro-modules"
+}
+
+apply from: "../nitrogen/generated/android/RNVoicevox+autolinking.gradle"
