@@ -19,7 +19,8 @@ android {
         applicationId = "jp.voicevox.voicevox_flutter_example"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // voicevox_flutter は minSdk 26 (Android 8.0) を要求する
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

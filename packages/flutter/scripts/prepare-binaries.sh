@@ -44,6 +44,14 @@ cp "$DIST/android/voicevox_core-android-x86_64-${VOICEVOX_CORE_VERSION}/lib/libv
 cp "$DIST/android/voicevox_onnxruntime-android-arm64-${VOICEVOX_ONNXRUNTIME_VERSION}/lib/libvoicevox_onnxruntime.so" "$jni/arm64-v8a/"
 cp "$DIST/android/voicevox_onnxruntime-android-x64-${VOICEVOX_ONNXRUNTIME_VERSION}/lib/libvoicevox_onnxruntime.so" "$jni/x86_64/"
 
+# libvoicevox_core.so は libc++_shared.so に動的リンクしている。
+# Flutter プラグインは NDK ビルドを行わず自動同梱されないため、NDK から取り出して同梱する。
+ndk_dir="$(ls -d "${ANDROID_HOME:-$HOME/Library/Android/sdk}"/ndk/* 2>/dev/null | sort -V | tail -1)"
+[[ -n "$ndk_dir" ]] || { echo "error: Android NDK not found (needed for libc++_shared.so)" >&2; exit 1; }
+sysroot_libs="$ndk_dir/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib"
+cp "$sysroot_libs/aarch64-linux-android/libc++_shared.so" "$jni/arm64-v8a/"
+cp "$sysroot_libs/x86_64-linux-android/libc++_shared.so" "$jni/x86_64/"
+
 # --- 3. assets ---
 rm -rf "$PKG_DIR/assets/open_jtalk_dic"
 mkdir -p "$PKG_DIR/assets"

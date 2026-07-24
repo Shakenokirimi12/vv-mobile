@@ -47,3 +47,6 @@ packages/react-native/ios/Resources/
 packages/react-native/android/vendored/
 packages/react-native/lib/
 .claude/
+
+# Android C++ ビルド中間物
+.cxx/

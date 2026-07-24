@@ -63,6 +63,8 @@ namespace margelo::nitro::voicevox {
     std::shared_ptr<Promise<std::vector<DownloadResult>>> downloadModels(const std::vector<std::string>& ids) override;
     std::shared_ptr<Promise<std::vector<DownloadResult>>> downloadAllModels() override;
     std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> synthesis(const std::string& text, const std::string& modelId, std::optional<double> styleId) override;
+    std::shared_ptr<Promise<void>> playWav(const std::shared_ptr<ArrayBuffer>& wav) override;
+    void stopPlayback() override;
 
   private:
     jni::global_ref<JHybridVoicevoxSpec::JavaPart> _javaPart;

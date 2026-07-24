@@ -22,6 +22,8 @@ public protocol HybridVoicevoxSpec_protocol: HybridObject {
   func downloadModels(ids: [String]) throws -> Promise<[DownloadResult]>
   func downloadAllModels() throws -> Promise<[DownloadResult]>
   func synthesis(text: String, modelId: String, styleId: Double?) throws -> Promise<ArrayBuffer>
+  func playWav(wav: ArrayBuffer) throws -> Promise<Void>
+  func stopPlayback() throws -> Void
 }
 
 public extension HybridVoicevoxSpec_protocol {

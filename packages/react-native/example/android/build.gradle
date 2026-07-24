@@ -1,7 +1,7 @@
 buildscript {
     ext {
         buildToolsVersion = "36.0.0"
-        minSdkVersion = 24
+        minSdkVersion = 26  // react-native-voicevox が minSdk 26 を要求
         compileSdkVersion = 36
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
@@ -19,3 +19,11 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+allprojects {
+    repositories {
+        // react-native-voicevox が依存する公式 voicevoxcore-android AAR
+        // (Maven Central 未公開のため、パッケージ同梱の local-maven から解決する)
+        maven { url("${rootDir}/../node_modules/react-native-voicevox/android/vendored/local-maven") }
+    }
+}

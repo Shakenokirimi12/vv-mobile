@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import NitroModules
 // VoicevoxCore の Swift ソースは prepare-sources.sh により
@@ -8,6 +9,7 @@ import NitroModules
 /// packages/swift の `Voicevox` Facade を呼ぶだけの薄いグルー。
 final class HybridVoicevox: HybridVoicevoxSpec {
     private var voicevox: Voicevox?
+    private var player: AVAudioPlayer?
 
     private func requireVoicevox() throws -> Voicevox {
         guard let voicevox else {
@@ -91,6 +93,22 @@ final class HybridVoicevox: HybridVoicevoxSpec {
             )
             return try ArrayBuffer.copy(data: wav)
         }
+    }
+
+    func playWav(wav: ArrayBuffer) throws -> Promise<Void> {
+        // ArrayBuffer は JS スレッド外では寿命保証がないため、先にコピーする
+        let data = wav.toData(copyIfNeeded: true)
+        return Promise.async { @MainActor in
+            let player = try AVAudioPlayer(data: data)
+            self.player?.stop()
+            self.player = player
+            player.play()
+        }
+    }
+
+    func stopPlayback() throws {
+        player?.stop()
+        player = nil
     }
 }
 

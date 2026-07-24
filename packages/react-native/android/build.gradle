@@ -1,21 +1,23 @@
 // react-native-voicevox (Android)
 // vendored ディレクトリ(Kotlin実装・assets・jniLibs・local-maven)は
 // ../scripts/prepare-sources.sh が packages/android から複製して配置する。
+// AGP / Kotlin プラグインは RN アプリの root buildscript のものをそのまま使う
+// (ここで AGP を再ロードすると別クラスローダの android 拡張になり
+//  「compileSdk 未指定」エラーになる)。kotlinx-serialization の
+// コンパイラプラグインだけは root に無いため、ここで classpath に追加する。
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:8.7.3"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0"
-        classpath "org.jetbrains.kotlin:kotlin-serialization:2.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:2.1.20"
     }
 }
 
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.android"
-apply plugin: "org.jetbrains.kotlinx.serialization"
+apply plugin: "org.jetbrains.kotlin.plugin.serialization"
 
 android {
     namespace = "com.voicevox"
@@ -23,6 +25,29 @@ android {
 
     defaultConfig {
         minSdk = 26
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-frtti -fexceptions -Wall"
+                arguments "-DANDROID_STL=c++_shared"
+                abiFilters "arm64-v8a", "x86_64"
+            }
+        }
+    }
+
+    // ReactAndroid / NitroModules の prefab(ネイティブ依存)を利用する
+    buildFeatures {
+        prefab = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    packagingOptions {
+        pickFirst "**/libc++_shared.so"
     }
 
     compileOptions {
@@ -56,7 +81,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
     implementation "com.squareup.okhttp3:okhttp:4.12.0"
     implementation "com.facebook.react:react-android"
-    implementation "com.margelo.nitro:react-native-nitro-modules"
+    implementation project(":react-native-nitro-modules")
 }
 
 apply from: "../nitrogen/generated/android/RNVoicevox+autolinking.gradle"

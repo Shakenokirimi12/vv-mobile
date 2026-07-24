@@ -195,7 +195,8 @@ class Voicevox {
     gate.require(modelId);
 
     if (!_synthesizer.isLoaded(modelId)) {
-      _synthesizer.loadVoiceModel(
+      // モデルロードは重いのでバックグラウンド isolate で実行
+      await _synthesizer.loadVoiceModelInBackground(
         _manager.localFile(modelId).path,
         modelId: modelId,
       );
@@ -209,7 +210,9 @@ class Voicevox {
     if (style == null) {
       throw TalkNotSupportedException(modelId);
     }
-    return _synthesizer.tts(text, styleId: style);
+    // 合成は数秒かかるCPU処理のためバックグラウンド isolate で実行
+    // (UIスレッドをブロックするとスピナーも止まり、アプリがハングして見える)
+    return _synthesizer.ttsInBackground(text, styleId: style);
   }
 
   /// ネイティブリソースを解放する。

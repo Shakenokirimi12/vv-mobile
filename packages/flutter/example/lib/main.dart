@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:voicevox_flutter/voicevox_flutter.dart';
 
 void main() {
@@ -130,7 +133,12 @@ class _HomePageState extends State<HomePage> {
     try {
       final wav = await _voicevox!
           .synthesis(_textController.text, modelId: model.id, styleId: styleId);
-      await _player.play(BytesSource(wav));
+      // BytesSource は iOS でハングすることがあるため、一時ファイル経由で再生する
+      final dir = await getTemporaryDirectory();
+      final file = File('${dir.path}/voicevox_out.wav');
+      await file.writeAsBytes(wav, flush: true);
+      await _player.stop();
+      await _player.play(DeviceFileSource(file.path));
       setState(
           () => _status = '再生中 (styleId=${styleId ?? "auto"}, ${wav.length} bytes)');
     } on VoicevoxException catch (e) {

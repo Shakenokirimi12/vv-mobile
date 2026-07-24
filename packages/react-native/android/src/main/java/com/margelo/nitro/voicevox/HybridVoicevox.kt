@@ -1,13 +1,10 @@
-package com.voicevox
+package com.margelo.nitro.voicevox
 
+import android.media.MediaPlayer
 import com.margelo.nitro.NitroModules
 import com.margelo.nitro.core.ArrayBuffer
 import com.margelo.nitro.core.Promise
-import com.margelo.nitro.voicevox.DownloadResult
-import com.margelo.nitro.voicevox.HybridVoicevoxSpec
-import com.margelo.nitro.voicevox.VoicevoxCharacter
-import com.margelo.nitro.voicevox.VoicevoxModel
-import com.margelo.nitro.voicevox.VoicevoxStyle
+import java.io.File
 import jp.voicevox.android.Voicevox
 
 /**
@@ -16,6 +13,7 @@ import jp.voicevox.android.Voicevox
  */
 class HybridVoicevox : HybridVoicevoxSpec() {
     private var voicevox: Voicevox? = null
+    private var player: MediaPlayer? = null
 
     private fun requireVoicevox(): Voicevox =
         voicevox ?: throw IllegalStateException("call initialize() first")
@@ -79,6 +77,28 @@ class HybridVoicevox : HybridVoicevoxSpec() {
             val wav = vv.synthesis(text, modelId, styleId?.toInt())
             ArrayBuffer.copy(java.nio.ByteBuffer.wrap(wav))
         }
+    }
+
+    override fun playWav(wav: ArrayBuffer): Promise<Unit> {
+        // ArrayBuffer は JS スレッド外では寿命保証がないため、先にコピーする
+        val buffer = wav.getBuffer(copyIfNeeded = true)
+        val bytes = ByteArray(buffer.remaining()).also { buffer.get(it) }
+        return Promise.async {
+            val context = NitroModules.applicationContext
+                ?: throw IllegalStateException("no application context")
+            val file = File(context.cacheDir, "voicevox_out.wav").apply { writeBytes(bytes) }
+            player?.release()
+            player = MediaPlayer().apply {
+                setDataSource(file.absolutePath)
+                prepare()
+                start()
+            }
+        }
+    }
+
+    override fun stopPlayback() {
+        player?.release()
+        player = null
     }
 }
 

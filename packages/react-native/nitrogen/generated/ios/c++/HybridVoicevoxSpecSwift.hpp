@@ -154,6 +154,20 @@ namespace margelo::nitro::voicevox {
       auto __value = std::move(__result.value());
       return __value;
     }
+    inline std::shared_ptr<Promise<void>> playWav(const std::shared_ptr<ArrayBuffer>& wav) override {
+      auto __result = _swiftPart.playWav(ArrayBufferHolder(wav));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline void stopPlayback() override {
+      auto __result = _swiftPart.stopPlayback();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
 
   private:
     RNVoicevox::HybridVoicevoxSpec_cxx _swiftPart;

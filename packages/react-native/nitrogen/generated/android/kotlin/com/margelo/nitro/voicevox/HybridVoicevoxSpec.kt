@@ -65,6 +65,14 @@ abstract class HybridVoicevoxSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun synthesis(text: String, modelId: String, styleId: Double?): Promise<ArrayBuffer>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun playWav(wav: ArrayBuffer): Promise<Unit>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun stopPlayback(): Unit
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

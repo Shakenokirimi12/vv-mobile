@@ -66,6 +66,8 @@ namespace margelo::nitro::voicevox {
       virtual std::shared_ptr<Promise<std::vector<DownloadResult>>> downloadModels(const std::vector<std::string>& ids) = 0;
       virtual std::shared_ptr<Promise<std::vector<DownloadResult>>> downloadAllModels() = 0;
       virtual std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> synthesis(const std::string& text, const std::string& modelId, std::optional<double> styleId) = 0;
+      virtual std::shared_ptr<Promise<void>> playWav(const std::shared_ptr<ArrayBuffer>& wav) = 0;
+      virtual void stopPlayback() = 0;
 
     protected:
       // Hybrid Setup

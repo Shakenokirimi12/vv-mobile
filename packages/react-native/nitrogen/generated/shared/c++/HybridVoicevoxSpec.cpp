@@ -23,6 +23,8 @@ namespace margelo::nitro::voicevox {
       prototype.registerHybridMethod("downloadModels", &HybridVoicevoxSpec::downloadModels);
       prototype.registerHybridMethod("downloadAllModels", &HybridVoicevoxSpec::downloadAllModels);
       prototype.registerHybridMethod("synthesis", &HybridVoicevoxSpec::synthesis);
+      prototype.registerHybridMethod("playWav", &HybridVoicevoxSpec::playWav);
+      prototype.registerHybridMethod("stopPlayback", &HybridVoicevoxSpec::stopPlayback);
     });
   }
 

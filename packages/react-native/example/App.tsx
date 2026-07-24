@@ -58,15 +58,40 @@ export default function App() {
     // ずんだもん(スタイル3=ノーマル)
     const wav = await voicevox.synthesis('こんにちは、ずんだもんなのだ', '0', 3);
     const header = String.fromCharCode(...new Uint8Array(wav).slice(0, 4));
-    setStatus(`E2E成功: ${wav.byteLength} bytes, header="${header}"`);
+    await voicevox.playWav(wav);
+    setStatus(`E2E成功(再生開始済): ${wav.byteLength} bytes, header="${header}"`);
   };
 
   const refresh = async () => setModels(await voicevox.listModels());
 
-  const download = async (model: VoicevoxModel) => {
-    if (!voicevox.isLicenseAccepted(model.id)) {
-      voicevox.acceptLicense(model.id);
+  // 規約に同意を得てからダウンロードする。
+  const confirmLicenseAndDownload = (model: VoicevoxModel) => {
+    if (voicevox.isLicenseAccepted(model.id)) {
+      download(model);
+      return;
     }
+    const characters = model.characters.map(c => c.name).join('、');
+    const credit = model.characters[0]?.creditText ?? '';
+    Alert.alert(
+      '利用規約への同意',
+      `このモデルには ${characters} が含まれます。\n\n` +
+        '利用には VOICEVOX 音声モデル利用規約および各キャラクターの規約への同意が必要です。' +
+        `生成音声の利用時はクレジット表記(例: ${credit})が必要です。\n\n` +
+        `規約: ${voicevox.getTermsURL()}`,
+      [
+        {text: '同意しない', style: 'cancel'},
+        {
+          text: '同意する',
+          onPress: () => {
+            voicevox.acceptLicense(model.id);
+            download(model);
+          },
+        },
+      ],
+    );
+  };
+
+  const download = async (model: VoicevoxModel) => {
     setBusy(true);
     setStatus(`${model.id} をダウンロード中...`);
     try {
@@ -110,10 +135,9 @@ export default function App() {
     setStatus('合成中...');
     try {
       const wav = await voicevox.synthesis(text, model.id, styleId);
-      const bytes = new Uint8Array(wav);
-      const header = String.fromCharCode(...bytes.slice(0, 4));
+      await voicevox.playWav(wav);
       setStatus(
-        `合成完了: styleId=${styleId ?? 'auto'}, ${wav.byteLength} bytes, header="${header}"`,
+        `再生中 (styleId=${styleId ?? 'auto'}, ${wav.byteLength} bytes)`,
       );
     } catch (e) {
       setStatus(String(e));
@@ -149,7 +173,7 @@ export default function App() {
               onPress={() =>
                 item.isDownloaded
                   ? selectStyleAndSynthesize(item)
-                  : download(item)
+                  : confirmLicenseAndDownload(item)
               }>
               <Text style={styles.action}>
                 {item.isDownloaded ? '再生' : 'DL'}

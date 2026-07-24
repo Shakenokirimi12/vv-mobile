@@ -88,4 +88,13 @@ export interface Voicevox
     modelId: string,
     styleId?: number
   ): Promise<ArrayBuffer>
+
+  /**
+   * synthesis が返した WAV をネイティブ側で再生する(再生開始で resolve)。
+   * 再生中に再度呼ぶと前の再生を停止して新しい音声を再生する。
+   */
+  playWav(wav: ArrayBuffer): Promise<void>
+
+  /** 再生を停止する。 */
+  stopPlayback(): void
 }

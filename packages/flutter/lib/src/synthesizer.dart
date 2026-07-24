@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
@@ -150,6 +151,81 @@ class Synthesizer {
 
   /// モデルがロード済みかどうか。
   bool isLoaded(String modelId) => _loadedModelIds.contains(modelId);
+
+  /// [loadVoiceModel] をバックグラウンド isolate で実行する。
+  /// モデルロードは数百ms〜数秒かかるため、UIスレッドをブロックしない。
+  /// voicevox_core は内部でロックしており別スレッドからの呼び出しは安全。
+  Future<void> loadVoiceModelInBackground(String path,
+      {required String modelId}) async {
+    _ensureAlive();
+    if (_loadedModelIds.contains(modelId)) return;
+    final address = _synthesizer.address;
+    await Isolate.run(() => _loadVoiceModelIsolate(address, path));
+    _loadedModelIds.add(modelId);
+  }
+
+  static void _loadVoiceModelIsolate(int synthesizerAddress, String path) {
+    final bindings = VoicevoxBindings(_openLibrary());
+    final synthesizer =
+        Pointer<VoicevoxSynthesizer>.fromAddress(synthesizerAddress);
+    final modelOut = calloc<Pointer<VoicevoxVoiceModelFile>>();
+    final pathPtr = path.toNativeUtf8();
+    try {
+      _check(
+        bindings,
+        bindings.voicevox_voice_model_file_open(pathPtr.cast(), modelOut),
+      );
+      final model = modelOut.value;
+      try {
+        _check(
+          bindings,
+          bindings.voicevox_synthesizer_load_voice_model(synthesizer, model),
+        );
+      } finally {
+        bindings.voicevox_voice_model_file_delete(model);
+      }
+    } finally {
+      calloc.free(pathPtr);
+      calloc.free(modelOut);
+    }
+  }
+
+  /// [tts] をバックグラウンド isolate で実行する。
+  /// 合成は数秒かかるCPU処理のため、UIスレッドをブロックしない。
+  Future<Uint8List> ttsInBackground(String text, {required int styleId}) {
+    _ensureAlive();
+    final address = _synthesizer.address;
+    return Isolate.run(() => _ttsIsolate(address, text, styleId));
+  }
+
+  static Uint8List _ttsIsolate(
+      int synthesizerAddress, String text, int styleId) {
+    final bindings = VoicevoxBindings(_openLibrary());
+    final synthesizer =
+        Pointer<VoicevoxSynthesizer>.fromAddress(synthesizerAddress);
+    final textPtr = text.toNativeUtf8();
+    final lengthOut = calloc<UintPtr>();
+    final wavOut = calloc<Pointer<Uint8>>();
+    try {
+      final options = bindings.voicevox_make_default_tts_options();
+      _check(
+        bindings,
+        bindings.voicevox_synthesizer_tts(
+            synthesizer, textPtr.cast(), styleId, options, lengthOut, wavOut),
+      );
+      final wav = wavOut.value;
+      final length = lengthOut.value;
+      try {
+        return Uint8List.fromList(wav.asTypedList(length));
+      } finally {
+        bindings.voicevox_wav_free(wav);
+      }
+    } finally {
+      calloc.free(textPtr);
+      calloc.free(lengthOut);
+      calloc.free(wavOut);
+    }
+  }
 
   /// テキストから WAV を合成する。
   Uint8List tts(String text, {required int styleId}) {
