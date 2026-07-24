@@ -11,7 +11,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/vv-mobile/vv-mobile.git", exact: "swift-v0.1.0")
+    .package(url: "https://github.com/shakenokirimi12/vv-mobile.git", exact: "swift-v0.1.0")
 ]
 ```
 

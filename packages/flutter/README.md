@@ -15,7 +15,7 @@
 dependencies:
   voicevox_flutter:
     git:
-      url: https://github.com/vv-mobile/vv-mobile.git
+      url: https://github.com/shakenokirimi12/vv-mobile.git
       path: packages/flutter
 ```
 

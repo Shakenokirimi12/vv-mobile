@@ -6,11 +6,11 @@ Pod::Spec.new do |s|
   s.name         = "RNVoicevox"
   s.version      = package["version"]
   s.summary      = package["description"]
-  s.homepage     = "https://github.com/vv-mobile/vv-mobile"
+  s.homepage     = "https://github.com/shakenokirimi12/vv-mobile"
   s.license      = "MIT"
   s.authors      = "vv-mobile"
   s.platforms    = { :ios => "15.0" }
-  s.source       = { :git => "https://github.com/vv-mobile/vv-mobile.git", :tag => "react-native-v#{s.version}" }
+  s.source       = { :git => "https://github.com/shakenokirimi12/vv-mobile.git", :tag => "react-native-v#{s.version}" }
 
   # RN グルー + packages/swift から複製した VoicevoxCore 実装
   # (ios/VoicevoxCore は scripts/prepare-sources.sh が配置する)。

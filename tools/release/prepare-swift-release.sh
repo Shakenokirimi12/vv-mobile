@@ -14,7 +14,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SWIFT_DIR="$REPO_ROOT/packages/swift"
 BINARIES_DIR="$SWIFT_DIR/Binaries"
 OUT_DIR="$SWIFT_DIR/.release"
-RELEASE_URL_BASE="https://github.com/vv-mobile/vv-mobile/releases/download/swift-v${VERSION}"
+RELEASE_URL_BASE="https://github.com/shakenokirimi12/vv-mobile/releases/download/swift-v${VERSION}"
 
 if [[ ! -d "$BINARIES_DIR/voicevox_core.xcframework" ]]; then
   echo "error: $BINARIES_DIR/voicevox_core.xcframework がありません。" >&2

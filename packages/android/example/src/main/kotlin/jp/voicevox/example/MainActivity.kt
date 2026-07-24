@@ -103,7 +103,10 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    /** キャラクター×スタイル(talkのみ)を選ばせてから合成する。 */
+    /** キャラクター×スタイル(talkのみ)を選ばせてから合成する。
+     *  モデルによって10以上のスタイルがあるため、必ずスクロール可能な
+     *  ListView(AlertDialog.Builder#setSingleChoiceItems)で表示する。
+     *  (setItems の M3 レンダリングでは項目が3つに見切れる問題があった) */
     private fun selectStyleAndSynthesize(model: VoicevoxModelInfo) {
         val styles = model.characters.flatMap { c ->
             c.talkStyles.map { s -> "${c.name}(${s.name})" to s.id }
@@ -112,12 +115,24 @@ class MainActivity : AppCompatActivity() {
             setStatus("このモデルは歌唱合成用のため読み上げには使えません", busy = false)
             return
         }
-        AlertDialog.Builder(this)
-            .setTitle("キャラクター・スタイルを選択")
-            .setItems(styles.map { it.first }.toTypedArray()) { _, which ->
+        val labels = styles.map { it.first }.toTypedArray()
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("キャラクター・スタイルを選択(${styles.size}件)")
+            .setSingleChoiceItems(labels, -1) { d, which ->
+                d.dismiss()
                 synthesize(model, styles[which].second)
             }
-            .show()
+            .setNegativeButton("キャンセル", null)
+            .create()
+        dialog.show()
+        // 縦の可視スタイル数を制限してリストを必ずスクロール可能に見せる
+        dialog.listView?.let { lv ->
+            val density = resources.displayMetrics.density
+            lv.layoutParams = lv.layoutParams.apply {
+                height = (48 * density * 8).toInt() // 約8件で高さを固定 → 残りはスクロール
+            }
+            lv.requestLayout()
+        }
     }
 
     private fun synthesize(model: VoicevoxModelInfo, styleId: Int) {

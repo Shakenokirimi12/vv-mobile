@@ -3,6 +3,8 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Modal,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -17,11 +19,15 @@ const voicevox = getVoicevox();
 // 開発検証用: true にすると起動時に DL→合成の自動E2Eを実行する
 const AUTO_E2E = false;
 
+type PickerStyle = {label: string; id: number};
+type PickerTarget = {model: VoicevoxModel; styles: PickerStyle[]};
+
 export default function App() {
   const [status, setStatus] = useState('初期化中...');
   const [models, setModels] = useState<VoicevoxModel[]>([]);
   const [text, setText] = useState('こんにちは、ずんだもんなのだ');
   const [busy, setBusy] = useState(false);
+  const [picker, setPicker] = useState<PickerTarget | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -106,8 +112,11 @@ export default function App() {
   };
 
   // キャラクター×スタイル(talkのみ)を選ばせてから合成する。
+  // モデルによっては 10〜30 スタイルあるため、Alert.alert(Android で
+  // ボタン最大3個の制約あり)ではなくスクロール可能な Modal + FlatList
+  // で表示する。
   const selectStyleAndSynthesize = (model: VoicevoxModel) => {
-    const styles = model.characters.flatMap(c =>
+    const styles: PickerStyle[] = model.characters.flatMap(c =>
       c.styles
         .filter(s => s.type === 'talk')
         .map(s => ({label: `${c.name}(${s.name})`, id: s.id})),
@@ -116,18 +125,7 @@ export default function App() {
       setStatus('このモデルは歌唱合成用のため読み上げには使えません');
       return;
     }
-    Alert.alert(
-      'キャラクター・スタイルを選択',
-      undefined,
-      [
-        ...styles.map(s => ({
-          text: s.label,
-          onPress: () => synthesize(model, s.id),
-        })),
-        {text: 'キャンセル', style: 'cancel' as const},
-      ],
-      {cancelable: true},
-    );
+    setPicker({model, styles});
   };
 
   const synthesize = async (model: VoicevoxModel, styleId?: number) => {
@@ -159,6 +157,39 @@ export default function App() {
         {busy && <ActivityIndicator style={{marginRight: 8}} />}
         <Text testID="status">{status}</Text>
       </View>
+      <Modal
+        visible={picker != null}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setPicker(null)}>
+        <Pressable style={styles.pickerScrim} onPress={() => setPicker(null)}>
+          <Pressable style={styles.pickerSheet} onPress={e => e.stopPropagation()}>
+            <Text style={styles.pickerTitle}>
+              キャラクター・スタイルを選択({picker?.styles.length ?? 0}件)
+            </Text>
+            <FlatList
+              data={picker?.styles ?? []}
+              keyExtractor={s => String(s.id)}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  style={styles.pickerRow}
+                  onPress={() => {
+                    const target = picker;
+                    setPicker(null);
+                    if (target) synthesize(target.model, item.id);
+                  }}>
+                  <Text style={styles.pickerLabel}>{item.label}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <TouchableOpacity
+              style={styles.pickerCancel}
+              onPress={() => setPicker(null)}>
+              <Text style={styles.pickerCancelLabel}>キャンセル</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
       <FlatList
         data={models}
         keyExtractor={m => m.id}
@@ -205,4 +236,37 @@ const styles = StyleSheet.create({
   },
   modelLabel: {flex: 1, marginRight: 8},
   action: {color: '#007aff', fontWeight: '600'},
+  pickerScrim: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    justifyContent: 'flex-end',
+  },
+  pickerSheet: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    maxHeight: '70%',
+    paddingTop: 16,
+  },
+  pickerTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    paddingHorizontal: 16,
+    paddingBottom: 8,
+  },
+  pickerRow: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: '#eee',
+  },
+  pickerLabel: {fontSize: 16, color: '#007aff'},
+  pickerCancel: {
+    paddingVertical: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    alignItems: 'center',
+  },
+  pickerCancelLabel: {fontSize: 16, color: '#666'},
 });

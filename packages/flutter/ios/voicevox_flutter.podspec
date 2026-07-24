@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 VOICEVOX CORE binding for Flutter (FFI). Text-to-speech synthesis with runtime
 voice model download and per-character license gating.
                        DESC
-  s.homepage         = 'https://github.com/vv-mobile/vv-mobile'
+  s.homepage         = 'https://github.com/shakenokirimi12/vv-mobile'
   s.license          = { :type => 'MIT' }
   s.author           = { 'vv-mobile' => 'noreply@example.com' }
   s.source           = { :path => '.' }
