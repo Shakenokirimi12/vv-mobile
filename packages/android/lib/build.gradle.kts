@@ -52,7 +52,10 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "jp.voicevox"
             artifactId = "voicevox-core-android"
-            version = "0.1.0"
+            // JitPack はタグ名を VERSION 環境変数として渡す。
+            // 例: タグ android-v0.1.0 → 生成される artifact も同名バージョンに揃うため
+            // 利用者は `com.github.Shakenokirimi12:vv-mobile:android-v0.1.0` で解決できる。
+            version = System.getenv("VERSION") ?: "0.1.0"
             afterEvaluate {
                 from(components["release"])
             }

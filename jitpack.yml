@@ -1,0 +1,24 @@
+# JitPack build config for the Android library.
+# 利用方法(利用者の build.gradle):
+#   allprojects { repositories { maven { url = "https://jitpack.io" } } }
+#   dependencies { implementation("com.github.Shakenokirimi12:vv-mobile:android-v0.1.0") }
+#
+# タグは android-v* を使用(swift-v* や react-native-v* と分離するため)。
+# lib/build.gradle.kts が VERSION 環境変数を読み取るので、タグ名がそのまま
+# 発行アーティファクトのバージョンに反映される。
+jdk:
+  - openjdk17
+
+before_install:
+  # 公式 prebuilt(voicevox_core .so, ONNX Runtime .so, java_packages.zip の中の
+  # voicevoxcore-android AAR)を取得。gen_licenses.py の出力
+  # licenses.json はリポジトリにコミット済み。
+  - ./packages/core-native/scripts/fetch-core.sh android
+  - ./packages/android/scripts/prepare-binaries.sh
+
+install:
+  - cd packages/android
+  - chmod +x gradlew
+  # AAR + sources.jar + pom を local Maven に発行(JitPack が拾って配信する)。
+  # test は端末が要るためスキップ、connectedAndroidTest も同様。
+  - ./gradlew :lib:publishToMavenLocal -x test
