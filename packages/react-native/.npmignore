@@ -1,0 +1,20 @@
+# npm パッケージから除外するもの(package.json の files で許可した後の細かな除外)。
+# .gitignore は npm publish には効かないため明示。
+
+# Android ビルド中間物(gradle/CMake の出力)
+android/build/
+android/.cxx/
+android/.gradle/
+android/local.properties
+
+# iOS ビルド中間物
+ios/build/
+
+# example アプリ全体
+example/
+
+# 開発ツール
+node_modules/
+scripts/prepare-sources.sh
+*.log
+.DS_Store

@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, doc_directive_unknown
+// ignore_for_file: type=lint, doc_directive_unknown, unused_element, unused_field, non_constant_identifier_names, prefer_initializing_formals
 
 // AUTO GENERATED FILE, DO NOT EDIT.
 //
