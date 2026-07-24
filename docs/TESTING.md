@@ -2,6 +2,22 @@
 
 実装済み・未実施のテストケース一覧。「済」は実行して通過済み、「未」はテストコード未作成または未実行。
 
+## サンプルアプリ動作確認まとめ (2026-07-24)
+
+4プラットフォームすべてにサンプルアプリがあり、実機環境で動作確認済み。
+Swift/Android/RN は自動E2E(未同意DL拒否 → 同意 → モデル0 DL → 実合成)で
+**全プラットフォーム同一の合成結果(122924 bytes, RIFF)** を確認:
+
+| プラットフォーム | サンプルアプリ | 起動確認 | E2E(DL→合成) |
+| --- | --- | --- | --- |
+| Swift | `packages/swift/Example`(SwiftUI, xcodegen) | ✅ iOSシミュレータ | ✅ `SIMCTL_CHILD_VV_AUTO_E2E=1 simctl launch` |
+| Kotlin | `packages/android/example` | ✅ エミュレータ(API 35) | ✅ `am start --ez auto_e2e true` |
+| Flutter | `packages/flutter/example` | ✅ iOSシミュレータ | ✅ 統合テスト5/5(同等フロー) |
+| React Native | `packages/react-native/example` | ✅ iOSシミュレータ | ✅ `AUTO_E2E`フラグ |
+
+Swift サンプルは `cd packages/swift/Example && xcodegen generate` でプロジェクト生成
+(xcodeproj は生成物のためコミットしない)。
+
 ## 共通テストケース(全プラットフォーム同一契約)
 
 | # | ケース | 期待動作 |

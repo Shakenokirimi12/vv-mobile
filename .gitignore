@@ -8,6 +8,8 @@ build/
 DerivedData/
 *.xcframework
 !packages/core-native/include/voicevox_core.h
+# xcodegen 生成物(packages/swift/Example/project.yml から再生成可能)
+packages/swift/Example/VoicevoxExample.xcodeproj/
 
 # Android / Gradle
 .gradle/

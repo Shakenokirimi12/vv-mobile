@@ -1,0 +1,25 @@
+# xcodegen 設定。`xcodegen generate` で VoicevoxExample.xcodeproj を生成する。
+name: VoicevoxExample
+options:
+  bundleIdPrefix: jp.voicevox.example
+  deploymentTarget:
+    iOS: "15.0"
+packages:
+  VoicevoxCore:
+    path: ../
+targets:
+  VoicevoxExample:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    dependencies:
+      - package: VoicevoxCore
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: "0.1.0"
+        SWIFT_VERSION: "5.9"
+        CODE_SIGNING_ALLOWED: NO

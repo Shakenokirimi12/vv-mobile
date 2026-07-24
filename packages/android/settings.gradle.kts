@@ -18,3 +18,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "voicevox-core-android"
 include(":lib")
+include(":example")
