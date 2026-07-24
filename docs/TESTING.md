@@ -43,16 +43,26 @@
 - 済 C9, C10 (`parallelDownload_partialFailure`)
 - 未 C4, C5, C8, C11, C12 の明示的テスト
 
-## Flutter (packages/flutter) — 未
+## Flutter (packages/flutter) — 済(iOS)
 
-テストコード未作成。作成すべきテスト:
+`flutter test integration_test/voicevox_test.dart -d <iOSシミュレータUDID>` で5/5通過(21秒)。
 
-- 未 単体: `LicenseCatalog.fromJson`(assets/licenses.json のパース、C1相当)
-- 未 単体: `LicenseGate`(SharedPreferences モックで C2, C4, C5)
-- 未 統合(integration_test, 実機/エミュレータ): C3, C6, C7, C9, C10
-  - `Voicevox.create()` → `listModels` → `acceptLicense('0')` → `downloadModel('0')` → `synthesis()` → RIFF確認
-  - ffigen バインディング経由の実ネイティブ呼び出し検証(iOS: init_once 手動lookupの動作確認を含む)
-- 未 example アプリの手動動作確認(iOS/Android)
+- 済 C1 (`listModels returns all models with characters`)
+- 済 C6 (`synthesis without download throws ModelNotDownloadedException`)
+- 済 C2 (`download without license throws LicenseNotAcceptedException`)
+- 済 C3, C7 (`end-to-end: accept, download, synthesize, RIFF header`)
+- 済 C9, C10 (`parallel download with partial failure`)
+- 未 Android実機/エミュレータでの同テスト実行(iOSのみ確認済み)
+- 未 C4, C5, C8, C11, C12 の明示的テスト
+
+### 発覚した問題と修正(iOSビルド)
+
+1. **SwiftPMプラグインのディレクトリ名不一致**: Flutterはプラグインルートのディレクトリ名(`packages/flutter`)からiOS/macOSのSwiftPMサブパッケージ名を`<root>/ios/<root名>`と推測する。当初`ios/voicevox_flutter/`だったため`unable to override package`エラーになった。→ 結局SwiftPM統合は諦め、CocoaPods(`vendored_frameworks`)方式に切り替え(`ios/voicevox_flutter.podspec`, `macos/voicevox_flutter.podspec`)。xcframeworkの埋め込みはCocoaPodsの方が確実
+2. **CocoaPodsが動作していなかった**: rbenvで有効なRuby(3.4.9)にcocoapods gemが入っておらず、かつ`.rbenv/shims/.rbenv-shim`の残留ロックでrehashも失敗していた。`gem install cocoapods` + ロックファイル削除で解消
+3. **iOSデプロイターゲット不足**: example側が13.0のままだったため、プラグイン(15.0)より低くpod installが失敗。`ios/Podfile`と`project.pbxproj`を15.0に統一
+4. **公式onnxruntimeフレームワークのBundleIdentifier不正**: 配布物の`CFBundleIdentifier`が`jp.hiroshiba.voicevox.voicevox_onnxruntime`とアンダースコアを含んでおり、Xcode 16+の埋め込み検証で拒否される。`packages/swift/scripts/prepare-binaries.sh`でxcframework化前にコピーしてハイフンに書き換えるよう修正(自前生成のmacOS用Info.plistも同様にハイフン化)
+
+- 未 example アプリの手動動作確認(Android)
 
 ## React Native (packages/react-native) — 未
 

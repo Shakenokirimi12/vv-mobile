@@ -39,7 +39,7 @@ make_macos_framework() { # name universal_dylib headers_dir out_dir
 <plist version="1.0">
 <dict>
   <key>CFBundleExecutable</key><string>$name</string>
-  <key>CFBundleIdentifier</key><string>jp.voicevox.$name</string>
+  <key>CFBundleIdentifier</key><string>jp.voicevox.${name//_/-}</string>
   <key>CFBundleName</key><string>$name</string>
   <key>CFBundlePackageType</key><string>FMWK</string>
   <key>CFBundleShortVersionString</key><string>${VOICEVOX_CORE_VERSION}</string>
@@ -82,9 +82,19 @@ lipo -create \
   -output "$TMP/libvoicevox_onnxruntime.dylib"
 make_macos_framework voicevox_onnxruntime "$TMP/libvoicevox_onnxruntime.dylib" "" "$TMP/ort-macos"
 
+# 公式 iOS フレームワークの CFBundleIdentifier にアンダースコアが含まれており
+# (jp.hiroshiba.voicevox.voicevox_onnxruntime)、Xcode 16+ の埋め込み検証で
+# 拒否されるため、コピーした上でハイフンに修正してから xcframework 化する。
+mkdir -p "$TMP/ort-ios-arm64" "$TMP/ort-ios-sim"
+cp -R "$ort_ios/ios-arm64/voicevox_onnxruntime.framework" "$TMP/ort-ios-arm64/"
+cp -R "$ort_ios/ios-arm64_x86_64-simulator/voicevox_onnxruntime.framework" "$TMP/ort-ios-sim/"
+for fw in "$TMP/ort-ios-arm64/voicevox_onnxruntime.framework" "$TMP/ort-ios-sim/voicevox_onnxruntime.framework"; do
+  /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier jp.hiroshiba.voicevox.voicevox-onnxruntime" "$fw/Info.plist"
+done
+
 xcodebuild -create-xcframework \
-  -framework "$ort_ios/ios-arm64/voicevox_onnxruntime.framework" \
-  -framework "$ort_ios/ios-arm64_x86_64-simulator/voicevox_onnxruntime.framework" \
+  -framework "$TMP/ort-ios-arm64/voicevox_onnxruntime.framework" \
+  -framework "$TMP/ort-ios-sim/voicevox_onnxruntime.framework" \
   -framework "$TMP/ort-macos/voicevox_onnxruntime.framework" \
   -output "$BIN/voicevox_onnxruntime.xcframework"
 

@@ -30,7 +30,7 @@
 
 - **Swift (`packages/swift`)**: 唯一の iOS/macOS 実装。C API を modulemap 経由で直接呼ぶ。バイナリは `scripts/prepare-binaries.sh` が iOS スライスと macOS dylib を1つの xcframework に統合して配置する(macOS dylib は framework バンドル化してから統合)
 - **Android (`packages/android`)**: 公式 `voicevoxcore-android` AAR(JNIブリッジ内蔵)に依存し、Kotlin で idiomatic なラッパー(suspend / LicenseGate / Facade)を被せる。JNI の重複実装はしない
-- **Flutter (`packages/flutter`)**: Dart は C++/Swift/Kotlin を直接呼べないため独立実装。`ffigen` で C ヘッダから自動生成したバインディング + Dart Facade。iOS のみ `voicevox_onnxruntime_init_once` を手動 lookup(ヘッダの LINK/LOAD マクロ分岐のため)
+- **Flutter (`packages/flutter`)**: Dart は C++/Swift/Kotlin を直接呼べないため独立実装。`ffigen` で C ヘッダから自動生成したバインディング + Dart Facade。iOS のみ `voicevox_onnxruntime_init_once` を手動 lookup(ヘッダの LINK/LOAD マクロ分岐のため)。iOS/macOS の xcframework 埋め込みは SwiftPM 統合ではなく **CocoaPods(`vendored_frameworks`)** を使う(SwiftPM経由だとFlutterのプラグイン集約パッケージ配下でバイナリターゲットが自動埋め込みされない問題があったため。詳細は docs/TESTING.md)
 - **React Native (`packages/react-native`)**: Nitro Modules。`HybridVoicevox.swift/kt` は Swift/Kotlin パッケージの Facade を呼ぶだけの薄いグルー(各数十行)。`scripts/prepare-sources.sh` が packages/swift・packages/android の実装を vendored ディレクトリに複製して npm パッケージに同梱する(単一実装の複製方式。CocoaPods では SwiftPM の `Bundle.module` が無いため `BundleModuleShim.swift` を追加)
 
 C ヘッダは公式配布物がプラットフォームごとに `VOICEVOX_LOAD/LINK_ONNXRUNTIME` をハードコードしているため、`fetch-core.sh` の同期時に条件分岐へ正規化し、全プラットフォームで単一ヘッダを共有する。

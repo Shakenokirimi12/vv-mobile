@@ -26,8 +26,8 @@ packages/swift/Binaries/
 .flutter-plugins*
 pubspec.lock
 packages/flutter/assets/open_jtalk_dic/
-packages/flutter/ios/voicevox_flutter/Frameworks/
-packages/flutter/macos/voicevox_flutter/Frameworks/
+packages/flutter/ios/Frameworks/
+packages/flutter/macos/Frameworks/
 packages/flutter/android/src/main/jniLibs/
 *.iml
 

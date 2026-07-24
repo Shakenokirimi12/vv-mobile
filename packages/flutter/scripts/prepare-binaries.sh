@@ -28,7 +28,7 @@ source "$CORE/VERSION"
 
 # --- 1. iOS/macOS xcframework ---
 for platform in ios macos; do
-  fw="$PKG_DIR/$platform/voicevox_flutter/Frameworks"
+  fw="$PKG_DIR/$platform/Frameworks"
   rm -rf "$fw"
   mkdir -p "$fw"
   cp -R "$SWIFT_BIN/voicevox_core.xcframework" "$fw/"

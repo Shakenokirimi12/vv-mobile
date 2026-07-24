@@ -31,8 +31,10 @@ flutter:
       android:
         ffiPlugin: true
       ios:
+        pluginClass: VoicevoxFlutterPlugin
         ffiPlugin: true
       macos:
+        pluginClass: VoicevoxFlutterPlugin
         ffiPlugin: true
   assets:
     - assets/licenses.json

@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - voicevox_flutter (0.1.0):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - voicevox_flutter (from `.symlinks/plugins/voicevox_flutter/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  voicevox_flutter:
+    :path: ".symlinks/plugins/voicevox_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  voicevox_flutter: d42be971121547903e3750d1bcffc581ed39721c
+
+PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
+
+COCOAPODS: 1.17.0
