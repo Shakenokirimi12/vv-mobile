@@ -127,9 +127,14 @@ public actor Voicevox {
     /// - Parameters:
     ///   - text: 読み上げるテキスト。
     ///   - modelId: モデルID(`listModels()` の `id`)。
-    ///   - styleId: スタイルID。nil ならモデル先頭キャラクターの先頭スタイル。
+    ///   - styleId: スタイルID(`characters[].styles[]` から選ぶ)。
+    ///     nil なら最初の talk スタイル。talk スタイルを持たないモデル
+    ///     (歌唱合成用の s0 など)は `talkNotSupported` を投げる。
     public func synthesis(text: String, modelId: String, styleId: UInt32? = nil) async throws -> Data {
         let info = try manager.info(for: modelId)
+        guard info.supportsTalk else {
+            throw VoicevoxError.talkNotSupported(modelId: modelId)
+        }
         guard manager.isDownloaded(modelId: modelId) else {
             throw VoicevoxError.modelNotDownloaded(modelId: modelId)
         }
@@ -139,7 +144,11 @@ public actor Voicevox {
             try synthesizer.loadVoiceModel(at: manager.localURL(for: modelId), modelId: modelId)
         }
 
-        let style = styleId ?? info.characters.first?.styles.first?.id ?? 0
+        guard let style = styleId
+            ?? info.characters.lazy.flatMap(\.talkStyles).first?.id
+        else {
+            throw VoicevoxError.talkNotSupported(modelId: modelId)
+        }
         let synthesizer = self.synthesizer
         // 合成はCPU負荷が高いのでactorの外(バックグラウンド)で実行する
         return try await Task.detached(priority: .userInitiated) {

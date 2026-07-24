@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   SafeAreaView,
   StyleSheet,
@@ -79,14 +80,41 @@ export default function App() {
     }
   };
 
-  const synthesize = async (model: VoicevoxModel) => {
+  // キャラクター×スタイル(talkのみ)を選ばせてから合成する。
+  const selectStyleAndSynthesize = (model: VoicevoxModel) => {
+    const styles = model.characters.flatMap(c =>
+      c.styles
+        .filter(s => s.type === 'talk')
+        .map(s => ({label: `${c.name}(${s.name})`, id: s.id})),
+    );
+    if (styles.length === 0) {
+      setStatus('このモデルは歌唱合成用のため読み上げには使えません');
+      return;
+    }
+    Alert.alert(
+      'キャラクター・スタイルを選択',
+      undefined,
+      [
+        ...styles.map(s => ({
+          text: s.label,
+          onPress: () => synthesize(model, s.id),
+        })),
+        {text: 'キャンセル', style: 'cancel' as const},
+      ],
+      {cancelable: true},
+    );
+  };
+
+  const synthesize = async (model: VoicevoxModel, styleId?: number) => {
     setBusy(true);
     setStatus('合成中...');
     try {
-      const wav = await voicevox.synthesis(text, model.id);
+      const wav = await voicevox.synthesis(text, model.id, styleId);
       const bytes = new Uint8Array(wav);
       const header = String.fromCharCode(...bytes.slice(0, 4));
-      setStatus(`合成完了: ${wav.byteLength} bytes, header="${header}"`);
+      setStatus(
+        `合成完了: styleId=${styleId ?? 'auto'}, ${wav.byteLength} bytes, header="${header}"`,
+      );
     } catch (e) {
       setStatus(String(e));
     } finally {
@@ -119,7 +147,9 @@ export default function App() {
               disabled={busy}
               testID={`action-${item.id}`}
               onPress={() =>
-                item.isDownloaded ? synthesize(item) : download(item)
+                item.isDownloaded
+                  ? selectStyleAndSynthesize(item)
+                  : download(item)
               }>
               <Text style={styles.action}>
                 {item.isDownloaded ? '再生' : 'DL'}

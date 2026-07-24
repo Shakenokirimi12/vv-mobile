@@ -35,6 +35,9 @@ data class VoicevoxModel(
   val vvmId: String,
   @DoNotStrip
   @Keep
+  val domains: Array<String>,
+  @DoNotStrip
+  @Keep
   val characters: Array<VoicevoxCharacter>,
   @DoNotStrip
   @Keep
@@ -50,6 +53,7 @@ data class VoicevoxModel(
       && Objects.deepEquals(this.sizeBytes, other.sizeBytes)
       && Objects.deepEquals(this.downloadURL, other.downloadURL)
       && Objects.deepEquals(this.vvmId, other.vvmId)
+      && Objects.deepEquals(this.domains, other.domains)
       && Objects.deepEquals(this.characters, other.characters)
       && Objects.deepEquals(this.isDownloaded, other.isDownloaded)
   }
@@ -61,6 +65,7 @@ data class VoicevoxModel(
       sizeBytes,
       downloadURL,
       vvmId,
+      domains,
       characters,
       isDownloaded
     ).contentDeepHashCode()
@@ -74,8 +79,8 @@ data class VoicevoxModel(
     @Keep
     @Suppress("unused")
     @JvmStatic
-    private fun fromCpp(id: String, filename: String, sizeBytes: Double, downloadURL: String, vvmId: String, characters: Array<VoicevoxCharacter>, isDownloaded: Boolean): VoicevoxModel {
-      return VoicevoxModel(id, filename, sizeBytes, downloadURL, vvmId, characters, isDownloaded)
+    private fun fromCpp(id: String, filename: String, sizeBytes: Double, downloadURL: String, vvmId: String, domains: Array<String>, characters: Array<VoicevoxCharacter>, isDownloaded: Boolean): VoicevoxModel {
+      return VoicevoxModel(id, filename, sizeBytes, downloadURL, vvmId, domains, characters, isDownloaded)
     }
   }
 }

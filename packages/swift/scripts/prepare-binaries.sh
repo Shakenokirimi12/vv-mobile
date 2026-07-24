@@ -112,6 +112,7 @@ dict_src="$DIST/common/open_jtalk_dic_utf_8-${OPEN_JTALK_DICT_VERSION}"
 dict_dst="$PKG_DIR/Sources/VoicevoxCore/Resources/open_jtalk_dic"
 rm -rf "$dict_dst"
 cp -R "$dict_src" "$dict_dst"
+cp "$PKG_DIR/../core-native/generated/licenses.json" "$PKG_DIR/Sources/VoicevoxCore/Resources/licenses.json"
 
 echo "done:"
 ls "$BIN"

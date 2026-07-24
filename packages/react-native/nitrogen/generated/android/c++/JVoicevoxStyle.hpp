@@ -35,9 +35,12 @@ namespace margelo::nitro::voicevox {
       jni::local_ref<jni::JString> name = this->getFieldValue(fieldName);
       static const auto fieldId = clazz->getField<double>("id");
       double id = this->getFieldValue(fieldId);
+      static const auto fieldType = clazz->getField<jni::JString>("type");
+      jni::local_ref<jni::JString> type = this->getFieldValue(fieldType);
       return VoicevoxStyle(
         name->toStdString(),
-        id
+        id,
+        type->toStdString()
       );
     }
 
@@ -47,13 +50,14 @@ namespace margelo::nitro::voicevox {
      */
     [[maybe_unused]]
     static jni::local_ref<JVoicevoxStyle::javaobject> fromCpp(const VoicevoxStyle& value) {
-      using JSignature = JVoicevoxStyle(jni::alias_ref<jni::JString>, double);
+      using JSignature = JVoicevoxStyle(jni::alias_ref<jni::JString>, double, jni::alias_ref<jni::JString>);
       static const auto clazz = javaClassStatic();
       static const auto create = clazz->getStaticMethod<JSignature>("fromCpp");
       return create(
         clazz,
         jni::make_jstring(value.name),
-        value.id
+        value.id,
+        jni::make_jstring(value.type)
       );
     }
   };

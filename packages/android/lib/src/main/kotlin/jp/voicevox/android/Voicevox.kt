@@ -142,10 +142,15 @@ class Voicevox private constructor(
      *
      * @param text 読み上げるテキスト。
      * @param modelId モデルID([listModels] の id)。
-     * @param styleId スタイルID。null ならモデル先頭キャラクターの先頭スタイル。
+     * @param styleId スタイルID(characters[].styles[] から選ぶ)。null なら最初の talk スタイル。
+     *   talk スタイルを持たないモデル(歌唱合成用の s0 など)は
+     *   [VoicevoxException.TalkNotSupported] を投げる。
      */
     suspend fun synthesis(text: String, modelId: String, styleId: Int? = null): ByteArray {
         val info = manager.info(modelId)
+        if (!info.supportsTalk) {
+            throw VoicevoxException.TalkNotSupported(modelId)
+        }
         if (!manager.isDownloaded(modelId)) {
             throw VoicevoxException.ModelNotDownloaded(modelId)
         }
@@ -163,8 +168,10 @@ class Voicevox private constructor(
         }
 
         val style = styleId
-            ?: info.characters.firstOrNull()?.styles?.firstOrNull()?.id
-            ?: 0
+            ?: info.characters.asSequence()
+                .flatMap { it.talkStyles }
+                .firstOrNull()?.id
+            ?: throw VoicevoxException.TalkNotSupported(modelId)
         // 合成はCPU負荷が高いのでDefaultディスパッチャで実行
         return withContext(Dispatchers.Default) {
             synthesizer.tts(text, style).perform()

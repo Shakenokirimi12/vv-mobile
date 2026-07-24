@@ -14,6 +14,10 @@ sealed class VoicevoxException(message: String) : Exception(message) {
     class UnknownModel(val modelId: String) :
         VoicevoxException("不明なモデルID: $modelId")
 
+    /** テキスト読み上げ(talk)非対応モデル(歌唱合成用 s0 など)で synthesis しようとした。 */
+    class TalkNotSupported(val modelId: String) :
+        VoicevoxException("モデル $modelId はテキスト読み上げ(talk)に対応していません(歌唱合成用モデルです)")
+
     /** ダウンロード失敗。 */
     class DownloadFailed(val modelId: String, cause: String) :
         VoicevoxException("モデル $modelId のダウンロードに失敗しました: $cause")

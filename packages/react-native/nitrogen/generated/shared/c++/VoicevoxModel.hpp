@@ -32,8 +32,8 @@
 namespace margelo::nitro::voicevox { struct VoicevoxCharacter; }
 
 #include <string>
-#include "VoicevoxCharacter.hpp"
 #include <vector>
+#include "VoicevoxCharacter.hpp"
 
 namespace margelo::nitro::voicevox {
 
@@ -47,12 +47,13 @@ namespace margelo::nitro::voicevox {
     double sizeBytes     SWIFT_PRIVATE;
     std::string downloadURL     SWIFT_PRIVATE;
     std::string vvmId     SWIFT_PRIVATE;
+    std::vector<std::string> domains     SWIFT_PRIVATE;
     std::vector<VoicevoxCharacter> characters     SWIFT_PRIVATE;
     bool isDownloaded     SWIFT_PRIVATE;
 
   public:
     VoicevoxModel() = default;
-    explicit VoicevoxModel(std::string id, std::string filename, double sizeBytes, std::string downloadURL, std::string vvmId, std::vector<VoicevoxCharacter> characters, bool isDownloaded): id(id), filename(filename), sizeBytes(sizeBytes), downloadURL(downloadURL), vvmId(vvmId), characters(characters), isDownloaded(isDownloaded) {}
+    explicit VoicevoxModel(std::string id, std::string filename, double sizeBytes, std::string downloadURL, std::string vvmId, std::vector<std::string> domains, std::vector<VoicevoxCharacter> characters, bool isDownloaded): id(id), filename(filename), sizeBytes(sizeBytes), downloadURL(downloadURL), vvmId(vvmId), domains(domains), characters(characters), isDownloaded(isDownloaded) {}
 
   public:
     friend bool operator==(const VoicevoxModel& lhs, const VoicevoxModel& rhs) = default;
@@ -73,6 +74,7 @@ namespace margelo::nitro {
         JSIConverter<double>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "sizeBytes"))),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "downloadURL"))),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "vvmId"))),
+        JSIConverter<std::vector<std::string>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "domains"))),
         JSIConverter<std::vector<margelo::nitro::voicevox::VoicevoxCharacter>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "characters"))),
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "isDownloaded")))
       );
@@ -84,6 +86,7 @@ namespace margelo::nitro {
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "sizeBytes"), JSIConverter<double>::toJSI(runtime, arg.sizeBytes));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "downloadURL"), JSIConverter<std::string>::toJSI(runtime, arg.downloadURL));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "vvmId"), JSIConverter<std::string>::toJSI(runtime, arg.vvmId));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "domains"), JSIConverter<std::vector<std::string>>::toJSI(runtime, arg.domains));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "characters"), JSIConverter<std::vector<margelo::nitro::voicevox::VoicevoxCharacter>>::toJSI(runtime, arg.characters));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "isDownloaded"), JSIConverter<bool>::toJSI(runtime, arg.isDownloaded));
       return obj;
@@ -101,6 +104,7 @@ namespace margelo::nitro {
       if (!JSIConverter<double>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "sizeBytes")))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "downloadURL")))) return false;
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "vvmId")))) return false;
+      if (!JSIConverter<std::vector<std::string>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "domains")))) return false;
       if (!JSIConverter<std::vector<margelo::nitro::voicevox::VoicevoxCharacter>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "characters")))) return false;
       if (!JSIConverter<bool>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "isDownloaded")))) return false;
       return true;

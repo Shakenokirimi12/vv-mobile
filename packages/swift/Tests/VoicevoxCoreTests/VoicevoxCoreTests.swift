@@ -22,6 +22,30 @@ final class VoicevoxCoreTests: XCTestCase {
             XCTAssertFalse(model.characters.isEmpty, "model \(model.id) has no characters")
             XCTAssertFalse(model.characters[0].styles.isEmpty)
             XCTAssertTrue(model.downloadURL.hasPrefix("https://"))
+            XCTAssertFalse(model.domains.isEmpty, "model \(model.id) has no domains")
+        }
+        // モデル0は talk 対応で複数キャラクター・複数スタイルを持つ
+        let model0 = catalog.models.first { $0.id == "0" }!
+        XCTAssertTrue(model0.supportsTalk)
+        XCTAssertEqual(model0.characters.count, 4)
+        XCTAssertEqual(model0.characters.flatMap(\.talkStyles).count, 10)
+        // s0(歌唱合成用)は talk 非対応
+        let s0 = catalog.models.first { $0.id == "s0" }!
+        XCTAssertFalse(s0.supportsTalk)
+        XCTAssertTrue(s0.characters.flatMap(\.talkStyles).isEmpty)
+    }
+
+    func testSynthesisRejectsSongOnlyModel() async throws {
+        let voicevox = try Voicevox(
+            onnxruntimePath: Self.onnxruntimePath,
+            modelsDir: FileManager.default.temporaryDirectory
+                .appendingPathComponent("vv-empty-\(UUID().uuidString)")
+        )
+        do {
+            _ = try await voicevox.synthesis(text: "テスト", modelId: "s0")
+            XCTFail("should throw talkNotSupported")
+        } catch let error as VoicevoxError {
+            XCTAssertEqual(error, .talkNotSupported(modelId: "s0"))
         }
     }
 
@@ -85,6 +109,19 @@ final class VoicevoxCoreTests: XCTestCase {
         // WAV ヘッダ("RIFF")と十分なデータ長を確認
         XCTAssertGreaterThan(wav.count, 44)
         XCTAssertEqual(String(data: wav.prefix(4), encoding: .ascii), "RIFF")
+
+        // 同一モデル内の別スタイル(ずんだもん あまあま=1)でも合成でき、
+        // 結果がノーマル(3)と異なることを確認(スタイル指定が効いている)
+        let wavAmaama = try await voicevox.synthesis(
+            text: "こんにちは、ずんだもんなのだ", modelId: "0", styleId: 1)
+        XCTAssertEqual(String(data: wavAmaama.prefix(4), encoding: .ascii), "RIFF")
+        XCTAssertNotEqual(wav, wavAmaama)
+
+        // デフォルト(styleId未指定)は最初のtalkスタイル(四国めたん ノーマル=2)
+        let wavDefault = try await voicevox.synthesis(
+            text: "こんにちは、ずんだもんなのだ", modelId: "0")
+        XCTAssertEqual(String(data: wavDefault.prefix(4), encoding: .ascii), "RIFF")
+        XCTAssertNotEqual(wavDefault, wav)
 
         // 検証用に書き出し
         let out = FileManager.default.temporaryDirectory.appendingPathComponent("vv_e2e_output.wav")

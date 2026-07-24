@@ -103,12 +103,29 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun synthesize(model: VoicevoxModelInfo) {
+    /** キャラクター×スタイル(talkのみ)を選ばせてから合成する。 */
+    private fun selectStyleAndSynthesize(model: VoicevoxModelInfo) {
+        val styles = model.characters.flatMap { c ->
+            c.talkStyles.map { s -> "${c.name}(${s.name})" to s.id }
+        }
+        if (styles.isEmpty()) {
+            setStatus("このモデルは歌唱合成用のため読み上げには使えません", busy = false)
+            return
+        }
+        AlertDialog.Builder(this)
+            .setTitle("キャラクター・スタイルを選択")
+            .setItems(styles.map { it.first }.toTypedArray()) { _, which ->
+                synthesize(model, styles[which].second)
+            }
+            .show()
+    }
+
+    private fun synthesize(model: VoicevoxModelInfo, styleId: Int) {
         val vv = voicevox ?: return
         lifecycleScope.launch {
             setStatus("合成中...", busy = true)
             try {
-                val wav = vv.synthesis(textInput.text.toString(), modelId = model.id)
+                val wav = vv.synthesis(textInput.text.toString(), modelId = model.id, styleId = styleId)
                 val file = File(cacheDir, "voicevox_out.wav").apply { writeBytes(wav) }
                 player?.release()
                 player = MediaPlayer().apply {
@@ -116,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                     prepare()
                     start()
                 }
-                setStatus("再生中 (${wav.size} bytes)", busy = false)
+                setStatus("再生中 (styleId=$styleId, ${wav.size} bytes)", busy = false)
             } catch (e: Exception) {
                 setStatus("$e", busy = false)
             }
@@ -172,7 +189,7 @@ class MainActivity : AppCompatActivity() {
             row.addView(Button(this).apply {
                 text = if (model.isDownloaded) "再生" else "DL"
                 setOnClickListener {
-                    if (model.isDownloaded) synthesize(model) else download(model)
+                    if (model.isDownloaded) selectStyleAndSynthesize(model) else download(model)
                 }
             })
             modelList.addView(row)

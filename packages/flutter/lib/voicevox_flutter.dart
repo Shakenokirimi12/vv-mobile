@@ -177,13 +177,18 @@ class Voicevox {
   /// モデルが未ダウンロードの場合は [ModelNotDownloadedException] を投げる
   /// (暗黙のダウンロードは行わない)。未ロードならロードしてから合成する。
   ///
-  /// [styleId] は null ならモデル先頭キャラクターの先頭スタイル。
+  /// [styleId] は characters[].styles[] から選ぶ。null なら最初の talk スタイル。
+  /// talk スタイルを持たないモデル(歌唱合成用の s0 など)は
+  /// [TalkNotSupportedException] を投げる。
   Future<Uint8List> synthesis(
     String text, {
     required String modelId,
     int? styleId,
   }) async {
     final info = _manager.info(modelId);
+    if (!info.supportsTalk) {
+      throw TalkNotSupportedException(modelId);
+    }
     if (!_manager.isDownloaded(modelId)) {
       throw ModelNotDownloadedException(modelId);
     }
@@ -197,9 +202,13 @@ class Voicevox {
     }
 
     final style = styleId ??
-        (info.characters.isNotEmpty && info.characters.first.styles.isNotEmpty
-            ? info.characters.first.styles.first.id
-            : 0);
+        info.characters
+            .expand((c) => c.talkStyles)
+            .map((s) => s.id)
+            .firstOrNull;
+    if (style == null) {
+      throw TalkNotSupportedException(modelId);
+    }
     return _synthesizer.tts(text, styleId: style);
   }
 

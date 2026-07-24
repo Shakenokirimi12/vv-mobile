@@ -3,6 +3,11 @@ import type { HybridObject } from 'react-native-nitro-modules'
 export interface VoicevoxStyle {
   name: string
   id: number
+  /**
+   * スタイル種別。"talk" はテキスト読み上げ(synthesis で使用可)、
+   * "frame_decode" は歌唱合成用で synthesis では使えない。
+   */
+  type: string
 }
 
 export interface VoicevoxCharacter {
@@ -24,6 +29,8 @@ export interface VoicevoxModel {
   sizeBytes: number
   downloadURL: string
   vvmId: string
+  /** モデルが対応する合成ドメイン(例: ["talk"]、歌唱モデルは ["frame_decode"])。 */
+  domains: string[]
   characters: VoicevoxCharacter[]
   isDownloaded: boolean
 }

@@ -18,6 +18,24 @@ Swift/Android/RN は自動E2E(未同意DL拒否 → 同意 → モデル0 DL →
 Swift サンプルは `cd packages/swift/Example && xcodegen generate` でプロジェクト生成
 (xcodeproj は生成物のためコミットしない)。
 
+### スタイル選択対応 (2026-07-24 追加)
+
+当初、サンプルアプリはモデル単位でしか操作できず「vvm内の最初のスタイルしか選べない」
+問題があった。vvm の実内容を調査した結果:
+
+- 1つの .vvm には複数キャラクター×複数スタイルが含まれる(例: モデル0は
+  四国めたん4スタイル + ずんだもん4スタイル + 春日部つむぎ + 雨晴はう = 計10スタイル)
+- **s0.vvm は歌唱合成用(`frame_decode`ドメイン、スタイルID 3000番台)で、
+  `tts()`(talk)では合成できない**。従来の licenses.json はこれを区別していなかった
+
+対応: licenses.json に `domains`(モデル)と `type`(スタイル)を追加し、
+全パッケージの Facade でデフォルトスタイルを「最初の talk スタイル」に変更、
+talk 非対応モデルは `TalkNotSupported` エラーに。全サンプルアプリに
+キャラクター×スタイル選択UI(Swift: confirmationDialog / Android: 選択ダイアログ /
+Flutter: ボトムシート / RN: Alert)を追加した。
+検証は Swift E2E(C13/C14)+ 各プラットフォームのビルドで実施。
+サンプルUIでの選択操作の実機確認は Android(エミュレータ、下記)で実施。Swift/Flutter/RN のUI操作は未(ロジックはSwift E2Eでカバー)。
+
 ## 共通テストケース(全プラットフォーム同一契約)
 
 | # | ケース | 期待動作 |
@@ -34,6 +52,8 @@ Swift サンプルは `cd packages/swift/Example && xcodegen generate` でプロ
 | C10 | `downloadModels` 部分失敗 | 未同意モデルのみ失敗、他は成功(全滅しない) |
 | C11 | 不明モデルID | `UnknownModel` エラー |
 | C12 | ダウンロード済みモデルの再DL | 何もせず成功(冪等) |
+| C13 | styleId指定合成 | 同一モデル内の別キャラ/スタイルを選択でき、スタイルごとに異なる音声が生成される |
+| C14 | talk非対応モデル(s0=歌唱合成用)で `synthesis` | `TalkNotSupported` エラー(styleId未指定のデフォルト解決も talk スタイルのみから選ぶ) |
 
 ## Swift (packages/swift) — 済
 
@@ -45,6 +65,8 @@ Swift サンプルは `cd packages/swift/Example && xcodegen generate` でプロ
 - 済 初期化+バージョン確認 (`testSynthesizerInitAndVersion`, macOS/iOSシミュレータ両方)
 - 済 C3, C7 (`testEndToEndSynthesis`, macOS: 2.56秒の実音声を確認)
 - 済 C9, C10 (`testParallelDownload`)
+- 済 C13 (`testEndToEndSynthesis`拡張: styleId 3/1/未指定で異なるWAVが生成されることを確認)
+- 済 C14 (`testSynthesisRejectsSongOnlyModel` + `testCatalogDecodes`でs0のtalk非対応を検証)
 - 未 C8, C11, C12 の明示的テスト
 - 未 iOSシミュレータでのE2E(ユニットテストは通過済み、E2EはmacOSのみ)
 

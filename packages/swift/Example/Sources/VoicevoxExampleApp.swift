@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var status = "初期化中..."
     @State private var busy = false
     @State private var licenseTarget: VoicevoxModelInfo?
+    @State private var styleTarget: VoicevoxModelInfo?
     @State private var player: AVAudioPlayer?
 
     var body: some View {
@@ -40,7 +41,7 @@ struct ContentView: View {
                         Spacer()
                         Button(model.isDownloaded ? "再生" : "DL") {
                             if model.isDownloaded {
-                                Task { await synthesize(model) }
+                                styleTarget = model
                             } else {
                                 licenseTarget = model
                             }
@@ -73,6 +74,26 @@ struct ContentView: View {
                     + "利用には VOICEVOX 音声モデル利用規約および各キャラクターの規約への同意が必要です。"
                     + "生成音声の利用時はクレジット表記(例: \(model.characters.first?.creditText ?? ""))が必要です。"
             )
+        }
+        .confirmationDialog(
+            "キャラクター・スタイルを選択",
+            isPresented: Binding(
+                get: { styleTarget != nil },
+                set: { if !$0 { styleTarget = nil } }
+            ),
+            titleVisibility: .visible,
+            presenting: styleTarget
+        ) { model in
+            ForEach(model.characters, id: \.speakerUuid) { character in
+                ForEach(character.talkStyles, id: \.id) { style in
+                    Button("\(character.name)(\(style.name))") {
+                        Task { await synthesize(model, styleId: style.id) }
+                    }
+                }
+            }
+            if !model.supportsTalk {
+                Button("このモデルは歌唱合成用のため読み上げ不可") {}
+            }
         }
     }
 
@@ -132,16 +153,16 @@ struct ContentView: View {
         }
     }
 
-    private func synthesize(_ model: VoicevoxModelInfo) async {
+    private func synthesize(_ model: VoicevoxModelInfo, styleId: UInt32? = nil) async {
         guard let voicevox else { return }
         busy = true
         status = "合成中..."
         defer { busy = false }
         do {
-            let wav = try await voicevox.synthesis(text: text, modelId: model.id)
+            let wav = try await voicevox.synthesis(text: text, modelId: model.id, styleId: styleId)
             player = try AVAudioPlayer(data: wav)
             player?.play()
-            status = "再生中 (\(wav.count) bytes)"
+            status = "再生中 (styleId=\(styleId.map(String.init) ?? "auto"), \(wav.count) bytes)"
         } catch {
             status = error.localizedDescription
         }

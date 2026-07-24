@@ -18,8 +18,14 @@ public extension VoicevoxModel {
   /**
    * Create a new instance of `VoicevoxModel`.
    */
-  init(id: String, filename: String, sizeBytes: Double, downloadURL: String, vvmId: String, characters: [VoicevoxCharacter], isDownloaded: Bool) {
-    self.init(std.string(id), std.string(filename), sizeBytes, std.string(downloadURL), std.string(vvmId), { () -> bridge.std__vector_VoicevoxCharacter_ in
+  init(id: String, filename: String, sizeBytes: Double, downloadURL: String, vvmId: String, domains: [String], characters: [VoicevoxCharacter], isDownloaded: Bool) {
+    self.init(std.string(id), std.string(filename), sizeBytes, std.string(downloadURL), std.string(vvmId), { () -> bridge.std__vector_std__string_ in
+      var __vector = bridge.create_std__vector_std__string_(domains.count)
+      for __item in domains {
+        __vector.push_back(std.string(__item))
+      }
+      return __vector
+    }(), { () -> bridge.std__vector_VoicevoxCharacter_ in
       var __vector = bridge.create_std__vector_VoicevoxCharacter_(characters.count)
       for __item in characters {
         __vector.push_back(__item)
@@ -51,6 +57,11 @@ public extension VoicevoxModel {
   @inline(__always)
   var vvmId: String {
     return String(self.__vvmId)
+  }
+  
+  @inline(__always)
+  var domains: [String] {
+    return self.__domains.map({ __item in String(__item) })
   }
   
   @inline(__always)

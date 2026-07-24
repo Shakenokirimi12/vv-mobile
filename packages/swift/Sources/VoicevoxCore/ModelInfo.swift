@@ -6,6 +6,9 @@ public struct VoicevoxModelInfo: Codable, Identifiable, Sendable, Equatable {
         public struct Style: Codable, Sendable, Equatable {
             public let name: String
             public let id: UInt32
+            /// スタイル種別。"talk" はテキスト読み上げ(synthesis で使用可)、
+            /// "frame_decode" は歌唱合成用で synthesis では使えない。
+            public let type: String
         }
 
         public let name: String
@@ -15,6 +18,9 @@ public struct VoicevoxModelInfo: Codable, Identifiable, Sendable, Equatable {
         /// キャラクター個別の利用規約URL。
         public let termsURL: String
         public let styles: [Style]
+
+        /// テキスト読み上げに使えるスタイルのみ。
+        public var talkStyles: [Style] { styles.filter { $0.type == "talk" } }
     }
 
     public let id: String
@@ -22,13 +28,18 @@ public struct VoicevoxModelInfo: Codable, Identifiable, Sendable, Equatable {
     public let sizeBytes: Int64
     public let downloadURL: String
     public let vvmId: String
+    /// モデルが対応する合成ドメイン(例: ["talk"]、歌唱モデルは ["frame_decode"])。
+    public let domains: [String]
     public let characters: [Character]
 
     /// ダウンロード済みかどうか(listModels() 時に付与)。
     public var isDownloaded: Bool = false
 
+    /// テキスト読み上げ(synthesis)に対応したモデルかどうか。
+    public var supportsTalk: Bool { domains.contains("talk") }
+
     private enum CodingKeys: String, CodingKey {
-        case id, filename, sizeBytes, downloadURL, vvmId, characters
+        case id, filename, sizeBytes, downloadURL, vvmId, domains, characters
     }
 }
 

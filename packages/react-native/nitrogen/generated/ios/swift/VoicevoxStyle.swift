@@ -18,8 +18,8 @@ public extension VoicevoxStyle {
   /**
    * Create a new instance of `VoicevoxStyle`.
    */
-  init(name: String, id: Double) {
-    self.init(std.string(name), id)
+  init(name: String, id: Double, type: String) {
+    self.init(std.string(name), id, std.string(type))
   }
 
   @inline(__always)
@@ -30,5 +30,10 @@ public extension VoicevoxStyle {
   @inline(__always)
   var id: Double {
     return self.__id
+  }
+  
+  @inline(__always)
+  var type: String {
+    return String(self.__type)
   }
 }

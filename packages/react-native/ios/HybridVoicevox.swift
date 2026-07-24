@@ -103,6 +103,7 @@ private extension VoicevoxModelInfo {
             sizeBytes: Double(sizeBytes),
             downloadURL: downloadURL,
             vvmId: vvmId,
+            domains: domains,
             characters: characters.map { character in
                 VoicevoxCharacter(
                     name: character.name,
@@ -110,7 +111,7 @@ private extension VoicevoxModelInfo {
                     creditText: character.creditText,
                     termsURL: character.termsURL,
                     styles: character.styles.map {
-                        VoicevoxStyle(name: $0.name, id: Double($0.id))
+                        VoicevoxStyle(name: $0.name, id: Double($0.id), type: $0.type)
                     }
                 )
             },

@@ -105,6 +105,17 @@ namespace margelo::nitro::voicevox::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::vector<std::string>
+  /**
+   * Specialized version of `std::vector<std::string>`.
+   */
+  using std__vector_std__string_ = std::vector<std::string>;
+  inline std::vector<std::string> create_std__vector_std__string_(size_t size) noexcept {
+    std::vector<std::string> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
   // pragma MARK: std::vector<VoicevoxStyle>
   /**
    * Specialized version of `std::vector<VoicevoxStyle>`.
@@ -230,17 +241,6 @@ namespace margelo::nitro::voicevox::bridge::swift {
   Func_void_std__vector_DownloadResult_ create_Func_void_std__vector_DownloadResult_(void* NON_NULL swiftClosureWrapper) noexcept;
   inline Func_void_std__vector_DownloadResult__Wrapper wrap_Func_void_std__vector_DownloadResult_(Func_void_std__vector_DownloadResult_ value) noexcept {
     return Func_void_std__vector_DownloadResult__Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::vector<std::string>
-  /**
-   * Specialized version of `std::vector<std::string>`.
-   */
-  using std__vector_std__string_ = std::vector<std::string>;
-  inline std::vector<std::string> create_std__vector_std__string_(size_t size) noexcept {
-    std::vector<std::string> vector;
-    vector.reserve(size);
-    return vector;
   }
   
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>

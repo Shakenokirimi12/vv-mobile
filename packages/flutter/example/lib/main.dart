@@ -93,16 +93,46 @@ class _HomePageState extends State<HomePage> {
     return result ?? false;
   }
 
-  Future<void> _speak(VoicevoxModelInfo model) async {
+  /// キャラクター×スタイル(talkのみ)を選ばせてから合成する。
+  Future<void> _selectStyleAndSpeak(VoicevoxModelInfo model) async {
+    final styles = [
+      for (final character in model.characters)
+        for (final style in character.talkStyles)
+          (label: '${character.name}(${style.name})', id: style.id),
+    ];
+    if (styles.isEmpty) {
+      setState(() => _status = 'このモデルは歌唱合成用のため読み上げには使えません');
+      return;
+    }
+    final selected = await showModalBottomSheet<int>(
+      context: context,
+      builder: (context) => ListView(
+        children: [
+          const ListTile(title: Text('キャラクター・スタイルを選択')),
+          for (final style in styles)
+            ListTile(
+              title: Text(style.label),
+              onTap: () => Navigator.pop(context, style.id),
+            ),
+        ],
+      ),
+    );
+    if (selected != null) {
+      await _speak(model, styleId: selected);
+    }
+  }
+
+  Future<void> _speak(VoicevoxModelInfo model, {int? styleId}) async {
     setState(() {
       _busy = true;
       _status = '合成中...';
     });
     try {
       final wav = await _voicevox!
-          .synthesis(_textController.text, modelId: model.id);
+          .synthesis(_textController.text, modelId: model.id, styleId: styleId);
       await _player.play(BytesSource(wav));
-      setState(() => _status = '再生中 (${wav.length} bytes)');
+      setState(
+          () => _status = '再生中 (styleId=${styleId ?? "auto"}, ${wav.length} bytes)');
     } on VoicevoxException catch (e) {
       setState(() => _status = e.message);
     } finally {
@@ -145,7 +175,8 @@ class _HomePageState extends State<HomePage> {
                   trailing: model.isDownloaded
                       ? IconButton(
                           icon: const Icon(Icons.play_arrow),
-                          onPressed: _busy ? null : () => _speak(model),
+                          onPressed:
+                              _busy ? null : () => _selectStyleAndSpeak(model),
                         )
                       : IconButton(
                           icon: const Icon(Icons.download),

@@ -46,6 +46,8 @@ namespace margelo::nitro::voicevox {
       jni::local_ref<jni::JString> downloadURL = this->getFieldValue(fieldDownloadURL);
       static const auto fieldVvmId = clazz->getField<jni::JString>("vvmId");
       jni::local_ref<jni::JString> vvmId = this->getFieldValue(fieldVvmId);
+      static const auto fieldDomains = clazz->getField<jni::JArrayClass<jni::JString>>("domains");
+      jni::local_ref<jni::JArrayClass<jni::JString>> domains = this->getFieldValue(fieldDomains);
       static const auto fieldCharacters = clazz->getField<jni::JArrayClass<JVoicevoxCharacter>>("characters");
       jni::local_ref<jni::JArrayClass<JVoicevoxCharacter>> characters = this->getFieldValue(fieldCharacters);
       static const auto fieldIsDownloaded = clazz->getField<jboolean>("isDownloaded");
@@ -56,6 +58,16 @@ namespace margelo::nitro::voicevox {
         sizeBytes,
         downloadURL->toStdString(),
         vvmId->toStdString(),
+        [&](auto&& __input) {
+          size_t __size = __input->size();
+          std::vector<std::string> __vector;
+          __vector.reserve(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            auto __element = __input->getElement(__i);
+            __vector.push_back(__element->toStdString());
+          }
+          return __vector;
+        }(domains),
         [&](auto&& __input) {
           size_t __size = __input->size();
           std::vector<VoicevoxCharacter> __vector;
@@ -76,7 +88,7 @@ namespace margelo::nitro::voicevox {
      */
     [[maybe_unused]]
     static jni::local_ref<JVoicevoxModel::javaobject> fromCpp(const VoicevoxModel& value) {
-      using JSignature = JVoicevoxModel(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, double, jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, jni::alias_ref<jni::JArrayClass<JVoicevoxCharacter>>, jboolean);
+      using JSignature = JVoicevoxModel(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, double, jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>, jni::alias_ref<jni::JArrayClass<jni::JString>>, jni::alias_ref<jni::JArrayClass<JVoicevoxCharacter>>, jboolean);
       static const auto clazz = javaClassStatic();
       static const auto create = clazz->getStaticMethod<JSignature>("fromCpp");
       return create(
@@ -86,6 +98,16 @@ namespace margelo::nitro::voicevox {
         value.sizeBytes,
         jni::make_jstring(value.downloadURL),
         jni::make_jstring(value.vvmId),
+        [&](auto&& __input) {
+          size_t __size = __input.size();
+          jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            const auto& __element = __input[__i];
+            auto __elementJni = jni::make_jstring(__element);
+            __array->setElement(__i, *__elementJni);
+          }
+          return __array;
+        }(value.domains),
         [&](auto&& __input) {
           size_t __size = __input.size();
           jni::local_ref<jni::JArrayClass<JVoicevoxCharacter>> __array = jni::JArrayClass<JVoicevoxCharacter>::newArray(__size);

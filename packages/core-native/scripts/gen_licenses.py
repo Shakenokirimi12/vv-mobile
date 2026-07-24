@@ -10,9 +10,15 @@
     "termsURL": "<リリースの TERMS.txt URL>",
     "models": [
       {"id", "filename", "sizeBytes", "downloadURL", "vvmId",
-       "characters": [{"name", "speakerUuid", "creditText", "termsURL", "styles": [...]}]}
+       "domains": ["talk" | "frame_decode" | ...],
+       "characters": [{"name", "speakerUuid", "creditText", "termsURL",
+                       "styles": [{"name", "id", "type"}]}]}
     ]
   }
+
+domains はモデルが対応する合成ドメイン(manifest のキー由来)。
+"talk" がテキスト読み上げ(tts)、"frame_decode" は歌唱合成用で tts では使えない。
+style の type も同様(metas.json に無い場合は "talk")。
 """
 import io
 import json
@@ -123,6 +129,10 @@ def main():
         manifest = json.loads(zf.read("manifest.json"))
         metas = json.loads(zf.read(manifest.get("metas_filename", "metas.json")))
 
+        # 合成ドメイン(talk = テキスト読み上げ、frame_decode = 歌唱)
+        domain_keys = ("talk", "sing", "song", "frame_decode", "humming")
+        domains = [k for k in domain_keys if k in manifest]
+
         characters = []
         for meta in metas:
             cname = meta["name"]
@@ -133,7 +143,12 @@ def main():
                     "creditText": f"VOICEVOX:{cname}",
                     "termsURL": char_terms.get(cname, terms_url),
                     "styles": [
-                        {"name": s["name"], "id": s["id"]} for s in meta.get("styles", [])
+                        {
+                            "name": s["name"],
+                            "id": s["id"],
+                            "type": s.get("type", "talk"),
+                        }
+                        for s in meta.get("styles", [])
                     ],
                 }
             )
@@ -145,6 +160,7 @@ def main():
                 "sizeBytes": size,
                 "downloadURL": url,
                 "vvmId": manifest.get("id", ""),
+                "domains": domains,
                 "characters": characters,
             }
         )

@@ -8,6 +8,9 @@
       "sizeBytes": 58214379,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/0.vvm",
       "vvmId": "7cb1e0dd-718f-41d7-889b-1b1307dc4727",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "四国めたん",
@@ -17,19 +20,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 2
+              "id": 2,
+              "type": "talk"
             },
             {
               "name": "あまあま",
-              "id": 0
+              "id": 0,
+              "type": "talk"
             },
             {
               "name": "ツンツン",
-              "id": 6
+              "id": 6,
+              "type": "talk"
             },
             {
               "name": "セクシー",
-              "id": 4
+              "id": 4,
+              "type": "talk"
             }
           ]
         },
@@ -41,19 +48,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3
+              "id": 3,
+              "type": "talk"
             },
             {
               "name": "あまあま",
-              "id": 1
+              "id": 1,
+              "type": "talk"
             },
             {
               "name": "ツンツン",
-              "id": 7
+              "id": 7,
+              "type": "talk"
             },
             {
               "name": "セクシー",
-              "id": 5
+              "id": 5,
+              "type": "talk"
             }
           ]
         },
@@ -65,7 +76,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 8
+              "id": 8,
+              "type": "talk"
             }
           ]
         },
@@ -77,7 +89,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10
+              "id": 10,
+              "type": "talk"
             }
           ]
         }
@@ -89,6 +102,9 @@
       "sizeBytes": 59477413,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/1.vvm",
       "vvmId": "960e7621-6831-4b7b-a90b-cd34093baa21",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "冥鳴ひまり",
@@ -98,7 +114,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 14
+              "id": 14,
+              "type": "talk"
             }
           ]
         }
@@ -110,6 +127,9 @@
       "sizeBytes": 58214778,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/2.vvm",
       "vvmId": "a1509c79-7f30-4a2a-9ad2-5b4ad211f0af",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "九州そら",
@@ -119,19 +139,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 16
+              "id": 16,
+              "type": "talk"
             },
             {
               "name": "あまあま",
-              "id": 15
+              "id": 15,
+              "type": "talk"
             },
             {
               "name": "ツンツン",
-              "id": 18
+              "id": 18,
+              "type": "talk"
             },
             {
               "name": "セクシー",
-              "id": 17
+              "id": 17,
+              "type": "talk"
             }
           ]
         }
@@ -143,6 +167,9 @@
       "sizeBytes": 61730024,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/3.vvm",
       "vvmId": "1dc1f513-08ac-4ada-a18a-cd7f94cff46c",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "波音リツ",
@@ -152,11 +179,13 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 9
+              "id": 9,
+              "type": "talk"
             },
             {
               "name": "クイーン",
-              "id": 65
+              "id": 65,
+              "type": "talk"
             }
           ]
         },
@@ -168,19 +197,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 61
+              "id": 61,
+              "type": "talk"
             },
             {
               "name": "おどろき",
-              "id": 62
+              "id": 62,
+              "type": "talk"
             },
             {
               "name": "こわがり",
-              "id": 63
+              "id": 63,
+              "type": "talk"
             },
             {
               "name": "へろへろ",
-              "id": 64
+              "id": 64,
+              "type": "talk"
             }
           ]
         }
@@ -192,6 +225,9 @@
       "sizeBytes": 58211265,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/4.vvm",
       "vvmId": "c5337c46-fe0d-4a6a-bbc2-ac587c640b68",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "玄野武宏",
@@ -201,7 +237,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 11
+              "id": 11,
+              "type": "talk"
             }
           ]
         },
@@ -213,7 +250,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 21
+              "id": 21,
+              "type": "talk"
             }
           ]
         }
@@ -225,6 +263,9 @@
       "sizeBytes": 56517330,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/5.vvm",
       "vvmId": "a0b1fe9c-a06f-4720-b03a-0eeddf0d3f65",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "四国めたん",
@@ -234,11 +275,13 @@
           "styles": [
             {
               "name": "ささやき",
-              "id": 36
+              "id": 36,
+              "type": "talk"
             },
             {
               "name": "ヒソヒソ",
-              "id": 37
+              "id": 37,
+              "type": "talk"
             }
           ]
         },
@@ -250,11 +293,13 @@
           "styles": [
             {
               "name": "ささやき",
-              "id": 22
+              "id": 22,
+              "type": "talk"
             },
             {
               "name": "ヒソヒソ",
-              "id": 38
+              "id": 38,
+              "type": "talk"
             }
           ]
         },
@@ -266,7 +311,8 @@
           "styles": [
             {
               "name": "ささやき",
-              "id": 19
+              "id": 19,
+              "type": "talk"
             }
           ]
         }
@@ -278,6 +324,9 @@
       "sizeBytes": 58211181,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/6.vvm",
       "vvmId": "c5757401-ca78-4e0c-ade5-0121b84ed2e7",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "No.7",
@@ -287,15 +336,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 29
+              "id": 29,
+              "type": "talk"
             },
             {
               "name": "アナウンス",
-              "id": 30
+              "id": 30,
+              "type": "talk"
             },
             {
               "name": "読み聞かせ",
-              "id": 31
+              "id": 31,
+              "type": "talk"
             }
           ]
         }
@@ -307,6 +359,9 @@
       "sizeBytes": 57232459,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/7.vvm",
       "vvmId": "0d993c88-2116-4766-85cb-f3f0da46d404",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "後鬼",
@@ -316,11 +371,13 @@
           "styles": [
             {
               "name": "人間ver.",
-              "id": 27
+              "id": 27,
+              "type": "talk"
             },
             {
               "name": "ぬいぐるみver.",
-              "id": 28
+              "id": 28,
+              "type": "talk"
             }
           ]
         }
@@ -332,6 +389,9 @@
       "sizeBytes": 58210984,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/8.vvm",
       "vvmId": "c545145c-ebc5-4d60-bd79-24dacc89c534",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "WhiteCUL",
@@ -341,19 +401,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 23
+              "id": 23,
+              "type": "talk"
             },
             {
               "name": "たのしい",
-              "id": 24
+              "id": 24,
+              "type": "talk"
             },
             {
               "name": "かなしい",
-              "id": 25
+              "id": 25,
+              "type": "talk"
             },
             {
               "name": "びえーん",
-              "id": 26
+              "id": 26,
+              "type": "talk"
             }
           ]
         }
@@ -365,6 +429,9 @@
       "sizeBytes": 57235017,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/9.vvm",
       "vvmId": "3fd47203-0943-4029-952e-11efbb6499f5",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "白上虎太郎",
@@ -374,23 +441,28 @@
           "styles": [
             {
               "name": "ふつう",
-              "id": 12
+              "id": 12,
+              "type": "talk"
             },
             {
               "name": "わーい",
-              "id": 32
+              "id": 32,
+              "type": "talk"
             },
             {
               "name": "びくびく",
-              "id": 33
+              "id": 33,
+              "type": "talk"
             },
             {
               "name": "おこ",
-              "id": 34
+              "id": 34,
+              "type": "talk"
             },
             {
               "name": "びえーん",
-              "id": 35
+              "id": 35,
+              "type": "talk"
             }
           ]
         }
@@ -402,6 +474,9 @@
       "sizeBytes": 57235185,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/10.vvm",
       "vvmId": "7a7b8b63-c4ce-4860-b1e5-1dfd890cef19",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "玄野武宏",
@@ -411,15 +486,18 @@
           "styles": [
             {
               "name": "喜び",
-              "id": 39
+              "id": 39,
+              "type": "talk"
             },
             {
               "name": "ツンギレ",
-              "id": 40
+              "id": 40,
+              "type": "talk"
             },
             {
               "name": "悲しみ",
-              "id": 41
+              "id": 41,
+              "type": "talk"
             }
           ]
         },
@@ -431,7 +509,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 42
+              "id": 42,
+              "type": "talk"
             }
           ]
         }
@@ -443,6 +522,9 @@
       "sizeBytes": 60231796,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/11.vvm",
       "vvmId": "e27721b0-c274-432a-a9d6-afe5e8b73c5e",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "櫻歌ミコ",
@@ -452,15 +534,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 43
+              "id": 43,
+              "type": "talk"
             },
             {
               "name": "第二形態",
-              "id": 44
+              "id": 44,
+              "type": "talk"
             },
             {
               "name": "ロリ",
-              "id": 45
+              "id": 45,
+              "type": "talk"
             }
           ]
         },
@@ -472,19 +557,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 47
+              "id": 47,
+              "type": "talk"
             },
             {
               "name": "楽々",
-              "id": 48
+              "id": 48,
+              "type": "talk"
             },
             {
               "name": "恐怖",
-              "id": 49
+              "id": 49,
+              "type": "talk"
             },
             {
               "name": "内緒話",
-              "id": 50
+              "id": 50,
+              "type": "talk"
             }
           ]
         }
@@ -496,6 +585,9 @@
       "sizeBytes": 58213390,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/12.vvm",
       "vvmId": "25836b4f-cb6f-47b2-9be4-0899f546790d",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "†聖騎士 紅桜†",
@@ -505,7 +597,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 51
+              "id": 51,
+              "type": "talk"
             }
           ]
         },
@@ -517,7 +610,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 52
+              "id": 52,
+              "type": "talk"
             }
           ]
         },
@@ -529,7 +623,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 53
+              "id": 53,
+              "type": "talk"
             }
           ]
         }
@@ -541,6 +636,9 @@
       "sizeBytes": 60231935,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/13.vvm",
       "vvmId": "e7e3bd49-c3fe-4c7c-82c5-96cc2b3937f5",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "春歌ナナ",
@@ -550,7 +648,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 54
+              "id": 54,
+              "type": "talk"
             }
           ]
         },
@@ -562,15 +661,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 55
+              "id": 55,
+              "type": "talk"
             },
             {
               "name": "おちつき",
-              "id": 56
+              "id": 56,
+              "type": "talk"
             },
             {
               "name": "うきうき",
-              "id": 57
+              "id": 57,
+              "type": "talk"
             }
           ]
         },
@@ -582,15 +684,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 58
+              "id": 58,
+              "type": "talk"
             },
             {
               "name": "おちつき",
-              "id": 59
+              "id": 59,
+              "type": "talk"
             },
             {
               "name": "人見知り",
-              "id": 60
+              "id": 60,
+              "type": "talk"
             }
           ]
         }
@@ -602,6 +707,9 @@
       "sizeBytes": 64664926,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/14.vvm",
       "vvmId": "8be7954b-9611-43ac-92ea-238c838f348d",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "栗田まろん",
@@ -611,7 +719,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 67
+              "id": 67,
+              "type": "talk"
             }
           ]
         },
@@ -623,7 +732,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 68
+              "id": 68,
+              "type": "talk"
             }
           ]
         },
@@ -635,23 +745,28 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 69
+              "id": 69,
+              "type": "talk"
             },
             {
               "name": "元気",
-              "id": 70
+              "id": 70,
+              "type": "talk"
             },
             {
               "name": "ささやき",
-              "id": 71
+              "id": 71,
+              "type": "talk"
             },
             {
               "name": "ぶりっ子",
-              "id": 72
+              "id": 72,
+              "type": "talk"
             },
             {
               "name": "ボーイ",
-              "id": 73
+              "id": 73,
+              "type": "talk"
             }
           ]
         },
@@ -663,7 +778,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 74
+              "id": 74,
+              "type": "talk"
             }
           ]
         }
@@ -675,6 +791,9 @@
       "sizeBytes": 65647574,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/15.vvm",
       "vvmId": "e65e8046-e0f9-4d54-925a-9103303fdc3e",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "ずんだもん",
@@ -684,11 +803,13 @@
           "styles": [
             {
               "name": "ヘロヘロ",
-              "id": 75
+              "id": 75,
+              "type": "talk"
             },
             {
               "name": "なみだめ",
-              "id": 76
+              "id": 76,
+              "type": "talk"
             }
           ]
         },
@@ -700,31 +821,38 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 13
+              "id": 13,
+              "type": "talk"
             },
             {
               "name": "熱血",
-              "id": 81
+              "id": 81,
+              "type": "talk"
             },
             {
               "name": "不機嫌",
-              "id": 82
+              "id": 82,
+              "type": "talk"
             },
             {
               "name": "喜び",
-              "id": 83
+              "id": 83,
+              "type": "talk"
             },
             {
               "name": "しっとり",
-              "id": 84
+              "id": 84,
+              "type": "talk"
             },
             {
               "name": "かなしみ",
-              "id": 85
+              "id": 85,
+              "type": "talk"
             },
             {
               "name": "囁き",
-              "id": 86
+              "id": 86,
+              "type": "talk"
             }
           ]
         },
@@ -736,27 +864,33 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 20
+              "id": 20,
+              "type": "talk"
             },
             {
               "name": "セクシー／あん子",
-              "id": 66
+              "id": 66,
+              "type": "talk"
             },
             {
               "name": "泣き",
-              "id": 77
+              "id": 77,
+              "type": "talk"
             },
             {
               "name": "怒り",
-              "id": 78
+              "id": 78,
+              "type": "talk"
             },
             {
               "name": "喜び",
-              "id": 79
+              "id": 79,
+              "type": "talk"
             },
             {
               "name": "のんびり",
-              "id": 80
+              "id": 80,
+              "type": "talk"
             }
           ]
         },
@@ -768,7 +902,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 46
+              "id": 46,
+              "type": "talk"
             }
           ]
         }
@@ -780,6 +915,9 @@
       "sizeBytes": 58212115,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/16.vvm",
       "vvmId": "913304f1-1a58-44e2-a772-f1fb770f59c9",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "後鬼",
@@ -789,11 +927,13 @@
           "styles": [
             {
               "name": "人間（怒り）ver.",
-              "id": 87
+              "id": 87,
+              "type": "talk"
             },
             {
               "name": "鬼ver.",
-              "id": 88
+              "id": 88,
+              "type": "talk"
             }
           ]
         }
@@ -805,6 +945,9 @@
       "sizeBytes": 58212482,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/17.vvm",
       "vvmId": "f10c162e-ab57-4007-b39b-ec7752f56a0a",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "Voidoll",
@@ -814,7 +957,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 89
+              "id": 89,
+              "type": "talk"
             }
           ]
         }
@@ -826,6 +970,9 @@
       "sizeBytes": 61399262,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/18.vvm",
       "vvmId": "a4b2e567-01ff-451a-b9cd-1029f7520d30",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "ぞん子",
@@ -835,19 +982,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 90
+              "id": 90,
+              "type": "talk"
             },
             {
               "name": "低血圧",
-              "id": 91
+              "id": 91,
+              "type": "talk"
             },
             {
               "name": "覚醒",
-              "id": 92
+              "id": 92,
+              "type": "talk"
             },
             {
               "name": "実況風",
-              "id": 93
+              "id": 93,
+              "type": "talk"
             }
           ]
         },
@@ -859,23 +1010,28 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 94
+              "id": 94,
+              "type": "talk"
             },
             {
               "name": "怒り",
-              "id": 95
+              "id": 95,
+              "type": "talk"
             },
             {
               "name": "ヒソヒソ",
-              "id": 96
+              "id": 96,
+              "type": "talk"
             },
             {
               "name": "おどおど",
-              "id": 97
+              "id": 97,
+              "type": "talk"
             },
             {
               "name": "絶望と敗北",
-              "id": 98
+              "id": 98,
+              "type": "talk"
             }
           ]
         }
@@ -887,6 +1043,9 @@
       "sizeBytes": 59022148,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/19.vvm",
       "vvmId": "d012830c-ebeb-4caf-aa49-ef6d8a460af1",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "離途",
@@ -896,11 +1055,13 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 99
+              "id": 99,
+              "type": "talk"
             },
             {
               "name": "シリアス",
-              "id": 101
+              "id": 101,
+              "type": "talk"
             }
           ]
         },
@@ -912,7 +1073,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 100
+              "id": 100,
+              "type": "talk"
             }
           ]
         }
@@ -924,6 +1086,9 @@
       "sizeBytes": 59535608,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/20.vvm",
       "vvmId": "46c46477-2ac9-419e-9b1e-9e2a0d8aba29",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "ユーレイちゃん",
@@ -933,23 +1098,28 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 102
+              "id": 102,
+              "type": "talk"
             },
             {
               "name": "甘々",
-              "id": 103
+              "id": 103,
+              "type": "talk"
             },
             {
               "name": "哀しみ",
-              "id": 104
+              "id": 104,
+              "type": "talk"
             },
             {
               "name": "ささやき",
-              "id": 105
+              "id": 105,
+              "type": "talk"
             },
             {
               "name": "ツクモちゃん",
-              "id": 106
+              "id": 106,
+              "type": "talk"
             }
           ]
         }
@@ -961,6 +1131,9 @@
       "sizeBytes": 62075160,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/21.vvm",
       "vvmId": "7f053732-582d-49e3-bea2-42b3b5e98f0b",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "猫使アル",
@@ -970,11 +1143,13 @@
           "styles": [
             {
               "name": "つよつよ",
-              "id": 110
+              "id": 110,
+              "type": "talk"
             },
             {
               "name": "へろへろ",
-              "id": 111
+              "id": 111,
+              "type": "talk"
             }
           ]
         },
@@ -986,7 +1161,8 @@
           "styles": [
             {
               "name": "つよつよ",
-              "id": 112
+              "id": 112,
+              "type": "talk"
             }
           ]
         },
@@ -998,7 +1174,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 107
+              "id": 107,
+              "type": "talk"
             }
           ]
         },
@@ -1010,7 +1187,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 108
+              "id": 108,
+              "type": "talk"
             }
           ]
         },
@@ -1022,7 +1200,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 109
+              "id": 109,
+              "type": "talk"
             }
           ]
         }
@@ -1034,6 +1213,9 @@
       "sizeBytes": 62289486,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/22.vvm",
       "vvmId": "18b8f1db-8d9b-44f3-8749-b30f4470de4b",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "あんこもん",
@@ -1043,19 +1225,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 113
+              "id": 113,
+              "type": "talk"
             },
             {
               "name": "つよつよ",
-              "id": 114
+              "id": 114,
+              "type": "talk"
             },
             {
               "name": "よわよわ",
-              "id": 115
+              "id": 115,
+              "type": "talk"
             },
             {
               "name": "けだるげ",
-              "id": 116
+              "id": 116,
+              "type": "talk"
             }
           ]
         }
@@ -1067,6 +1253,9 @@
       "sizeBytes": 59022909,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/23.vvm",
       "vvmId": "392a1e93-6939-4861-a88b-58817dfec0c8",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "あんこもん",
@@ -1076,7 +1265,8 @@
           "styles": [
             {
               "name": "ささやき",
-              "id": 117
+              "id": 117,
+              "type": "talk"
             }
           ]
         }
@@ -1088,6 +1278,9 @@
       "sizeBytes": 59024323,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/24.vvm",
       "vvmId": "28ca9911-63f1-4adb-8f3b-7bb475fcfe49",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "夜語トバリ",
@@ -1097,19 +1290,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 118
+              "id": 118,
+              "type": "talk"
             },
             {
               "name": "明るい",
-              "id": 119
+              "id": 119,
+              "type": "talk"
             },
             {
               "name": "哀しみ",
-              "id": 120
+              "id": 120,
+              "type": "talk"
             },
             {
               "name": "呆れ",
-              "id": 121
+              "id": 121,
+              "type": "talk"
             }
           ]
         },
@@ -1121,19 +1318,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 122
+              "id": 122,
+              "type": "talk"
             },
             {
               "name": "怒り",
-              "id": 123
+              "id": 123,
+              "type": "talk"
             },
             {
               "name": "哀しみ",
-              "id": 124
+              "id": 124,
+              "type": "talk"
             },
             {
               "name": "ささやき",
-              "id": 125
+              "id": 125,
+              "type": "talk"
             }
           ]
         },
@@ -1145,7 +1346,8 @@
           "styles": [
             {
               "name": "つぼみ",
-              "id": 126
+              "id": 126,
+              "type": "talk"
             }
           ]
         }
@@ -1157,6 +1359,9 @@
       "sizeBytes": 73074437,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/n0.vvm",
       "vvmId": "ef85fd24-b1da-4a0f-ab66-6043cf048581",
+      "domains": [
+        "talk"
+      ],
       "characters": [
         {
           "name": "女声1",
@@ -1166,7 +1371,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10005
+              "id": 10005,
+              "type": "talk"
             }
           ]
         },
@@ -1178,7 +1384,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10007
+              "id": 10007,
+              "type": "talk"
             }
           ]
         },
@@ -1190,7 +1397,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10004
+              "id": 10004,
+              "type": "talk"
             }
           ]
         },
@@ -1202,7 +1410,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10003
+              "id": 10003,
+              "type": "talk"
             }
           ]
         },
@@ -1214,7 +1423,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10008
+              "id": 10008,
+              "type": "talk"
             }
           ]
         },
@@ -1226,7 +1436,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10006
+              "id": 10006,
+              "type": "talk"
             }
           ]
         },
@@ -1238,7 +1449,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10001
+              "id": 10001,
+              "type": "talk"
             }
           ]
         },
@@ -1250,7 +1462,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10000
+              "id": 10000,
+              "type": "talk"
             }
           ]
         },
@@ -1262,7 +1475,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 10002
+              "id": 10002,
+              "type": "talk"
             }
           ]
         }
@@ -1274,6 +1488,9 @@
       "sizeBytes": 130412376,
       "downloadURL": "https://github.com/VOICEVOX/voicevox_vvm/releases/download/0.16.4/s0.vvm",
       "vvmId": "81fed1e8-aa94-4863-ae66-4adacb784879",
+      "domains": [
+        "frame_decode"
+      ],
       "characters": [
         {
           "name": "四国めたん",
@@ -1283,23 +1500,28 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3002
+              "id": 3002,
+              "type": "frame_decode"
             },
             {
               "name": "あまあま",
-              "id": 3000
+              "id": 3000,
+              "type": "frame_decode"
             },
             {
               "name": "ツンツン",
-              "id": 3006
+              "id": 3006,
+              "type": "frame_decode"
             },
             {
               "name": "セクシー",
-              "id": 3004
+              "id": 3004,
+              "type": "frame_decode"
             },
             {
               "name": "ヒソヒソ",
-              "id": 3037
+              "id": 3037,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1311,31 +1533,38 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3003
+              "id": 3003,
+              "type": "frame_decode"
             },
             {
               "name": "あまあま",
-              "id": 3001
+              "id": 3001,
+              "type": "frame_decode"
             },
             {
               "name": "ツンツン",
-              "id": 3007
+              "id": 3007,
+              "type": "frame_decode"
             },
             {
               "name": "セクシー",
-              "id": 3005
+              "id": 3005,
+              "type": "frame_decode"
             },
             {
               "name": "ヒソヒソ",
-              "id": 3038
+              "id": 3038,
+              "type": "frame_decode"
             },
             {
               "name": "ヘロヘロ",
-              "id": 3075
+              "id": 3075,
+              "type": "frame_decode"
             },
             {
               "name": "なみだめ",
-              "id": 3076
+              "id": 3076,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1347,7 +1576,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3008
+              "id": 3008,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1359,7 +1589,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3010
+              "id": 3010,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1371,15 +1602,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3009
+              "id": 3009,
+              "type": "frame_decode"
             },
             {
               "name": "クイーン",
-              "id": 3065
+              "id": 3065,
+              "type": "frame_decode"
             },
             {
               "name": "ノーマル",
-              "id": 6000
+              "id": 6000,
+              "type": "sing"
             }
           ]
         },
@@ -1391,19 +1625,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3011
+              "id": 3011,
+              "type": "frame_decode"
             },
             {
               "name": "喜び",
-              "id": 3039
+              "id": 3039,
+              "type": "frame_decode"
             },
             {
               "name": "ツンギレ",
-              "id": 3040
+              "id": 3040,
+              "type": "frame_decode"
             },
             {
               "name": "悲しみ",
-              "id": 3041
+              "id": 3041,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1415,23 +1653,28 @@
           "styles": [
             {
               "name": "ふつう",
-              "id": 3012
+              "id": 3012,
+              "type": "frame_decode"
             },
             {
               "name": "わーい",
-              "id": 3032
+              "id": 3032,
+              "type": "frame_decode"
             },
             {
               "name": "びくびく",
-              "id": 3033
+              "id": 3033,
+              "type": "frame_decode"
             },
             {
               "name": "おこ",
-              "id": 3034
+              "id": 3034,
+              "type": "frame_decode"
             },
             {
               "name": "びえーん",
-              "id": 3035
+              "id": 3035,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1443,27 +1686,33 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3013
+              "id": 3013,
+              "type": "frame_decode"
             },
             {
               "name": "熱血",
-              "id": 3081
+              "id": 3081,
+              "type": "frame_decode"
             },
             {
               "name": "不機嫌",
-              "id": 3082
+              "id": 3082,
+              "type": "frame_decode"
             },
             {
               "name": "喜び",
-              "id": 3083
+              "id": 3083,
+              "type": "frame_decode"
             },
             {
               "name": "しっとり",
-              "id": 3084
+              "id": 3084,
+              "type": "frame_decode"
             },
             {
               "name": "かなしみ",
-              "id": 3085
+              "id": 3085,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1475,7 +1724,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3014
+              "id": 3014,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1487,19 +1737,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3016
+              "id": 3016,
+              "type": "frame_decode"
             },
             {
               "name": "あまあま",
-              "id": 3015
+              "id": 3015,
+              "type": "frame_decode"
             },
             {
               "name": "ツンツン",
-              "id": 3018
+              "id": 3018,
+              "type": "frame_decode"
             },
             {
               "name": "セクシー",
-              "id": 3017
+              "id": 3017,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1511,27 +1765,33 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3020
+              "id": 3020,
+              "type": "frame_decode"
             },
             {
               "name": "セクシー／あん子",
-              "id": 3066
+              "id": 3066,
+              "type": "frame_decode"
             },
             {
               "name": "泣き",
-              "id": 3077
+              "id": 3077,
+              "type": "frame_decode"
             },
             {
               "name": "怒り",
-              "id": 3078
+              "id": 3078,
+              "type": "frame_decode"
             },
             {
               "name": "喜び",
-              "id": 3079
+              "id": 3079,
+              "type": "frame_decode"
             },
             {
               "name": "のんびり",
-              "id": 3080
+              "id": 3080,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1543,7 +1803,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3021
+              "id": 3021,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1555,19 +1816,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3023
+              "id": 3023,
+              "type": "frame_decode"
             },
             {
               "name": "たのしい",
-              "id": 3024
+              "id": 3024,
+              "type": "frame_decode"
             },
             {
               "name": "かなしい",
-              "id": 3025
+              "id": 3025,
+              "type": "frame_decode"
             },
             {
               "name": "びえーん",
-              "id": 3026
+              "id": 3026,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1579,11 +1844,13 @@
           "styles": [
             {
               "name": "人間ver.",
-              "id": 3027
+              "id": 3027,
+              "type": "frame_decode"
             },
             {
               "name": "ぬいぐるみver.",
-              "id": 3028
+              "id": 3028,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1595,15 +1862,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3029
+              "id": 3029,
+              "type": "frame_decode"
             },
             {
               "name": "アナウンス",
-              "id": 3030
+              "id": 3030,
+              "type": "frame_decode"
             },
             {
               "name": "読み聞かせ",
-              "id": 3031
+              "id": 3031,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1615,7 +1885,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3042
+              "id": 3042,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1627,15 +1898,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3043
+              "id": 3043,
+              "type": "frame_decode"
             },
             {
               "name": "第二形態",
-              "id": 3044
+              "id": 3044,
+              "type": "frame_decode"
             },
             {
               "name": "ロリ",
-              "id": 3045
+              "id": 3045,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1647,7 +1921,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3046
+              "id": 3046,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1659,15 +1934,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3047
+              "id": 3047,
+              "type": "frame_decode"
             },
             {
               "name": "楽々",
-              "id": 3048
+              "id": 3048,
+              "type": "frame_decode"
             },
             {
               "name": "恐怖",
-              "id": 3049
+              "id": 3049,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1679,7 +1957,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3051
+              "id": 3051,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1691,7 +1970,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3052
+              "id": 3052,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1703,7 +1983,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3053
+              "id": 3053,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1715,7 +1996,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3054
+              "id": 3054,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1727,15 +2009,18 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3055
+              "id": 3055,
+              "type": "frame_decode"
             },
             {
               "name": "おちつき",
-              "id": 3056
+              "id": 3056,
+              "type": "frame_decode"
             },
             {
               "name": "うきうき",
-              "id": 3057
+              "id": 3057,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1747,11 +2032,13 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3058
+              "id": 3058,
+              "type": "frame_decode"
             },
             {
               "name": "おちつき",
-              "id": 3059
+              "id": 3059,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1763,19 +2050,23 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3061
+              "id": 3061,
+              "type": "frame_decode"
             },
             {
               "name": "おどろき",
-              "id": 3062
+              "id": 3062,
+              "type": "frame_decode"
             },
             {
               "name": "こわがり",
-              "id": 3063
+              "id": 3063,
+              "type": "frame_decode"
             },
             {
               "name": "へろへろ",
-              "id": 3064
+              "id": 3064,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1787,7 +2078,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3067
+              "id": 3067,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1799,7 +2091,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3068
+              "id": 3068,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1811,23 +2104,28 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3069
+              "id": 3069,
+              "type": "frame_decode"
             },
             {
               "name": "元気",
-              "id": 3070
+              "id": 3070,
+              "type": "frame_decode"
             },
             {
               "name": "ささやき",
-              "id": 3071
+              "id": 3071,
+              "type": "frame_decode"
             },
             {
               "name": "ぶりっ子",
-              "id": 3072
+              "id": 3072,
+              "type": "frame_decode"
             },
             {
               "name": "ボーイ",
-              "id": 3073
+              "id": 3073,
+              "type": "frame_decode"
             }
           ]
         },
@@ -1839,7 +2137,8 @@
           "styles": [
             {
               "name": "ノーマル",
-              "id": 3074
+              "id": 3074,
+              "type": "frame_decode"
             }
           ]
         }

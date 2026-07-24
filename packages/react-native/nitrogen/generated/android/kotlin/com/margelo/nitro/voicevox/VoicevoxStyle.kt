@@ -23,7 +23,10 @@ data class VoicevoxStyle(
   val name: String,
   @DoNotStrip
   @Keep
-  val id: Double
+  val id: Double,
+  @DoNotStrip
+  @Keep
+  val type: String
 ) {
   /* primary constructor */
 
@@ -32,12 +35,14 @@ data class VoicevoxStyle(
     if (other !is VoicevoxStyle) return false
     return Objects.deepEquals(this.name, other.name)
       && Objects.deepEquals(this.id, other.id)
+      && Objects.deepEquals(this.type, other.type)
   }
 
   override fun hashCode(): Int {
     return arrayOf<Any?>(
       name,
-      id
+      id,
+      type
     ).contentDeepHashCode()
   }
 
@@ -49,8 +54,8 @@ data class VoicevoxStyle(
     @Keep
     @Suppress("unused")
     @JvmStatic
-    private fun fromCpp(name: String, id: Double): VoicevoxStyle {
-      return VoicevoxStyle(name, id)
+    private fun fromCpp(name: String, id: Double, type: String): VoicevoxStyle {
+      return VoicevoxStyle(name, id, type)
     }
   }
 }

@@ -42,6 +42,14 @@ class UnknownModelException extends VoicevoxException {
   final String modelId;
 }
 
+/// テキスト読み上げ(talk)非対応モデル(歌唱合成用 s0 など)で synthesis しようとした。
+class TalkNotSupportedException extends VoicevoxException {
+  const TalkNotSupportedException(this.modelId)
+      : super('モデル $modelId はテキスト読み上げ(talk)に対応していません(歌唱合成用モデルです)');
+
+  final String modelId;
+}
+
 /// ダウンロード失敗。
 class DownloadFailedException extends VoicevoxException {
   const DownloadFailedException(this.modelId, String cause)

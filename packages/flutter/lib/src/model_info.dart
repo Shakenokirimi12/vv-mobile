@@ -6,6 +6,7 @@ class VoicevoxModelInfo {
     required this.sizeBytes,
     required this.downloadURL,
     required this.vvmId,
+    required this.domains,
     required this.characters,
     this.isDownloaded = false,
   });
@@ -17,6 +18,7 @@ class VoicevoxModelInfo {
         sizeBytes: json['sizeBytes'] as int,
         downloadURL: json['downloadURL'] as String,
         vvmId: json['vvmId'] as String,
+        domains: (json['domains'] as List?)?.cast<String>() ?? ['talk'],
         characters: (json['characters'] as List)
             .map((c) =>
                 VoicevoxCharacter.fromJson(c as Map<String, dynamic>))
@@ -28,10 +30,16 @@ class VoicevoxModelInfo {
   final int sizeBytes;
   final String downloadURL;
   final String vvmId;
+
+  /// モデルが対応する合成ドメイン(例: ["talk"]、歌唱モデルは ["frame_decode"])。
+  final List<String> domains;
   final List<VoicevoxCharacter> characters;
 
   /// listModels() 時に付与されるダウンロード状態。
   final bool isDownloaded;
+
+  /// テキスト読み上げ(synthesis)に対応したモデルかどうか。
+  bool get supportsTalk => domains.contains('talk');
 
   VoicevoxModelInfo withDownloaded(bool downloaded) => VoicevoxModelInfo(
         id: id,
@@ -39,6 +47,7 @@ class VoicevoxModelInfo {
         sizeBytes: sizeBytes,
         downloadURL: downloadURL,
         vvmId: vvmId,
+        domains: domains,
         characters: characters,
         isDownloaded: downloaded,
       );
@@ -73,16 +82,31 @@ class VoicevoxCharacter {
   /// キャラクター個別の利用規約URL。
   final String termsURL;
   final List<VoicevoxStyle> styles;
+
+  /// テキスト読み上げに使えるスタイルのみ。
+  List<VoicevoxStyle> get talkStyles =>
+      styles.where((s) => s.type == 'talk').toList();
 }
 
 class VoicevoxStyle {
-  const VoicevoxStyle({required this.name, required this.id});
+  const VoicevoxStyle({
+    required this.name,
+    required this.id,
+    this.type = 'talk',
+  });
 
-  factory VoicevoxStyle.fromJson(Map<String, dynamic> json) =>
-      VoicevoxStyle(name: json['name'] as String, id: json['id'] as int);
+  factory VoicevoxStyle.fromJson(Map<String, dynamic> json) => VoicevoxStyle(
+        name: json['name'] as String,
+        id: json['id'] as int,
+        type: json['type'] as String? ?? 'talk',
+      );
 
   final String name;
   final int id;
+
+  /// スタイル種別。"talk" はテキスト読み上げ(synthesis で使用可)、
+  /// "frame_decode" は歌唱合成用で synthesis では使えない。
+  final String type;
 }
 
 /// licenses.json 全体。

@@ -16,6 +16,9 @@ public enum VoicevoxError: Error, LocalizedError, Equatable {
     case modelNotDownloaded(modelId: String)
     /// licenses.json に存在しないモデルIDを指定した。
     case unknownModel(modelId: String)
+    /// テキスト読み上げ(talk)スタイルを持たないモデルで synthesis しようとした。
+    /// (歌唱合成用モデル s0 など。スタイルIDを明示しても talk 用エンジンでは合成できない)
+    case talkNotSupported(modelId: String)
     /// モデルのダウンロードに失敗した。
     case downloadFailed(modelId: String, underlying: String)
     /// 同梱リソース(辞書・licenses.json)が見つからない。
@@ -31,6 +34,8 @@ public enum VoicevoxError: Error, LocalizedError, Equatable {
             return "モデル \(modelId) は未ダウンロードです。downloadModel を先に呼んでください"
         case let .unknownModel(modelId):
             return "不明なモデルID: \(modelId)"
+        case let .talkNotSupported(modelId):
+            return "モデル \(modelId) はテキスト読み上げ(talk)に対応していません(歌唱合成用モデルです)"
         case let .downloadFailed(modelId, underlying):
             return "モデル \(modelId) のダウンロードに失敗しました: \(underlying)"
         case let .missingResource(name):

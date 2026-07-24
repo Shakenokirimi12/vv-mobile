@@ -90,13 +90,14 @@ private fun jp.voicevox.android.VoicevoxModelInfo.toNitro(): VoicevoxModel =
         sizeBytes = sizeBytes.toDouble(),
         downloadURL = downloadURL,
         vvmId = vvmId,
+        domains = domains.toTypedArray(),
         characters = characters.map { c ->
             VoicevoxCharacter(
                 name = c.name,
                 speakerUuid = c.speakerUuid,
                 creditText = c.creditText,
                 termsURL = c.termsURL,
-                styles = c.styles.map { VoicevoxStyle(it.name, it.id.toDouble()) }
+                styles = c.styles.map { VoicevoxStyle(it.name, it.id.toDouble(), it.type) }
                     .toTypedArray(),
             )
         }.toTypedArray(),
