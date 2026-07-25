@@ -1,4 +1,11 @@
 include: package:flutter_lints/flutter.yaml
 
+linter:
+  rules:
+    # named 引数と private フィールドの組み合わせでは満たせないため無効化。
+    # Dart は `_` 始まりの named 引数を禁止しているので
+    # `Foo({required this._bar})` とは書けず、初期化子リストに頼るしかない。
+    prefer_initializing_formals: false
+
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
