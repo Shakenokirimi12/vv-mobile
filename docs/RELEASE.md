@@ -48,17 +48,36 @@ gradle :lib:publishReleasePublicationToMavenLocal   # ローカル確認
 
 ```bash
 cd packages/flutter
-flutter pub publish --dry-run   # 事前検証(バイナリ同梱サイズに注意)
+flutter pub publish --dry-run
 flutter pub publish
 ```
 
-注意: pub.dev は100MB制限がある。
+**0.1.0 の失敗と 0.1.1 での修正**: pub は git 管理下のリポジトリで gitignore 対象を
+除外するため、0.1.0 の配布物には**ネイティブバイナリも Open JTalk 辞書も含まれず**、
+利用者側では初期化時に `Failed to load dynamic library` で失敗していた
+(クリーンなアプリで再現確認済み)。0.1.0 は retract 済み。
 
-**dry-run 実測 (0.1.0)**: pub は git 管理下のリポジトリでは gitignore されたファイルを含めないため、アーカイブは **231KB(圧縮)** に収まる。サイズは問題にならない一方、**バイナリ(ios/macos Frameworks・android jniLibs・assets/open_jtalk_dic)が一切含まれない**ため、pub.dev から取得したパッケージは `prepare-binaries.sh` を実行できず動作しない(pubspec の `assets: assets/open_jtalk_dic/` も実体がなく、利用側のビルドが失敗する)。pub には postinstall フックもない。
+0.1.1 では以下の方式に変更し、**バイナリを一切含まないまま動作する**ようにした:
 
-**0.1.0 の方針**: pub.dev への公開は**保留**し、**git 依存のみで配布**する(packages/flutter/README.md に記載済み)。将来 pub.dev に公開する場合は、`dart run voicevox_flutter:prepare` のようなバイナリ取得ツール(bin/prepare.dart)を実装し、利用者のアプリ側にバイナリを配置する方式を設計してから行う。
+| 対象 | 取得タイミング | 実装 |
+| --- | --- | --- |
+| voicevox_core / ONNX Runtime (iOS/macOS) | ビルド時 | podspec の `prepare_command` → `scripts/fetch-native.sh` |
+| voicevox_core / ONNX Runtime / libc++_shared (Android) | ビルド時 | Gradle タスク `downloadVoicevoxNatives` → 同スクリプト |
+| Open JTalk 辞書(約100MB) | アプリ初回起動時 | `DictionaryManager`(`archive` で純 Dart 展開) |
 
-このほか dry-run は `dart analyze` の警告(ffigen 生成の `lib/src/bindings.g.dart` の unused_element 等、計71件)を報告する。公開時は ffigen の preamble に `// ignore_for_file:` を追加して再生成するとよい。
+いずれも配置済みならスキップする冪等な実装で、モノレポ開発時は
+`prepare-binaries.sh` が置いたものがそのまま使われる。
+
+実装上の注意:
+- **iOS ではプロセス起動が禁止**されているため、辞書展開に `tar` コマンドは使えない
+  (`ProcessException: Starting new processes is not supported on iOS`)。
+  `package:archive` による純 Dart 展開にしてある
+- 公式 iOS フレームワークの `CFBundleIdentifier` にはアンダースコアが含まれ、
+  Xcode 16+ の埋め込み検証で拒否されるため fetch-native.sh 側で正規化している
+- Android の `libvoicevox_core.so` は `libc++_shared.so` に動的リンクするため、
+  NDK から取り出して同梱する(NDK 必須)
+
+アーカイブサイズは **232KB(圧縮)**。
 
 ### React Native (npm)
 
@@ -70,12 +89,16 @@ npm pack --dry-run             # files に vendored 一式が含まれること�
 npm publish
 ```
 
-**dry-run 実測 (0.1.0)**: tarball **115.6MB(圧縮)/ 353.9MB(展開後)**、133ファイル。内訳の大どころ: iOS Resources/open_jtalk_dic 102MB + android/vendored/assets/open_jtalk_dic 102MB(同一辞書が iOS/Android で重複)、ios/Frameworks 79MB、android/vendored/jniLibs 31MB、local-maven 23MB。
+**公開実測 (0.1.0)**: tarball **102MB(圧縮)/ 318MB(展開後)**、131ファイル。npm は受理した。
+内訳の大どころ: iOS Resources/open_jtalk_dic 102MB + android/vendored/assets/open_jtalk_dic 102MB
+(同一辞書が iOS/Android で重複)、ios/Frameworks 45MB、android/vendored/jniLibs 31MB、local-maven 23MB。
 
-**公開前の要確認・削減候補**:
-- npm レジストリのサイズ上限(一般に tarball 数百MB は要注意)に 115.6MB が収まるか、publish 前に要確認。超える場合は postinstall ダウンロード方式への切り替えが必要
-- `ios/Frameworks/*.xcframework` に **macOS スライス(voicevox_onnxruntime だけで約29MB)** が含まれている。RN は iOS のみ対象のため、prepare-sources.sh で macOS スライスを除外すれば削減できる
-- Open JTalk 辞書の iOS/Android 重複(102MB×2)は展開後サイズを押し上げるが、両プラットフォームのビルドがそれぞれの場所を参照するため単純には統合できない
+公開時に `files` へ除外パターン(`!android/build` など)を追加した。これが無いと
+gradle/CMake のビルド中間物(`libreactnative.so` 156MB×2 など)が混入し **463MB** に膨らむ。
+`.npmignore` は `files` 指定があると無視されるため、除外は `files` 側に書くこと。
+
+**将来の削減候補**: Flutter 0.1.1 と同様にバイナリ・辞書を postinstall / ビルド時
+ダウンロードへ移せば tarball は数百KBまで縮む。
 
 ## 新リリース検知(自動化TODO)
 

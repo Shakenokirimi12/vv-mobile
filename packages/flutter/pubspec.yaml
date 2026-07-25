@@ -2,7 +2,7 @@ name: voicevox_flutter
 description: >-
   VOICEVOX CORE binding for Flutter. Text-to-speech synthesis with runtime
   voice model download and per-character license gating.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/shakenokirimi12/vv-mobile
 repository: https://github.com/shakenokirimi12/vv-mobile/tree/main/packages/flutter
 
@@ -11,6 +11,7 @@ environment:
   flutter: ">=3.35.0"
 
 dependencies:
+  archive: ^4.0.9
   ffi: ^2.1.3
   flutter:
     sdk: flutter
@@ -39,4 +40,3 @@ flutter:
         ffiPlugin: true
   assets:
     - assets/licenses.json
-    - assets/open_jtalk_dic/

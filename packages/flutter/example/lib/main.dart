@@ -33,7 +33,15 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _init() async {
     try {
-      final voicevox = await Voicevox.create();
+      final voicevox = await Voicevox.create(
+        // 初回は Open JTalk 辞書(約100MB)をダウンロードする
+        onDictionaryProgress: (progress) {
+          if (!mounted) return;
+          setState(() => _status = progress == null
+              ? '辞書をダウンロード中...'
+              : '辞書をダウンロード中... ${(progress * 100).toStringAsFixed(0)}%');
+        },
+      );
       setState(() {
         _voicevox = voicevox;
         _models = voicevox.listModels();

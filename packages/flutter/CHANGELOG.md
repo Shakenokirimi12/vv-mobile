@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.1
+
+**0.1.0 は pub.dev 経由では動作しません。0.1.1 以降を使ってください。**
+
+pub.dev の配布物にはネイティブバイナリと Open JTalk 辞書が含まれず(pub が
+gitignore 対象を除外するため)、初期化時に `Failed to load dynamic library` で
+失敗していた。0.1.1 でこれを解消:
+
+- ネイティブバイナリ(voicevox_core / VOICEVOX ONNX Runtime)を**ビルド時に自動ダウンロード**
+  - iOS / macOS: podspec の `prepare_command`
+  - Android: Gradle タスク `downloadVoicevoxNatives`
+  - いずれも配置済みならスキップする冪等な処理(モノレポ開発時は既存のまま)
+- Open JTalk 辞書(約100MB)を Flutter アセットから外し、**初回起動時のダウンロード**に変更
+  - `Voicevox.create(onDictionaryProgress: ...)` で進捗を取得できる
+  - 展開は純 Dart(`archive`)で行う(iOS はプロセス起動が禁止されているため)
+- iOS フレームワークの `CFBundleIdentifier` のアンダースコアを自動修正
+  (Xcode 16+ の埋め込み検証を通すため)
+
 ## 0.1.0
 
 初回リリース。

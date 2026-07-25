@@ -1,8 +1,30 @@
 // voicevox_flutter (Android, FFI plugin)
-// jniLibs は ../scripts/prepare-binaries.sh が配置する
-// (libvoicevox_core.so + libvoicevox_onnxruntime.so)。
+//
+// jniLibs(libvoicevox_core.so / libvoicevox_onnxruntime.so / libc++_shared.so)は
+//   - モノレポ開発時: ../scripts/prepare-binaries.sh が配置済み
+//   - pub.dev 取得時: 下記 downloadVoicevoxNatives タスクが公式リリースから取得
+// のどちらかで用意される(スクリプトは配置済みなら何もしない冪等な実装)。
 plugins {
     id "com.android.library"
+}
+
+def jniLibsDir = file("src/main/jniLibs")
+
+tasks.register("downloadVoicevoxNatives", Exec) {
+    description = "Download voicevox_core / ONNX Runtime shared libraries if missing"
+    workingDir = projectDir
+    commandLine "bash", file("../scripts/fetch-native.sh").absolutePath,
+            "android", jniLibsDir.absolutePath
+    // 配置済みならスクリプト側で即 return するが、Gradle 的にも up-to-date にする
+    outputs.dir jniLibsDir
+    onlyIf { !new File(jniLibsDir, "arm64-v8a/libvoicevox_core.so").exists() }
+}
+
+// merge*JniLibFolders より前に確実に走らせる
+tasks.configureEach { task ->
+    if (task.name ==~ /^merge.*JniLibFolders$/ || task.name ==~ /^pre.*Build$/) {
+        task.dependsOn "downloadVoicevoxNatives"
+    }
 }
 
 android {

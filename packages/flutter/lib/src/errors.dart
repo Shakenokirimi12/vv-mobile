@@ -42,6 +42,12 @@ class UnknownModelException extends VoicevoxException {
   final String modelId;
 }
 
+/// Open JTalk 辞書のダウンロード・展開に失敗した。
+class DictionaryDownloadException extends VoicevoxException {
+  const DictionaryDownloadException(String cause)
+      : super('Open JTalk 辞書の準備に失敗しました: $cause');
+}
+
 /// テキスト読み上げ(talk)非対応モデル(歌唱合成用 s0 など)で synthesis しようとした。
 class TalkNotSupportedException extends VoicevoxException {
   const TalkNotSupportedException(this.modelId)

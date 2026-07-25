@@ -19,18 +19,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show AssetManifest, rootBundle;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pool/pool.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'src/dictionary.dart';
 import 'src/errors.dart';
 import 'src/license_gate.dart';
 import 'src/model_info.dart';
 import 'src/model_manager.dart';
 import 'src/synthesizer.dart';
 
+export 'src/dictionary.dart';
 export 'src/errors.dart';
 export 'src/license_gate.dart';
 export 'src/model_info.dart';
@@ -60,7 +62,11 @@ class Voicevox {
 
   static const _assetPrefix = 'packages/voicevox_flutter/assets';
 
-  /// Facade を構築する。ネイティブ初期化と辞書展開を含む。
+  /// Facade を構築する。ネイティブ初期化と辞書の準備を含む。
+  ///
+  /// **初回起動時は Open JTalk 辞書(約100MB)をダウンロードする**ため
+  /// 時間がかかる。進捗は [onDictionaryProgress] で受け取れる
+  /// (0.0〜1.0、Content-Length 不明なら null)。2回目以降は即座に返る。
   ///
   /// [modelsDir] モデル保存先(null なら ApplicationSupport/voicevox/models)。
   /// [onnxruntimePath] デスクトップでの ONNX Runtime dylib パス。
@@ -69,6 +75,7 @@ class Voicevox {
     Directory? modelsDir,
     String? onnxruntimePath,
     int maxConcurrentDownloads = 4,
+    void Function(double? progress)? onDictionaryProgress,
   }) async {
     final catalogJson =
         await rootBundle.loadString('$_assetPrefix/licenses.json');
@@ -86,7 +93,8 @@ class Voicevox {
           modelsDir ?? Directory(p.join(support.path, 'voicevox/models')),
     );
 
-    final dictDir = await _extractOpenJtalkDict(support);
+    final dictDir = await DictionaryManager(baseDir: support)
+        .ensure(onProgress: onDictionaryProgress);
     final synthesizer = Synthesizer(
       openJtalkDictDir: dictDir.path,
       onnxruntimePath: onnxruntimePath,
@@ -102,25 +110,6 @@ class Voicevox {
     );
   }
 
-  /// アセットの Open JTalk 辞書をファイルシステムへ展開する(展開済みならスキップ)。
-  static Future<Directory> _extractOpenJtalkDict(Directory support) async {
-    final dictDir = Directory(p.join(support.path, 'voicevox/open_jtalk_dic'));
-    final marker = File(p.join(dictDir.path, '.complete'));
-    if (marker.existsSync()) return dictDir;
-
-    dictDir.createSync(recursive: true);
-    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-    final assets = manifest
-        .listAssets()
-        .where((a) => a.startsWith('$_assetPrefix/open_jtalk_dic/'));
-    for (final asset in assets) {
-      final data = await rootBundle.load(asset);
-      final file = File(p.join(dictDir.path, p.basename(asset)));
-      await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
-    }
-    marker.createSync();
-    return dictDir;
-  }
 
   // --- モデル一覧 ---
 

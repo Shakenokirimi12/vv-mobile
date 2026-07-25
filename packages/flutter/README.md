@@ -9,25 +9,35 @@
 
 ## インストール
 
-現時点(0.1.0)では **git 依存での利用を想定**しています(pub.dev への公開はネイティブバイナリ同梱サイズの都合で保留中。下記「ネイティブバイナリの準備」参照):
-
 ```yaml
 dependencies:
-  voicevox_flutter:
-    git:
-      url: https://github.com/shakenokirimi12/vv-mobile.git
-      path: packages/flutter
+  voicevox_flutter: ^0.1.1
 ```
 
-## ネイティブバイナリの準備
+ネイティブバイナリ(voicevox_core / VOICEVOX ONNX Runtime)は**ビルド時に自動ダウンロード**されます(iOS/macOS は CocoaPods の `prepare_command`、Android は Gradle タスク)。追加の手順は不要です。
 
-voicevox_core / VOICEVOX ONNX Runtime / Open JTalk 辞書はリポジトリにコミットされていません。利用前に一度、リポジトリルートで以下を実行してください:
+Open JTalk 辞書(約100MB)は**アプリの初回起動時にダウンロード**されます。`Voicevox.create()` の `onDictionaryProgress` で進捗を受け取れます:
+
+```dart
+final voicevox = await Voicevox.create(
+  onDictionaryProgress: (p) => print('辞書 ${((p ?? 0) * 100).toStringAsFixed(0)}%'),
+);
+```
+
+> **要件**: iOS 15.0+ / macOS 13.0+ / Android 8.0 (API 26)+。Android ビルドには NDK が必要です(`libc++_shared.so` の取り出しに使用)。
+
+<details>
+<summary>モノレポから直接開発する場合</summary>
+
+リポジトリを clone して使う場合は、バイナリを手動配置できます(自動ダウンロードはスキップされます):
 
 ```bash
 ./packages/core-native/scripts/fetch-core.sh ios osx android
-./packages/swift/scripts/prepare-binaries.sh    # iOS/macOS 用 xcframework
-./packages/flutter/scripts/prepare-binaries.sh  # Frameworks / jniLibs / 辞書の配置
+./packages/swift/scripts/prepare-binaries.sh
+./packages/flutter/scripts/prepare-binaries.sh
 ```
+
+</details>
 
 ## クイックスタート
 
