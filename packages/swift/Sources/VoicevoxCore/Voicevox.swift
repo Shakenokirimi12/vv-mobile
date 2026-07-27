@@ -76,8 +76,49 @@ public actor Voicevox {
     // MARK: - ダウンロード
 
     /// 1モデルをダウンロードする(要同意)。ダウンロード済みなら何もしない。
-    public func downloadModel(id: String) async throws {
-        try await manager.download(modelId: id)
+    ///
+    /// - Parameter onProgress: 進捗コールバック。(受信済みbytes, 全体bytes)。
+    ///   高頻度で呼ばれるので、UI 更新は自前でスロットルすること。
+    public func downloadModel(
+        id: String,
+        onProgress: (@Sendable (Int64, Int64) -> Void)? = nil
+    ) async throws {
+        try await manager.download(modelId: id, onProgress: onProgress)
+    }
+
+    // MARK: - 削除
+
+    /// スタイルID を含むモデルのID。
+    ///
+    /// スタイルID だけを保持しているアプリから `synthesis` の modelId を解決するのに使う。
+    /// 一覧表示だけなら `VoicevoxCatalog` を使えばネイティブ初期化を待たずに済む。
+    public nonisolated func modelId(forStyle styleId: UInt32) -> String? {
+        catalog.models.first { model in
+            model.characters.contains { $0.styles.contains { $0.id == styleId } }
+        }?.id
+    }
+
+    /// ダウンロード済みモデルのローカルサイズ(bytes)。未ダウンロードなら 0。
+    public func downloadedSize(modelId: String) -> Int64 {
+        guard let url = try? manager.localURL(for: modelId),
+              let attributes = try? FileManager.default.attributesOfItem(atPath: url.path)
+        else { return 0 }
+        return (attributes[.size] as? NSNumber)?.int64Value ?? 0
+    }
+
+    /// ダウンロード済みモデルの合計サイズ(bytes)。
+    public func downloadedSize() -> Int64 {
+        catalog.models.reduce(0) { $0 + downloadedSize(modelId: $1.id) }
+    }
+
+    /// ダウンロード済みモデルを削除する。ロード済みならアンロードしてから消す。
+    /// 未ダウンロードなら何もしない。
+    public func deleteModel(_ modelId: String) throws {
+        let info = try manager.info(for: modelId)
+        if synthesizer.isLoaded(modelId: modelId) {
+            try synthesizer.unloadVoiceModel(modelId: modelId, vvmId: info.vvmId)
+        }
+        try manager.remove(modelId: modelId)
     }
 
     /// 複数モデルを並列ダウンロードする。

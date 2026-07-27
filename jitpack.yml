@@ -1,11 +1,16 @@
 # JitPack build config for the Android library.
 # 利用方法(利用者の build.gradle):
 #   allprojects { repositories { maven { url = "https://jitpack.io" } } }
-#   dependencies { implementation("com.github.Shakenokirimi12:vv-mobile:android-v0.1.0") }
+#   dependencies { implementation("com.github.Shakenokirimi12:vv-mobile:android-v0.1.1") }
 #
 # タグは android-v* を使用(swift-v* や react-native-v* と分離するため)。
 # lib/build.gradle.kts が VERSION 環境変数を読み取るので、タグ名がそのまま
 # 発行アーティファクトのバージョンに反映される。
+#
+# lib/build.gradle.kts は公式 voicevoxcore-android AAR も同じバージョンで
+# 併せて発行する("vendoredCore" publication)。JitPack が本体 POM の依存を
+# com.github.Shakenokirimi12.vv-mobile:voicevoxcore-android:<タグ> に書き換えるため、
+# これが無いと書き換え先が 404 になり利用者側で依存解決に失敗する(android-v0.1.0 の不具合)。
 jdk:
   - openjdk17
 

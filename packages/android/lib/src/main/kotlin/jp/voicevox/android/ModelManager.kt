@@ -1,6 +1,8 @@
 package jp.voicevox.android
 
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -29,8 +31,14 @@ class ModelManager internal constructor(
 
     /**
      * 1モデルをダウンロードする(要同意)。ダウンロード済みなら何もしない。
+     *
+     * @param onProgress 進捗コールバック。(受信済みbytes, 全体bytes)。
+     *   Content-Length が得られない場合は licenses.json の sizeBytes を全体サイズとして渡す。
      */
-    suspend fun download(modelId: String) {
+    suspend fun download(
+        modelId: String,
+        onProgress: ((downloadedBytes: Long, totalBytes: Long) -> Unit)? = null,
+    ) {
         gate.require(modelId)
         val info = info(modelId)
         val dest = localFile(modelId)
@@ -45,9 +53,16 @@ class ModelManager internal constructor(
                     }
                     val body = response.body
                         ?: throw VoicevoxException.DownloadFailed(modelId, "empty body")
+                    val total = body.contentLength().takeIf { it > 0 } ?: info.sizeBytes
                     val tmp = File.createTempFile("vvm-", ".part", modelsDir)
                     try {
-                        tmp.outputStream().use { out -> body.byteStream().copyTo(out) }
+                        tmp.outputStream().use { out ->
+                            if (onProgress == null) {
+                                body.byteStream().copyTo(out)
+                            } else {
+                                copyReporting(body.byteStream(), out, total, onProgress)
+                            }
+                        }
                         // 別コルーチンが先に完了していた場合は置き換えない
                         if (!dest.exists()) {
                             if (!tmp.renameTo(dest)) {
@@ -63,6 +78,24 @@ class ModelManager internal constructor(
             } catch (e: Exception) {
                 throw VoicevoxException.DownloadFailed(modelId, e.toString())
             }
+        }
+    }
+
+    private fun copyReporting(
+        input: InputStream,
+        output: OutputStream,
+        total: Long,
+        onProgress: (Long, Long) -> Unit,
+    ) {
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var downloaded = 0L
+        onProgress(0L, total)
+        while (true) {
+            val read = input.read(buffer)
+            if (read < 0) break
+            output.write(buffer, 0, read)
+            downloaded += read
+            onProgress(downloaded, total)
         }
     }
 
