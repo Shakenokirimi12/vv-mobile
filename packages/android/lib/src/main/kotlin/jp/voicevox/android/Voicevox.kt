@@ -2,6 +2,7 @@ package jp.voicevox.android
 
 import android.content.Context
 import java.io.File
+import java.util.UUID
 import jp.hiroshiba.voicevoxcore.blocking.Onnxruntime
 import jp.hiroshiba.voicevoxcore.blocking.OpenJtalk
 import jp.hiroshiba.voicevoxcore.blocking.Synthesizer
@@ -131,6 +132,32 @@ class Voicevox private constructor(
     /** 全モデルを一括ダウンロードする(全モデルへの同意が必要)。 */
     suspend fun downloadAllModels(): Map<String, Result<Unit>> =
         downloadModels(catalog.models.map { it.id })
+
+    // --- 削除 ---
+
+    /** ダウンロード済みモデルのローカルファイルサイズ(bytes)。未ダウンロードなら 0。 */
+    fun downloadedSize(modelId: String): Long =
+        manager.localFile(modelId).let { if (it.exists()) it.length() else 0L }
+
+    /** ダウンロード済みモデルの合計サイズ(bytes)。 */
+    fun downloadedSize(): Long = catalog.models.sumOf { downloadedSize(it.id) }
+
+    /**
+     * ダウンロード済みモデルを削除する。ロード済みならアンロードしてから消す。
+     * 未ダウンロードなら何もしない。
+     */
+    suspend fun deleteModel(modelId: String) {
+        val info = manager.info(modelId)
+        loadMutex.withLock {
+            if (modelId in loadedModelIds) {
+                withContext(Dispatchers.IO) {
+                    synthesizer.unloadVoiceModel(UUID.fromString(info.vvmId))
+                }
+                loadedModelIds.remove(modelId)
+            }
+            withContext(Dispatchers.IO) { manager.remove(modelId) }
+        }
+    }
 
     // --- 合成 ---
 

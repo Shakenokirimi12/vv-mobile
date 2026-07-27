@@ -25,11 +25,11 @@ dependencyResolutionManagement {
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.github.Shakenokirimi12:vv-mobile:android-v0.1.1")
+    implementation("com.github.Shakenokirimi12.vv-mobile:voicevox-core-android:android-v0.1.2")
 }
 ```
 
-`minSdk` は 26 以上が必要です。ネイティブライブラリは `arm64-v8a` / `x86_64` のみを同梱しています。
+`minSdk` は 26 以上が必要です。ネイティブライブラリは `arm64-v8a` / `x86_64` のみを同梱しています。AAR は Open JTalk 辞書を同梱するため約 35MB あります。
 
 ### 依存する公式 AAR について
 
@@ -61,6 +61,14 @@ val wav = voicevox.synthesis("こんにちは、ずんだもんなのだ", model
 ```
 
 `downloadModels(ids)` / `downloadAllModels()` は並列実行され、モデルごとの `Result` を返します(一部失敗でも例外を投げません)。
+
+モデルは1件あたり数十MB(最大約130MB)あるため、ストレージ管理用に削除系のAPIも用意しています:
+
+```kotlin
+voicevox.downloadedSize("0")   // そのモデルのローカルサイズ(bytes)。未DLなら 0
+voicevox.downloadedSize()      // ダウンロード済み全モデルの合計(bytes)
+voicevox.deleteModel("0")      // ロード済みならアンロードしてから削除。suspend
+```
 
 ## 音声モデルのライセンス
 
