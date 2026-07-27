@@ -62,20 +62,28 @@ flutter pub publish
 | 対象 | 取得タイミング | 実装 |
 | --- | --- | --- |
 | voicevox_core / ONNX Runtime (iOS/macOS) | ビルド時 | podspec の `prepare_command` → `scripts/fetch-native.sh` |
-| voicevox_core / ONNX Runtime / libc++_shared (Android) | ビルド時 | Gradle タスク `downloadVoicevoxNatives` → 同スクリプト |
-| Open JTalk 辞書(約100MB) | アプリ初回起動時 | `DictionaryManager`(`archive` で純 Dart 展開) |
+| voicevox_core / ONNX Runtime / libc++_shared (Android) | ビルド時 | Gradle タスク `downloadVoicevoxNatives`(JVM のみ) |
+| Open JTalk 辞書(約100MB) | アプリ初回起動時 | `DictionaryManager`(`archive` でストリーム展開) |
 
-いずれも配置済みならスキップする冪等な実装で、モノレポ開発時は
-`prepare-binaries.sh` が置いたものがそのまま使われる。
+ネイティブバイナリは配置済みならスキップする冪等な実装で、モノレポ開発時は
+`prepare-binaries.sh` が置いたものがそのまま使われる。**辞書は例外で、モノレポ
+開発時も初回起動時にダウンロードされる**(pubspec の assets から外したため、
+`prepare-binaries.sh` は辞書を配置しない)。
 
 実装上の注意:
 - **iOS ではプロセス起動が禁止**されているため、辞書展開に `tar` コマンドは使えない
   (`ProcessException: Starting new processes is not supported on iOS`)。
-  `package:archive` による純 Dart 展開にしてある
+  `package:archive` の `extractFileToDisk` によるストリーム展開にしてある。
+  一括展開すると gz 全体と `sys.dic`(約103MB)が同時にメモリへ載って OOM するため、
+  ストリーム化した上で `Isolate.run` で UI スレッドから逃がしている
+- ダウンロードしたものは辞書・ネイティブバイナリとも sha256 を検証する
+  (`packages/core-native/checksums.txt` と同じ値。特に辞書は sourceforge が
+  任意のミラーへリダイレクトするため必須)
 - 公式 iOS フレームワークの `CFBundleIdentifier` にはアンダースコアが含まれ、
   Xcode 16+ の埋め込み検証で拒否されるため fetch-native.sh 側で正規化している
 - Android の `libvoicevox_core.so` は `libc++_shared.so` に動的リンクするため、
-  NDK から取り出して同梱する(NDK 必須)
+  NDK から取り出して同梱する(NDK 必須)。取得は bash ではなく Gradle/JVM で
+  行う — bash 前提だと Windows ホストで Android ビルドができなくなるため
 
 アーカイブサイズは **232KB(圧縮)**。
 

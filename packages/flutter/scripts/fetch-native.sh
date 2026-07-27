@@ -2,10 +2,12 @@
 # fetch-native.sh — pub.dev から取得したパッケージ向けに、ネイティブバイナリを
 # ビルド時に自動ダウンロードする。
 #
-#   iOS   : voicevox_flutter.podspec の prepare_command から呼ばれる
-#   Android: android/build.gradle の downloadVoicevoxNatives タスクから呼ばれる
+#   iOS / macOS: voicevox_flutter.podspec の prepare_command から呼ばれる
 #
-# 使い方: fetch-native.sh <ios|android> <出力先ディレクトリ>
+# 使い方: fetch-native.sh <ios|macos> <出力先ディレクトリ>
+#
+# Android は android/build.gradle が JVM だけで同じことを行う。bash に依存すると
+# Windows ホストで Android ビルドができなくなるため、ここでは扱わない。
 #
 # リポジトリから直接使う(git 依存 / モノレポ開発)場合は、既に
 # prepare-binaries.sh が同じ場所へ配置しているため何もしない(冪等)。
@@ -14,8 +16,8 @@
 # 同じく実行時ダウンロード(lib/src/dictionary.dart)にしている。
 set -euo pipefail
 
-PLATFORM="${1:?usage: fetch-native.sh <ios|android> <dest-dir>}"
-DEST="${2:?usage: fetch-native.sh <ios|android> <dest-dir>}"
+PLATFORM="${1:?usage: fetch-native.sh <ios|macos> <dest-dir>}"
+DEST="${2:?usage: fetch-native.sh <ios|macos> <dest-dir>}"
 
 # packages/core-native/VERSION と同期させること
 VOICEVOX_CORE_VERSION="0.16.4"
@@ -26,13 +28,55 @@ ORT_BASE="https://github.com/VOICEVOX/onnxruntime-builder/releases/download/voic
 
 log() { echo "[voicevox_flutter] $*" >&2; }
 
+# packages/core-native/checksums.txt と同期させること。検証なしで取り込むと
+# 改竄されたリリース資産がそのままアプリへリンクされる。
+expected_sha256() { # archive_name
+  case "$1" in
+    "voicevox_core-ios-xcframework-cpu-${VOICEVOX_CORE_VERSION}.zip")
+      echo "8d7bea9007ad3819591f2318a626a1a1e1278332d6a34ff114cf77b0a1d3ae82" ;;
+    "voicevox_onnxruntime-ios-xcframework-${VOICEVOX_ONNXRUNTIME_VERSION}.zip")
+      echo "5b0138f25e68c3fb99771d37978837d5038a67b0720f96d912c900887164494b" ;;
+    "voicevox_core-osx-arm64-${VOICEVOX_CORE_VERSION}.zip")
+      echo "feabfeb0e2c69ba9f54c7eb492f25d1957163d89e3c81eccdc21cf8da0bcd8b4" ;;
+    "voicevox_core-osx-x64-${VOICEVOX_CORE_VERSION}.zip")
+      echo "92bfeb4665a57faf1f70c631bb7e135e840e3f10624036bc4fa244296649991b" ;;
+    "voicevox_onnxruntime-osx-arm64-${VOICEVOX_ONNXRUNTIME_VERSION}.tgz")
+      echo "96d7ea1928a0a15485492d37621387df50f40a792e2a6817d4df73ecd18571f2" ;;
+    "voicevox_onnxruntime-osx-x86_64-${VOICEVOX_ONNXRUNTIME_VERSION}.tgz")
+      echo "59edc860252dbb7f64cc2eb72bd4b2904a6df7c35f33dc8082435b9f15a505df" ;;
+    *) return 1 ;;
+  esac
+}
+
+sha256_of() { # file
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$1" | awk '{print $1}'
+  else
+    sha256sum "$1" | awk '{print $1}'
+  fi
+}
+
 fetch_and_extract() { # url dest_dir
-  local url="$1" dest_dir="$2" tmp
+  local url="$1" dest_dir="$2" tmp name expected actual
   tmp="$(mktemp -d)"
   trap 'rm -rf "$tmp"' RETURN
-  local archive="$tmp/$(basename "$url")"
-  log "downloading $(basename "$url")"
+  name="$(basename "$url")"
+  local archive="$tmp/$name"
+  log "downloading $name"
   curl -fL --retry 3 --progress-bar -o "$archive" "$url"
+
+  if ! expected="$(expected_sha256 "$name")"; then
+    log "error: no recorded sha256 for $name (update expected_sha256)"
+    return 1
+  fi
+  actual="$(sha256_of "$archive")"
+  if [[ "$actual" != "$expected" ]]; then
+    log "error: checksum mismatch for $url"
+    log "       expected: $expected"
+    log "       actual:   $actual"
+    return 1
+  fi
+
   mkdir -p "$dest_dir"
   case "$archive" in
     *.zip) unzip -oq "$archive" -d "$dest_dir" ;;
@@ -135,48 +179,8 @@ PLIST
     log "macOS frameworks ready in $DEST"
     ;;
 
-  android)
-    if [[ -f "$DEST/arm64-v8a/libvoicevox_core.so" && -f "$DEST/arm64-v8a/libc++_shared.so" ]]; then
-      log "Android jniLibs already present, skipping download"
-      exit 0
-    fi
-    tmp="$(mktemp -d)"
-    trap 'rm -rf "$tmp"' EXIT
-    mkdir -p "$DEST/arm64-v8a" "$DEST/x86_64"
-
-    fetch_and_extract "$CORE_BASE/voicevox_core-android-arm64-${VOICEVOX_CORE_VERSION}.zip" "$tmp"
-    fetch_and_extract "$CORE_BASE/voicevox_core-android-x86_64-${VOICEVOX_CORE_VERSION}.zip" "$tmp"
-    fetch_and_extract "$ORT_BASE/voicevox_onnxruntime-android-arm64-${VOICEVOX_ONNXRUNTIME_VERSION}.tgz" "$tmp"
-    fetch_and_extract "$ORT_BASE/voicevox_onnxruntime-android-x64-${VOICEVOX_ONNXRUNTIME_VERSION}.tgz" "$tmp"
-
-    cp "$tmp/voicevox_core-android-arm64-${VOICEVOX_CORE_VERSION}/lib/libvoicevox_core.so" "$DEST/arm64-v8a/"
-    cp "$tmp/voicevox_core-android-x86_64-${VOICEVOX_CORE_VERSION}/lib/libvoicevox_core.so" "$DEST/x86_64/"
-    cp "$tmp/voicevox_onnxruntime-android-arm64-${VOICEVOX_ONNXRUNTIME_VERSION}/lib/libvoicevox_onnxruntime.so" "$DEST/arm64-v8a/"
-    cp "$tmp/voicevox_onnxruntime-android-x64-${VOICEVOX_ONNXRUNTIME_VERSION}/lib/libvoicevox_onnxruntime.so" "$DEST/x86_64/"
-
-    # libvoicevox_core.so は libc++_shared.so に動的リンクしている。
-    # NDK から取り出して同梱する(NDK は Flutter の Android ビルドに必須)。
-    if [[ -n "${ANDROID_NDK_HOME:-}" ]]; then
-      ndk_dir="$ANDROID_NDK_HOME"
-    else
-      # glob をクォート内に入れると展開されないため、変数展開後に評価する
-      sdk_root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-$HOME/Library/Android/sdk}}"
-      ndk_dir="$(ls -d "$sdk_root"/ndk/* 2>/dev/null | sort -V | tail -1 || true)"
-    fi
-    if [[ -z "$ndk_dir" || ! -d "$ndk_dir" ]]; then
-      log "error: Android NDK not found (needed for libc++_shared.so)."
-      log "       Set ANDROID_NDK_HOME or install the NDK via Android Studio."
-      exit 1
-    fi
-    host="$(uname -s | tr '[:upper:]' '[:lower:]')-x86_64"
-    sysroot_libs="$ndk_dir/toolchains/llvm/prebuilt/$host/sysroot/usr/lib"
-    cp "$sysroot_libs/aarch64-linux-android/libc++_shared.so" "$DEST/arm64-v8a/"
-    cp "$sysroot_libs/x86_64-linux-android/libc++_shared.so" "$DEST/x86_64/"
-    log "Android jniLibs ready in $DEST"
-    ;;
-
   *)
-    log "unknown platform: $PLATFORM (expected ios or android)"
+    log "unknown platform: $PLATFORM (expected ios or macos)"
     exit 1
     ;;
 esac

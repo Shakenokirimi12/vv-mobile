@@ -12,6 +12,7 @@ environment:
 
 dependencies:
   archive: ^4.0.9
+  crypto: ^3.0.3
   ffi: ^2.1.3
   flutter:
     sdk: flutter

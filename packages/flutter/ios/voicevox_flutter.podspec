@@ -5,7 +5,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'voicevox_flutter'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'VOICEVOX CORE binding for Flutter.'
   s.description      = <<-DESC
 VOICEVOX CORE binding for Flutter (FFI). Text-to-speech synthesis with runtime

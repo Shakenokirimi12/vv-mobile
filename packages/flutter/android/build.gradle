@@ -3,28 +3,16 @@
 // jniLibs(libvoicevox_core.so / libvoicevox_onnxruntime.so / libc++_shared.so)は
 //   - モノレポ開発時: ../scripts/prepare-binaries.sh が配置済み
 //   - pub.dev 取得時: 下記 downloadVoicevoxNatives タスクが公式リリースから取得
-// のどちらかで用意される(スクリプトは配置済みなら何もしない冪等な実装)。
+// のどちらかで用意される(配置済みなら何もしない冪等なタスク)。
+//
+// ダウンロード処理は Gradle/JVM だけで完結させている。fetch-native.sh を呼ぶと
+// bash 前提になり Windows ホストで Android ビルドができなくなるため。
+import java.security.MessageDigest
+import java.util.zip.GZIPInputStream
+import java.util.zip.ZipInputStream
+
 plugins {
     id "com.android.library"
-}
-
-def jniLibsDir = file("src/main/jniLibs")
-
-tasks.register("downloadVoicevoxNatives", Exec) {
-    description = "Download voicevox_core / ONNX Runtime shared libraries if missing"
-    workingDir = projectDir
-    commandLine "bash", file("../scripts/fetch-native.sh").absolutePath,
-            "android", jniLibsDir.absolutePath
-    // 配置済みならスクリプト側で即 return するが、Gradle 的にも up-to-date にする
-    outputs.dir jniLibsDir
-    onlyIf { !new File(jniLibsDir, "arm64-v8a/libvoicevox_core.so").exists() }
-}
-
-// merge*JniLibFolders より前に確実に走らせる
-tasks.configureEach { task ->
-    if (task.name ==~ /^merge.*JniLibFolders$/ || task.name ==~ /^pre.*Build$/) {
-        task.dependsOn "downloadVoicevoxNatives"
-    }
 }
 
 android {
@@ -38,5 +26,219 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+def jniLibsDir = file("src/main/jniLibs")
+
+// packages/core-native/VERSION と同期させること
+def coreVersion = "0.16.4"
+def ortVersion = "1.17.3"
+def coreBase = "https://github.com/VOICEVOX/voicevox_core/releases/download/${coreVersion}"
+def ortBase = "https://github.com/VOICEVOX/onnxruntime-builder/releases/download/voicevox_onnxruntime-${ortVersion}"
+
+// sha256 は packages/core-native/checksums.txt と同期させること。
+// 検証なしで取り込むと改竄されたリリース資産がそのままアプリへリンクされる。
+def natives = [
+    [url   : "${coreBase}/voicevox_core-android-arm64-${coreVersion}.zip",
+     sha256: "51357e6804901129e8684f404f00e107b024739cdd7619b367906f9f6f282271",
+     member: "voicevox_core-android-arm64-${coreVersion}/lib/libvoicevox_core.so",
+     dest  : "arm64-v8a/libvoicevox_core.so"],
+    [url   : "${coreBase}/voicevox_core-android-x86_64-${coreVersion}.zip",
+     sha256: "b04b74719599f556c11ace926fa0522a6e972da0154700d079c24251c6fb0a68",
+     member: "voicevox_core-android-x86_64-${coreVersion}/lib/libvoicevox_core.so",
+     dest  : "x86_64/libvoicevox_core.so"],
+    [url   : "${ortBase}/voicevox_onnxruntime-android-arm64-${ortVersion}.tgz",
+     sha256: "516a992cec029d4414260b602f38f388423517221ad5f81f0e1da4ada7104c60",
+     member: "voicevox_onnxruntime-android-arm64-${ortVersion}/lib/libvoicevox_onnxruntime.so",
+     dest  : "arm64-v8a/libvoicevox_onnxruntime.so"],
+    [url   : "${ortBase}/voicevox_onnxruntime-android-x64-${ortVersion}.tgz",
+     sha256: "95f48afe11706476cedcea51b9b59f4f5dab3ec1e2f509fcf74a6230ee4b7d8b",
+     member: "voicevox_onnxruntime-android-x64-${ortVersion}/lib/libvoicevox_onnxruntime.so",
+     dest  : "x86_64/libvoicevox_onnxruntime.so"],
+]
+
+// libvoicevox_core.so は libc++_shared.so に動的リンクしているため NDK から
+// 取り出して同梱する。ABI ごとの sysroot 名 -> jniLibs 内の配置先。
+def ndkLibs = ["aarch64-linux-android": "arm64-v8a", "x86_64-linux-android": "x86_64"]
+
+// 一つでも欠けていたらタスクを走らせる。libvoicevox_core.so だけを見ると、
+// NDK 未導入で失敗した直後の再ビルドで libc++_shared.so が欠けたまま
+// スキップされ、実行時に dlopen が失敗する。
+def requiredLibs = natives.collect { it.dest } + ndkLibs.values().collect { "${it}/libc++_shared.so" }
+
+def sha256Of = { File f ->
+    def digest = MessageDigest.getInstance("SHA-256")
+    f.withInputStream { input ->
+        byte[] buf = new byte[64 * 1024]
+        int n
+        while ((n = input.read(buf)) > 0) {
+            digest.update(buf, 0, n)
+        }
+    }
+    digest.digest().encodeHex().toString()
+}
+
+def downloadVerified = { String url, String expected, File into ->
+    if (into.exists() && sha256Of(into) == expected) {
+        return into
+    }
+    into.parentFile.mkdirs()
+    def part = new File(into.parentFile, "${into.name}.part")
+    logger.lifecycle("[voicevox_flutter] downloading ${url}")
+    new URL(url).withInputStream { input ->
+        part.withOutputStream { out -> out << input }
+    }
+    def actual = sha256Of(part)
+    if (actual != expected) {
+        part.delete()
+        throw new GradleException(
+                "[voicevox_flutter] checksum mismatch for ${url}\n  expected: ${expected}\n  actual:   ${actual}")
+    }
+    part.renameTo(into)
+    into
+}
+
+def extractZipMember = { File zip, String member, File dest ->
+    dest.parentFile.mkdirs()
+    boolean found = false
+    def zin = new ZipInputStream(new BufferedInputStream(new FileInputStream(zip)))
+    try {
+        def entry
+        while ((entry = zin.nextEntry) != null) {
+            if (entry.name == member) {
+                dest.withOutputStream { out -> out << zin }
+                found = true
+                break
+            }
+        }
+    } finally {
+        zin.close()
+    }
+    if (!found) {
+        throw new GradleException("[voicevox_flutter] ${member} not found in ${zip.name}")
+    }
+}
+
+// tar は 512 バイトのヘッダ + 内容(512 バイト境界へパディング)の繰り返し。
+// 対象は ustar の短いパスだけなので GNU 拡張ヘッダは扱わない。
+def extractTarGzMember = { File tgz, String member, File dest ->
+    dest.parentFile.mkdirs()
+    boolean found = false
+    def tin = new GZIPInputStream(new BufferedInputStream(new FileInputStream(tgz)))
+    try {
+        byte[] header = new byte[512]
+        while (true) {
+            int read = 0
+            while (read < 512) {
+                int n = tin.read(header, read, 512 - read)
+                if (n < 0) break
+                read += n
+            }
+            // 終端(空ブロック)または途中で尽きた
+            if (read < 512 || header[0] == 0) break
+
+            int nameLen = 0
+            while (nameLen < 100 && header[nameLen] != 0) nameLen++
+            def name = new String(header, 0, nameLen, "UTF-8")
+
+            int sizeLen = 0
+            while (sizeLen < 12 && header[124 + sizeLen] != 0 && header[124 + sizeLen] != 32) sizeLen++
+            def sizeField = new String(header, 124, sizeLen, "UTF-8").trim()
+            long size = sizeField.isEmpty() ? 0L : Long.parseLong(sizeField, 8)
+
+            if (name == member) {
+                dest.withOutputStream { out ->
+                    byte[] buf = new byte[64 * 1024]
+                    long remaining = size
+                    while (remaining > 0) {
+                        int n = tin.read(buf, 0, (int) Math.min((long) buf.length, remaining))
+                        if (n < 0) break
+                        out.write(buf, 0, n)
+                        remaining -= n
+                    }
+                }
+                found = true
+                break
+            }
+
+            long padded = ((size + 511L).intdiv(512L)) * 512L
+            long skipped = 0
+            while (skipped < padded) {
+                long n = tin.skip(padded - skipped)
+                if (n <= 0) {
+                    if (tin.read() < 0) break
+                    skipped += 1
+                } else {
+                    skipped += n
+                }
+            }
+        }
+    } finally {
+        tin.close()
+    }
+    if (!found) {
+        throw new GradleException("[voicevox_flutter] ${member} not found in ${tgz.name}")
+    }
+}
+
+tasks.register("downloadVoicevoxNatives") {
+    description = "Download voicevox_core / ONNX Runtime shared libraries if missing"
+    outputs.dir jniLibsDir
+    onlyIf { requiredLibs.any { !new File(jniLibsDir, it).exists() } }
+
+    // NDK の場所は Gradle が知っている(ANDROID_NDK_HOME でも上書きできる)。
+    // ホスト種別ごとの prebuilt ディレクトリ名を組み立てる必要もない。
+    def ndkEnv = System.getenv("ANDROID_NDK_HOME")
+    def ndkRoot = ndkEnv ? new File(ndkEnv) : null
+    if (ndkRoot == null) {
+        // NDK 未導入だと AGP が例外を投げることがあるが、ここで失敗させると
+        // 配置済み(タスクがスキップされる)ケースまで巻き込んでしまう。
+        try {
+            ndkRoot = android.ndkDirectory
+        } catch (Exception ignored) {
+            ndkRoot = null
+        }
+    }
+    def cacheDir = new File(buildDir, "voicevox-natives")
+
+    doLast {
+        natives.each { spec ->
+            def dest = new File(jniLibsDir, spec.dest)
+            if (dest.exists()) return
+            def archive = downloadVerified(spec.url, spec.sha256, new File(cacheDir, spec.url.tokenize("/").last()))
+            if (archive.name.endsWith(".zip")) {
+                extractZipMember(archive, spec.member, dest)
+            } else {
+                extractTarGzMember(archive, spec.member, dest)
+            }
+        }
+
+        if (ndkRoot == null || !ndkRoot.isDirectory()) {
+            throw new GradleException("[voicevox_flutter] Android NDK not found (needed for libc++_shared.so).\n" +
+                    "  Install it via Android Studio (SDK Manager > NDK), set ndkVersion in your app's " +
+                    "build.gradle, or set ANDROID_NDK_HOME.")
+        }
+        def prebuilt = new File(ndkRoot, "toolchains/llvm/prebuilt").listFiles()?.find { it.isDirectory() }
+        if (prebuilt == null) {
+            throw new GradleException("[voicevox_flutter] no LLVM toolchain under ${ndkRoot}/toolchains/llvm/prebuilt")
+        }
+        ndkLibs.each { sysrootAbi, jniAbi ->
+            def src = new File(prebuilt, "sysroot/usr/lib/${sysrootAbi}/libc++_shared.so")
+            if (!src.isFile()) {
+                throw new GradleException("[voicevox_flutter] ${src} not found")
+            }
+            def dest = new File(jniLibsDir, "${jniAbi}/libc++_shared.so")
+            dest.parentFile.mkdirs()
+            dest.bytes = src.bytes
+        }
+        logger.lifecycle("[voicevox_flutter] jniLibs ready in ${jniLibsDir}")
+    }
+}
+
+// merge*JniLibFolders より前に確実に走らせる
+tasks.configureEach { task ->
+    if (task.name ==~ /^merge.*JniLibFolders$/ || task.name ==~ /^pre.*Build$/) {
+        task.dependsOn "downloadVoicevoxNatives"
     }
 }

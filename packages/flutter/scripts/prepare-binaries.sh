@@ -2,7 +2,9 @@
 # prepare-binaries.sh — Flutter パッケージのビルドに必要な取得物を配置する。
 #   1. iOS/macOS: 統合 xcframework(packages/swift/Binaries から流用)
 #   2. Android: libvoicevox_core.so + libvoicevox_onnxruntime.so → jniLibs
-#   3. assets: licenses.json + Open JTalk 辞書
+#   3. assets: licenses.json
+# Open JTalk 辞書はここでは配置しない。0.1.1 で Flutter アセットから外し、
+# 初回起動時のダウンロード(lib/src/dictionary.dart)に移したため。
 # 事前に以下を実行しておくこと:
 #   ../core-native/scripts/fetch-core.sh ios osx android
 #   ../swift/scripts/prepare-binaries.sh
@@ -53,9 +55,10 @@ cp "$sysroot_libs/aarch64-linux-android/libc++_shared.so" "$jni/arm64-v8a/"
 cp "$sysroot_libs/x86_64-linux-android/libc++_shared.so" "$jni/x86_64/"
 
 # --- 3. assets ---
+# 辞書(約100MB)は pubspec の assets から外したのでコピーしない。残っていると
+# 参照されないまま 100MB を消費するだけなので、古い配置は掃除しておく。
 rm -rf "$PKG_DIR/assets/open_jtalk_dic"
 mkdir -p "$PKG_DIR/assets"
-cp -R "$DIST/common/open_jtalk_dic_utf_8-${OPEN_JTALK_DICT_VERSION}" "$PKG_DIR/assets/open_jtalk_dic"
 cp "$CORE/generated/licenses.json" "$PKG_DIR/assets/licenses.json"
 
 echo "done."
