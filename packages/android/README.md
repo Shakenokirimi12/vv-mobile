@@ -25,7 +25,7 @@ dependencyResolutionManagement {
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.github.Shakenokirimi12.vv-mobile:voicevox-core-android:android-v0.1.2")
+    implementation("com.github.Shakenokirimi12.vv-mobile:voicevox-core-android:android-v0.1.3")
 }
 ```
 
@@ -62,11 +62,28 @@ val wav = voicevox.synthesis("こんにちは、ずんだもんなのだ", model
 
 `downloadModels(ids)` / `downloadAllModels()` は並列実行され、モデルごとの `Result` を返します(一部失敗でも例外を投げません)。
 
-モデルは1件あたり数十MB(最大約130MB)あるため、ストレージ管理用に削除系のAPIも用意しています:
+### 一覧表示だけなら VoicevoxCatalog
+
+`Voicevox.create` は ONNX Runtime のロードと Open JTalk 辞書(約100MB)の展開を伴い、初回は時間がかかります。キャラクター一覧やダウンロード状態を出したいだけの画面では、ネイティブ初期化なしで読める `VoicevoxCatalog` を使ってください。
 
 ```kotlin
+val catalog = VoicevoxCatalog.load(context)
+catalog.models()                  // ダウンロード状態付きの全モデル
+catalog.modelForStyle(3)          // スタイルID からモデルを逆引き
+catalog.downloadedSize()          // ダウンロード済みの合計サイズ(bytes)
+```
+
+### ダウンロードの進捗とストレージ管理
+
+モデルは1件あたり数十MB(最大約130MB、全27モデルで約1.7GB)あります。
+
+```kotlin
+voicevox.downloadModel("0") { done, total ->
+    // IOディスパッチャ上から高頻度に呼ばれる。UI 更新は自前でスロットルすること
+}
+
+voicevox.modelIdForStyle(3)    // スタイルID → モデルID(synthesis 用)
 voicevox.downloadedSize("0")   // そのモデルのローカルサイズ(bytes)。未DLなら 0
-voicevox.downloadedSize()      // ダウンロード済み全モデルの合計(bytes)
 voicevox.deleteModel("0")      // ロード済みならアンロードしてから削除。suspend
 ```
 

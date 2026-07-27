@@ -16,7 +16,6 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 
 /**
  * 高レベル Facade。通常の利用はこのクラスだけで完結する。
@@ -59,14 +58,12 @@ class Voicevox private constructor(
             maxConcurrentDownloads: Int = 4,
         ): Voicevox = withContext(Dispatchers.IO) {
             val appContext = context.applicationContext
-            val catalog = Json.decodeFromString<LicenseCatalog>(
-                appContext.assets.open("licenses.json").bufferedReader().readText()
-            )
+            val catalog = VoicevoxCatalog.parse(appContext)
             val gate = LicenseGate(appContext, catalog.termsVersion)
             val manager = ModelManager(
                 catalog = catalog,
                 gate = gate,
-                modelsDir = modelsDir ?: File(appContext.filesDir, "voicevox/models"),
+                modelsDir = modelsDir ?: VoicevoxCatalog.defaultModelsDir(appContext),
             )
 
             val dictDir = extractOpenJtalkDict(appContext)
@@ -103,6 +100,17 @@ class Voicevox private constructor(
     /** 全モデル共通の利用規約(VOICEVOX 音声モデル利用規約)のURL。 */
     val termsURL: String get() = catalog.termsURL
 
+    /**
+     * スタイルID を含むモデルのID。存在しなければ null。
+     *
+     * スタイルID だけを保持しているアプリから [synthesis] の modelId を解決するのに使う。
+     * 一覧表示だけなら [VoicevoxCatalog] を使えばネイティブ初期化を待たずに済む。
+     */
+    fun modelIdForStyle(styleId: Int): String? =
+        catalog.models.firstOrNull { model ->
+            model.characters.any { c -> c.styles.any { it.id == styleId } }
+        }?.id
+
     // --- ライセンス同意 ---
 
     /** モデルの利用規約に同意する。アプリ側は規約を提示した上で呼ぶこと。 */
@@ -113,8 +121,17 @@ class Voicevox private constructor(
 
     // --- ダウンロード ---
 
-    /** 1モデルをダウンロードする(要同意)。ダウンロード済みなら何もしない。 */
-    suspend fun downloadModel(id: String) = manager.download(id)
+    /**
+     * 1モデルをダウンロードする(要同意)。ダウンロード済みなら何もしない。
+     *
+     * @param onProgress 進捗コールバック。(受信済みbytes, 全体bytes)。
+     *   全体サイズが不明な場合は第2引数に licenses.json の sizeBytes が渡る。
+     *   IOディスパッチャ上から高頻度で呼ばれるので、UI 更新は自前でスロットルすること。
+     */
+    suspend fun downloadModel(
+        id: String,
+        onProgress: ((downloadedBytes: Long, totalBytes: Long) -> Unit)? = null,
+    ) = manager.download(id, onProgress)
 
     /**
      * 複数モデルを並列ダウンロードする(同時実行数は maxConcurrentDownloads)。
