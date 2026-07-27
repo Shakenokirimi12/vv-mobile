@@ -11,15 +11,17 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Shakenokirimi12/vv-mobile.git", exact: "swift-v0.1.1")
+    .package(url: "https://github.com/Shakenokirimi12/vv-mobile.git", exact: "0.1.1")
 ]
 ```
 
-Xcode から追加する場合も、リポジトリURLに `https://github.com/Shakenokirimi12/vv-mobile.git`、バージョン指定に `Exact: swift-v0.1.1` を入れてください。
+Xcode から追加する場合も、リポジトリURLに `https://github.com/Shakenokirimi12/vv-mobile.git`、バージョン指定に `Exact: 0.1.1` を入れてください。
 
-**必ずリリースタグ(`swift-vX.Y.Z`)を指定してください。** SwiftPM はリポジトリの**ルート**にある `Package.swift` しか読まないため、ルートのマニフェストは常にリリース済み xcframework を URL + checksum で取得する形になっています。また Open JTalk 辞書(約107MB)は通常 gitignore されており、**リリースタグにのみコミットされています**。`main` ブランチを直接指定すると辞書が入らず、初期化時に失敗します。
+**バージョンは `swift-v0.1.1` ではなく `0.1.1` を指定してください。** SwiftPM はタグをセマンティックバージョンとして解釈するため、`swift-v` のような接頭辞つきタグは解決できません。リリースごとに、パッケージを区別するための `swift-vX.Y.Z` と、SwiftPM 用の `X.Y.Z` の両方を打っています(同じコミットを指しています)。
 
-`swift-v0.1.0` はルートに `Package.swift` が無く SwiftPM から解決できないため、**`swift-v0.1.1` 以降を使ってください**。
+**必ずリリースタグを指定してください。** SwiftPM はリポジトリの**ルート**にある `Package.swift` しか読まないため、ルートのマニフェストは常にリリース済み xcframework を URL + checksum で取得する形になっています。また Open JTalk 辞書(約107MB)は通常 gitignore されており、**リリースタグにのみコミットされています**。`main` ブランチを直接指定すると辞書が入らず、初期化時に失敗します。
+
+`swift-v0.1.0` はルートに `Package.swift` が無く、SwiftPM 用のセマンティックバージョンタグも無かったため解決できません。**`0.1.1` 以降を使ってください**。
 
 ### バイナリ(xcframework)について
 
