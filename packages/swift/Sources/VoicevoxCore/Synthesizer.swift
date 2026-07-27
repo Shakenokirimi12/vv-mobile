@@ -103,6 +103,27 @@ public final class Synthesizer: @unchecked Sendable {
         return loadedModelIds.contains(modelId)
     }
 
+    /// ロード済みモデルをアンロードする。未ロードなら何もしない。
+    ///
+    /// - Parameters:
+    ///   - modelId: カタログ上のモデルID。
+    ///   - vvmId: `.vvm` の UUID(`VoicevoxModelInfo.vvmId`)。ネイティブ側はこちらで識別する。
+    public func unloadVoiceModel(modelId: String, vvmId: String) throws {
+        lock.lock()
+        defer { lock.unlock() }
+        guard loadedModelIds.contains(modelId) else { return }
+        guard let uuid = UUID(uuidString: vvmId) else {
+            throw VoicevoxError.unknownModel(modelId: modelId)
+        }
+
+        // VoicevoxVoiceModelId は const uint8_t (*)[16]。uuid_t がそのまま同じ形なので直接渡せる。
+        var bytes = uuid.uuid
+        try withUnsafePointer(to: &bytes) { pointer in
+            try check(voicevox_synthesizer_unload_voice_model(synthesizer, pointer))
+        }
+        loadedModelIds.remove(modelId)
+    }
+
     /// テキストから WAV を合成する。
     public func tts(text: String, styleId: UInt32) throws -> Data {
         var wavLength: UInt = 0

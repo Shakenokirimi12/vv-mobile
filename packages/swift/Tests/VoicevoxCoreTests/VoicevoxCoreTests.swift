@@ -35,6 +35,36 @@ final class VoicevoxCoreTests: XCTestCase {
         XCTAssertTrue(s0.characters.flatMap(\.talkStyles).isEmpty)
     }
 
+    func testVoicevoxCatalogReadsWithoutNativeInit() throws {
+        // ONNX Runtime も Open JTalk 辞書も要らずに読めること
+        let tempModels = FileManager.default.temporaryDirectory
+            .appendingPathComponent("catalog-test-\(UUID().uuidString)")
+        let catalog = try VoicevoxCatalog(modelsDir: tempModels)
+
+        XCTAssertFalse(catalog.models().isEmpty)
+        XCTAssertFalse(catalog.termsURL.isEmpty)
+        // 何も落としていないので、全部未取得で合計 0
+        XCTAssertTrue(catalog.models().allSatisfy { !$0.isDownloaded })
+        XCTAssertEqual(catalog.downloadedSize(), 0)
+    }
+
+    func testCatalogResolvesModelFromStyleId() throws {
+        let catalog = try VoicevoxCatalog()
+        // ずんだもん(ノーマル)はスタイルID 3、モデル 0 に属する
+        XCTAssertEqual(catalog.model(forStyle: 3)?.id, "0")
+        XCTAssertNil(catalog.model(forStyle: 99999))
+    }
+
+    func testSynthesizerModelIdLookupMatchesCatalog() throws {
+        let voicevox = try Voicevox(onnxruntimePath: Self.onnxruntimePath)
+        let catalog = try VoicevoxCatalog()
+        for model in catalog.models() {
+            for style in model.characters.flatMap(\.talkStyles) {
+                XCTAssertEqual(voicevox.modelId(forStyle: style.id), model.id)
+            }
+        }
+    }
+
     func testSynthesisRejectsSongOnlyModel() async throws {
         let voicevox = try Voicevox(
             onnxruntimePath: Self.onnxruntimePath,

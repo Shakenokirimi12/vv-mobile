@@ -11,17 +11,17 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Shakenokirimi12/vv-mobile.git", exact: "0.1.1")
+    .package(url: "https://github.com/Shakenokirimi12/vv-mobile.git", exact: "0.1.2")
 ]
 ```
 
-Xcode から追加する場合も、リポジトリURLに `https://github.com/Shakenokirimi12/vv-mobile.git`、バージョン指定に `Exact: 0.1.1` を入れてください。
+Xcode から追加する場合も、リポジトリURLに `https://github.com/Shakenokirimi12/vv-mobile.git`、バージョン指定に `Exact: 0.1.2` を入れてください。
 
-**バージョンは `swift-v0.1.1` ではなく `0.1.1` を指定してください。** SwiftPM はタグをセマンティックバージョンとして解釈するため、`swift-v` のような接頭辞つきタグは解決できません。リリースごとに、パッケージを区別するための `swift-vX.Y.Z` と、SwiftPM 用の `X.Y.Z` の両方を打っています(同じコミットを指しています)。
+**バージョンは `swift-v0.1.2` ではなく `0.1.2` を指定してください。** SwiftPM はタグをセマンティックバージョンとして解釈するため、`swift-v` のような接頭辞つきタグは解決できません。リリースごとに、パッケージを区別するための `swift-vX.Y.Z` と、SwiftPM 用の `X.Y.Z` の両方を打っています(同じコミットを指しています)。
 
 **必ずリリースタグを指定してください。** SwiftPM はリポジトリの**ルート**にある `Package.swift` しか読まないため、ルートのマニフェストは常にリリース済み xcframework を URL + checksum で取得する形になっています。また Open JTalk 辞書(約107MB)は通常 gitignore されており、**リリースタグにのみコミットされています**。`main` ブランチを直接指定すると辞書が入らず、初期化時に失敗します。
 
-`swift-v0.1.0` はルートに `Package.swift` が無く、SwiftPM 用のセマンティックバージョンタグも無かったため解決できません。**`0.1.1` 以降を使ってください**。
+`swift-v0.1.0` はルートに `Package.swift` が無く、SwiftPM 用のセマンティックバージョンタグも無かったため解決できません。**`0.1.2` 以降を使ってください**。
 
 ### バイナリ(xcframework)について
 
@@ -58,6 +58,31 @@ let wav = try await voicevox.synthesis(
     modelId: "0",
     styleId: 3
 )
+```
+
+### 一覧表示だけなら VoicevoxCatalog
+
+`Voicevox()` は ONNX Runtime のロードと Open JTalk 辞書の読み込みを伴います。キャラクター一覧やダウンロード状態を出したいだけの画面では、JSON を読むだけの `VoicevoxCatalog` を使ってください。
+
+```swift
+let catalog = try VoicevoxCatalog()
+catalog.models()                  // ダウンロード状態付きの全モデル
+catalog.model(forStyle: 3)        // スタイルID からモデルを逆引き
+catalog.downloadedSize()          // ダウンロード済みの合計サイズ(bytes)
+```
+
+### ダウンロードの進捗とストレージ管理
+
+モデルは1件あたり数十MB(最大約130MB、全27モデルで約1.7GB)あります。
+
+```swift
+try await voicevox.downloadModel(id: "0") { done, total in
+    // 高頻度で呼ばれる。UI 更新は自前でスロットルすること
+}
+
+voicevox.modelId(forStyle: 3)     // スタイルID → モデルID(synthesis 用)
+voicevox.downloadedSize(modelId: "0")
+try voicevox.deleteModel("0")     // ロード済みならアンロードしてから削除
 ```
 
 ## 音声モデルのライセンス
