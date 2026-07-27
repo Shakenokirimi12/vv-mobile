@@ -9,18 +9,35 @@
 
 ## インストール
 
+JitPack から取得できます。`settings.gradle.kts`(または `build.gradle`)にリポジトリを追加してください。
+
 ```kotlin
-dependencies {
-    implementation("jp.voicevox:voicevox-core-android:0.1.0")
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
 }
 ```
 
-### 依存する公式 AAR について(重要)
+```kotlin
+// app/build.gradle.kts
+dependencies {
+    implementation("com.github.Shakenokirimi12:vv-mobile:android-v0.1.1")
+}
+```
 
-本ライブラリは公式 Java API `jp.hiroshiba.voicevoxcore:voicevoxcore-android:0.16.4` に `api` 依存しますが、この AAR は **Maven Central には公開されていません**(公式配布の `java_packages.zip` に Maven リポジトリ形式で同梱)。利用側では次のいずれかが必要です:
+`minSdk` は 26 以上が必要です。ネイティブライブラリは `arm64-v8a` / `x86_64` のみを同梱しています。
 
-1. **本リポジトリと同じ方式でローカル Maven リポジトリとして展開する**: `./packages/core-native/scripts/fetch-core.sh android` → `./packages/android/scripts/prepare-binaries.sh` を実行すると `packages/android/local-maven/` に展開されるので、`settings.gradle.kts` の `dependencyResolutionManagement.repositories` に `maven(url = ".../local-maven")` を追加する
-2. **上流の Maven 公開を待つ**: VOICEVOX 公式が voicevoxcore-android を公開リポジトリに配布し始めたら、リポジトリ追加のみで解決可能になる
+### 依存する公式 AAR について
+
+本ライブラリは公式 Java API `jp.hiroshiba.voicevoxcore:voicevoxcore-android:0.16.4` に `api` 依存しますが、この AAR は **Maven Central には公開されていません**(公式配布の `java_packages.zip` に Maven リポジトリ形式で同梱)。
+
+そのため JitPack 公開時に、公式 AAR も同じタグのバージョンで併せて発行し、`com.github.Shakenokirimi12.vv-mobile:voicevoxcore-android:<タグ>` として配信しています。利用側で追加の設定は不要です(`android-v0.1.0` はこの再発行が無く依存解決に失敗するため、**`android-v0.1.1` 以降を使ってください**)。
+
+モノレポ内で開発する場合は `./packages/core-native/scripts/fetch-core.sh android` → `./packages/android/scripts/prepare-binaries.sh` を実行すると `packages/android/local-maven/` に展開され、そこから解決されます。
 
 ## クイックスタート
 
